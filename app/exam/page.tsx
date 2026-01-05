@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useExamStore } from '@/stores/examStore';
 import { isUserLoggedIn } from '@/lib/auth';
 import { ExamTimer } from '@/components/exam/ExamTimer';
@@ -23,8 +23,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export default function ExamPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const quizId = searchParams.get('quiz');
   const {
     questions,
     currentQuestionIndex,
@@ -39,7 +37,6 @@ export default function ExamPage() {
 
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [quizTitle, setQuizTitle] = useState('PMS GK Test');
 
   useEffect(() => {
     // Check authentication
@@ -48,33 +45,24 @@ export default function ExamPage() {
       return;
     }
 
-    // Load quiz title if quizId is provided
-    if (quizId) {
-      fetch(`/api/quizzes`)
-        .then((res) => res.json())
-        .then((quizzes) => {
-          const quiz = quizzes.find((q: any) => q.id === quizId);
-          if (quiz) {
-            setQuizTitle(quiz.title);
-          }
-        })
-        .catch(() => {
-          // Ignore errors
-        });
+    // Initialize exam if questions are not loaded
+    if (questions.length === 0) {
+      initializeExam();
+      return;
     }
 
-    // Initialize exam if not started
-    if (!isExamStarted && !isExamCompleted) {
-      initializeExam();
+    // Start exam if not started and not completed
+    if (!isExamStarted && !isExamCompleted && questions.length > 0) {
+      startExam();
     }
-  }, [isExamStarted, isExamCompleted, initializeExam, router, quizId]);
+  }, [isExamStarted, isExamCompleted, initializeExam, startExam, questions.length, router]);
 
   useEffect(() => {
     // Redirect to result if exam is completed
     if (isExamCompleted) {
-      router.push(`/result?quiz=${quizId || ''}`);
+      router.push('/result');
     }
-  }, [isExamCompleted, router, quizId]);
+  }, [isExamCompleted, router]);
 
   useEffect(() => {
     // Prevent accidental page refresh
@@ -119,8 +107,8 @@ export default function ExamPage() {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <h1 className="text-lg font-semibold">{quizTitle}</h1>
+              <div className="flex items-center gap-4">
+                <h1 className="text-lg font-semibold">PMS GK Test 2026</h1>
               <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
                 <span>
                   Question {currentQuestionIndex + 1} of {questions.length}
@@ -130,7 +118,7 @@ export default function ExamPage() {
 
             <div className="flex items-center gap-4">
               <ExamTimer />
-              
+
               {/* Mobile Navigator Toggle */}
               <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
                 <SheetTrigger asChild className="lg:hidden">
@@ -200,7 +188,7 @@ export default function ExamPage() {
           <div className="hidden lg:block">
             <div className="sticky top-24">
               <QuestionNavigator />
-              
+
               <Button
                 variant="default"
                 onClick={handleSubmit}

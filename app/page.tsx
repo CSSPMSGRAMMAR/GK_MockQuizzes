@@ -37,8 +37,6 @@ export default function Home() {
       return;
     }
     setUser(getCurrentUser());
-    // Redirect to quiz selection instead
-    router.push('/quizzes');
   }, [router]);
 
   const handleStartExam = () => {

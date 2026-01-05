@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useExamStore } from '@/stores/examStore';
@@ -24,10 +24,9 @@ import {
   Download,
 } from 'lucide-react';
 
-export default function ResultPage() {
+function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const quizId = searchParams.get('quiz');
   const { result, isExamCompleted, questions, userAnswers, resetExam } = useExamStore();
 
   useEffect(() => {
@@ -66,11 +65,7 @@ export default function ResultPage() {
 
   const handleRetakeExam = () => {
     resetExam();
-    if (quizId) {
-      router.push(`/quiz/${quizId}`);
-    } else {
-      router.push('/quizzes');
-    }
+    router.push('/');
   };
 
   const handleDownloadReport = () => {
@@ -353,15 +348,30 @@ export default function ResultPage() {
               <Download className="h-4 w-4 mr-2" />
               Download Report
             </Button>
-            <Link href="/quizzes">
+            <Link href="/">
               <Button size="lg" variant="outline">
                 <Home className="h-4 w-4 mr-2" />
-                Back to Mock Papers
+                Back to Home
               </Button>
             </Link>
           </div>
         </div>
       </main>
     </div>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading results...</p>
+        </div>
+      </div>
+    }>
+      <ResultContent />
+    </Suspense>
   );
 }
