@@ -2,42 +2,31 @@
 
 ## Issue: User Creation Not Working on Vercel
 
-The app uses file-based storage locally, but Vercel's serverless functions have a read-only filesystem. This has been fixed by using **Redis** for production storage.
+The app uses file-based storage locally, but Vercel's serverless functions have a read-only filesystem. This has been fixed by using **MongoDB** for production storage.
 
 ## Setup Instructions
 
-### Option 1: Using Redis URL (Current Setup)
+### MongoDB Configuration
 
-You've already set up Redis with a `REDIS_URL` connection string. The code now supports this!
-
-1. **Verify Environment Variable**:
+1. **Set Environment Variable in Vercel**:
    - Go to your Vercel project → **Settings** → **Environment Variables**
-   - Ensure `REDIS_URL` is set with your Redis connection string
-   - Format: `redis://default:password@host:port`
+   - Add `MONGODB_URI` with your MongoDB connection string
+   - Format: `mongodb+srv://username:password@cluster.mongodb.net/`
+   - **Current value**: `mongodb+srv://csspmsgrammar_db_user:0RvdCgtd8X3X7MjN@cluster0.eu370ti.mongodb.net/`
 
-2. **Redeploy**:
+2. **Optional - Database Name**:
+   - Add `MONGODB_DB` if you want to use a specific database name
+   - Default: `pmsgk-quiz`
+
+3. **Redeploy**:
    - Push your code or manually redeploy from Vercel dashboard
-
-### Option 2: Using Vercel KV (Alternative)
-
-If you prefer to use Vercel's native KV:
-
-1. Go to your Vercel project dashboard
-2. Navigate to **Storage** → **Create Database**
-3. Select **KV** (Redis)
-4. Create the KV database
-
-Vercel will automatically add:
-- `KV_REST_API_URL`
-- `KV_REST_API_TOKEN`
 
 ## How It Works
 
-The code automatically detects which Redis setup you're using:
+The code automatically detects the environment:
 
-- **Local Development**: Uses file-based storage (`data/quiz-users.json`)
-- **Vercel Production with `REDIS_URL`**: Uses standard Redis connection
-- **Vercel Production with `KV_REST_API_URL`**: Uses Vercel KV
+- **Local Development**: Uses file-based storage (`data/quiz-users.json` and `data/users.json`)
+- **Vercel Production**: Automatically uses MongoDB when `MONGODB_URI` is detected
 
 The code will automatically use the appropriate storage method based on available environment variables.
 
