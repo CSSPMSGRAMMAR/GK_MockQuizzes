@@ -41,18 +41,40 @@ After deployment:
 ## Troubleshooting
 
 If users still aren't being created:
-1. **Check Vercel logs**: **Deployments** → Click on deployment → **Functions** tab → Look for Redis connection errors
+1. **Check Vercel logs**: **Deployments** → Click on deployment → **Functions** tab → Look for MongoDB connection errors
 2. **Verify environment variables**:
-   - For `REDIS_URL`: Ensure the connection string is correct and includes password
-   - For Vercel KV: Ensure `KV_REST_API_URL` and `KV_REST_API_TOKEN` are set
-3. **Test Redis connection**: The code will log errors if Redis connection fails
-4. **Check packages**: Ensure `redis` and `@vercel/kv` packages are in `package.json` (both are included)
+   - Ensure `MONGODB_URI` is set correctly in Vercel
+   - Check that the connection string includes the password
+   - Verify network access: MongoDB Atlas allows connections from specific IPs (add `0.0.0.0/0` for Vercel)
+3. **Test MongoDB connection**: The code will log errors if MongoDB connection fails
+4. **Check packages**: Ensure `mongodb` package is in `package.json` (it's included)
+
+## MongoDB Atlas Network Access (CRITICAL)
+
+**This is the most common cause of connection errors!**
+
+Make sure your MongoDB Atlas cluster allows connections from Vercel:
+1. Go to MongoDB Atlas → **Network Access** (or **Security** → **Network Access**)
+2. Click **Add IP Address**
+3. Select **Allow Access from Anywhere** (or add `0.0.0.0/0`)
+   - This allows all IPs, which is needed for Vercel's dynamic IPs
+   - For production, you can restrict to specific IP ranges later
+4. Click **Confirm**
+5. Wait 1-2 minutes for changes to propagate
+
+**If you see SSL/TLS errors**, it's almost always because:
+- Network Access is not configured to allow Vercel IPs
+- The IP whitelist hasn't propagated yet (wait a few minutes)
+- Your MongoDB cluster is paused (check cluster status)
 
 ## Current Setup
 
 Based on your configuration, you're using:
-- **Redis URL**: `REDIS_URL` environment variable
-- **Provider**: Redis Labs (Cloud Redis)
+- **MongoDB URI**: `mongodb+srv://csspmsgrammar_db_user:0RvdCgtd8X3X7MjN@cluster0.eu370ti.mongodb.net/`
+- **Database**: `pmsgk-quiz` (default)
+- **Collections**: 
+  - `quiz-users` - for quiz access users
+  - `users` - for general users
 
-The code will automatically connect to your Redis instance using the `REDIS_URL` connection string.
+The code will automatically connect to your MongoDB instance using the `MONGODB_URI` connection string.
 
