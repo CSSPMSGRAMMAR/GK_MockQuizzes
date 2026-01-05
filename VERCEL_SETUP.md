@@ -2,45 +2,44 @@
 
 ## Issue: User Creation Not Working on Vercel
 
-The app uses file-based storage locally, but Vercel's serverless functions have a read-only filesystem. This has been fixed by using **Vercel KV (Redis)** for production.
+The app uses file-based storage locally, but Vercel's serverless functions have a read-only filesystem. This has been fixed by using **Redis** for production storage.
 
 ## Setup Instructions
 
-### 1. Install Vercel KV in Your Vercel Project
+### Option 1: Using Redis URL (Current Setup)
+
+You've already set up Redis with a `REDIS_URL` connection string. The code now supports this!
+
+1. **Verify Environment Variable**:
+   - Go to your Vercel project → **Settings** → **Environment Variables**
+   - Ensure `REDIS_URL` is set with your Redis connection string
+   - Format: `redis://default:password@host:port`
+
+2. **Redeploy**:
+   - Push your code or manually redeploy from Vercel dashboard
+
+### Option 2: Using Vercel KV (Alternative)
+
+If you prefer to use Vercel's native KV:
 
 1. Go to your Vercel project dashboard
 2. Navigate to **Storage** → **Create Database**
 3. Select **KV** (Redis)
 4. Create the KV database
 
-### 2. Get Your KV Credentials
-
-After creating the KV database, Vercel will automatically add these environment variables to your project:
+Vercel will automatically add:
 - `KV_REST_API_URL`
 - `KV_REST_API_TOKEN`
-- `KV_REST_API_READ_ONLY_TOKEN` (optional)
-
-These are automatically available in your Vercel deployment.
-
-### 3. Verify Environment Variables
-
-In your Vercel project settings:
-- Go to **Settings** → **Environment Variables**
-- Ensure `KV_REST_API_URL` and `KV_REST_API_TOKEN` are present
-- If deploying to multiple environments (Production, Preview, Development), add them to each
-
-### 4. Redeploy
-
-After setting up KV:
-1. Push your code to trigger a new deployment, OR
-2. Go to **Deployments** → Click **Redeploy** on the latest deployment
 
 ## How It Works
 
-- **Local Development**: Uses file-based storage (`data/quiz-users.json`)
-- **Vercel Production**: Automatically uses Vercel KV (Redis) when `KV_REST_API_URL` is detected
+The code automatically detects which Redis setup you're using:
 
-The code automatically detects the environment and uses the appropriate storage method.
+- **Local Development**: Uses file-based storage (`data/quiz-users.json`)
+- **Vercel Production with `REDIS_URL`**: Uses standard Redis connection
+- **Vercel Production with `KV_REST_API_URL`**: Uses Vercel KV
+
+The code will automatically use the appropriate storage method based on available environment variables.
 
 ## Testing
 
@@ -53,8 +52,18 @@ After deployment:
 ## Troubleshooting
 
 If users still aren't being created:
-1. Check Vercel logs: **Deployments** → Click on deployment → **Functions** tab
-2. Verify KV environment variables are set correctly
-3. Ensure you've created the KV database in Vercel
-4. Check that `@vercel/kv` package is installed (it should be in `package.json`)
+1. **Check Vercel logs**: **Deployments** → Click on deployment → **Functions** tab → Look for Redis connection errors
+2. **Verify environment variables**:
+   - For `REDIS_URL`: Ensure the connection string is correct and includes password
+   - For Vercel KV: Ensure `KV_REST_API_URL` and `KV_REST_API_TOKEN` are set
+3. **Test Redis connection**: The code will log errors if Redis connection fails
+4. **Check packages**: Ensure `redis` and `@vercel/kv` packages are in `package.json` (both are included)
+
+## Current Setup
+
+Based on your configuration, you're using:
+- **Redis URL**: `REDIS_URL` environment variable
+- **Provider**: Redis Labs (Cloud Redis)
+
+The code will automatically connect to your Redis instance using the `REDIS_URL` connection string.
 

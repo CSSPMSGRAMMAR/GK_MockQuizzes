@@ -18,43 +18,128 @@ export function validateAdminCredentials(username: string, password: string): bo
   return username === ADMIN_USERNAME && password === adminPassword;
 }
 
-// Check if we're in a Vercel environment (production)
-function isVercelEnvironment(): boolean {
-  return !!process.env.KV_REST_API_URL && !!process.env.KV_REST_API_TOKEN;
+// Check if we're in a production environment with Redis
+function isRedisEnvironment(): boolean {
+  return !!(process.env.REDIS_URL || (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN));
 }
 
-// Vercel KV storage (for production)
+// Cached Redis clients
+let kvClient: any = null;
+let redisClient: any = null;
+let redisClientPromise: Promise<any> | null = null;
+
+// Get Vercel KV client (cached)
 async function getKVClient(): Promise<any> {
-  if (!isVercelEnvironment()) {
-    return null;
-  }
+  if (kvClient) return kvClient;
   
-  try {
-    // Dynamic import to avoid issues in local development
-    const kvModule = await import('@vercel/kv');
-    return kvModule.kv;
-  } catch {
-    return null;
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    try {
+      const kvModule = await import('@vercel/kv');
+      kvClient = kvModule.kv;
+      return kvClient;
+    } catch {
+      return null;
+    }
   }
+  return null;
 }
 
-async function readQuizUsersFromKV(): Promise<QuizUser[]> {
-  const kv = await getKVClient();
-  if (!kv) return [];
+// Get standard Redis client (cached, with connection reuse)
+async function getStandardRedisClient(): Promise<any> {
+  if (redisClient) return redisClient;
+  
+  if (redisClientPromise) {
+    return redisClientPromise;
+  }
+  
+  if (process.env.REDIS_URL) {
+    redisClientPromise = (async () => {
+      try {
+        const { createClient } = await import('redis');
+        const client = createClient({ 
+          url: process.env.REDIS_URL,
+          socket: {
+            reconnectStrategy: (retries) => {
+              if (retries > 10) {
+                return new Error('Too many reconnection attempts');
+              }
+              return Math.min(retries * 100, 3000);
+            }
+          }
+        });
+        
+        client.on('error', (err) => console.error('Redis Client Error:', err));
+        
+        if (!client.isOpen) {
+          await client.connect();
+        }
+        
+        redisClient = client;
+        return redisClient;
+      } catch (error) {
+        console.error('Failed to connect to Redis:', error);
+        redisClientPromise = null;
+        return null;
+      }
+    })();
+    
+    return redisClientPromise;
+  }
+  
+  return null;
+}
+
+async function readQuizUsersFromRedis(): Promise<QuizUser[]> {
+  if (!isRedisEnvironment()) return [];
   
   try {
-    const users = await kv.get(QUIZ_USERS_KEY) as QuizUser[] | null;
-    return users || [];
-  } catch {
+    // Try Vercel KV first
+    const kv = await getKVClient();
+    if (kv) {
+      const users = await kv.get(QUIZ_USERS_KEY) as QuizUser[] | null;
+      return users || [];
+    }
+    
+    // Try standard Redis
+    const redis = await getStandardRedisClient();
+    if (redis) {
+      const data = await redis.get(QUIZ_USERS_KEY);
+      if (!data) return [];
+      return JSON.parse(data) as QuizUser[];
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error reading from Redis:', error);
     return [];
   }
 }
 
-async function writeQuizUsersToKV(users: QuizUser[]): Promise<void> {
-  const kv = await getKVClient();
-  if (!kv) throw new Error('KV client not available');
+async function writeQuizUsersToRedis(users: QuizUser[]): Promise<void> {
+  if (!isRedisEnvironment()) {
+    throw new Error('Redis environment not configured');
+  }
   
-  await kv.set(QUIZ_USERS_KEY, users);
+  try {
+    // Try Vercel KV first
+    const kv = await getKVClient();
+    if (kv) {
+      await kv.set(QUIZ_USERS_KEY, users);
+      return;
+    }
+    
+    // Try standard Redis
+    const redis = await getStandardRedisClient();
+    if (redis) {
+      await redis.set(QUIZ_USERS_KEY, JSON.stringify(users));
+      return;
+    }
+    
+    throw new Error('No Redis client available');
+  } catch (error) {
+    console.error('Error writing to Redis:', error);
+    throw error;
+  }
 }
 
 // File storage (for local development)
@@ -89,15 +174,15 @@ async function writeQuizUsersToFile(users: QuizUser[]): Promise<void> {
 
 // Unified storage functions
 async function readQuizUsers(): Promise<QuizUser[]> {
-  if (isVercelEnvironment()) {
-    return readQuizUsersFromKV();
+  if (isRedisEnvironment()) {
+    return readQuizUsersFromRedis();
   }
   return readQuizUsersFromFile();
 }
 
 async function writeQuizUsers(users: QuizUser[]): Promise<void> {
-  if (isVercelEnvironment()) {
-    await writeQuizUsersToKV(users);
+  if (isRedisEnvironment()) {
+    await writeQuizUsersToRedis(users);
   } else {
     await writeQuizUsersToFile(users);
   }
