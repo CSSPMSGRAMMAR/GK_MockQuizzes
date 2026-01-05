@@ -1,38 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join } from 'path';
-
-const USERS_FILE = join(process.cwd(), 'data', 'users.json');
-
-// Helper to read users
-function readUsers(): any[] {
-  try {
-    if (!existsSync(USERS_FILE)) {
-      return [];
-    }
-    const data = readFileSync(USERS_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading users:', error);
-    return [];
-  }
-}
-
-// Helper to write users
-function writeUsers(users: any[]): void {
-  try {
-    writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Error writing users:', error);
-  }
-}
+import { readUsers, writeUsers, type User } from '@/lib/userStorage';
 
 // GET - Get all users (admin only)
 export async function GET(request: NextRequest) {
-  const users = readUsers();
-  // Remove passwords from response
-  const safeUsers = users.map(({ password, ...user }) => user);
-  return NextResponse.json(safeUsers);
+  try {
+    const users = await readUsers();
+    // Remove passwords from response
+    const safeUsers = users.map(({ password, ...user }) => user);
+    return NextResponse.json(safeUsers);
+  } catch (error) {
+    console.error('Error reading users:', error);
+    return NextResponse.json(
+      { error: 'Failed to read users' },
+      { status: 500 }
+    );
+  }
 }
 
 // POST - Create new user (admin only)
@@ -48,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const users = readUsers();
+    const users = await readUsers();
 
     // Check if username already exists
     if (users.some((u) => u.username === username)) {
@@ -59,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new user
-    const newUser = {
+    const newUser: User = {
       id: `user${Date.now()}`,
       username,
       password, // In production, hash this!
@@ -68,7 +50,7 @@ export async function POST(request: NextRequest) {
     };
 
     users.push(newUser);
-    writeUsers(users);
+    await writeUsers(users);
 
     // Return user without password
     const { password: _, ...safeUser } = newUser;
@@ -92,9 +74,9 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
 
-    const users = readUsers();
+    const users = await readUsers();
     const filteredUsers = users.filter((u) => u.id !== id);
-    writeUsers(filteredUsers);
+    await writeUsers(filteredUsers);
 
     return NextResponse.json({ success: true });
   } catch (error) {

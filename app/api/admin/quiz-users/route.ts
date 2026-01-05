@@ -38,8 +38,22 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error) {
+    console.error('Error adding quiz user:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unexpected error';
+    
+    // Provide more helpful error messages
+    if (errorMessage.includes('Redis') || errorMessage.includes('connection')) {
+      return NextResponse.json(
+        { 
+          error: 'Database connection error. Please check Redis configuration.',
+          details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        },
+        { status: 500 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Unexpected error' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

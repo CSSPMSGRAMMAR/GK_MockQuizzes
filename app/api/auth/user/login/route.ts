@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
-
-const USERS_FILE = join(process.cwd(), 'data', 'users.json');
+import { readUsers } from '@/lib/userStorage';
 
 // POST - User login
 export async function POST(request: NextRequest) {
@@ -17,17 +14,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Read users from file
-    if (!existsSync(USERS_FILE)) {
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      );
-    }
-
-    const users = JSON.parse(readFileSync(USERS_FILE, 'utf-8'));
+    // Read users from storage (Redis or file)
+    const users = await readUsers();
     const user = users.find(
-      (u: any) => u.username === username && u.password === password
+      (u) => u.username === username && u.password === password
     );
 
     if (!user) {
