@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readUsers, writeUsers, type User } from '@/lib/userStorage';
+import { readUsers, addUser, deleteUser, type User } from '@/lib/userStorage';
 
 // GET - Get all users (admin only)
 export async function GET(request: NextRequest) {
@@ -30,16 +30,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const users = await readUsers();
-
-    // Check if username already exists
-    if (users.some((u) => u.username === username)) {
-      return NextResponse.json(
-        { error: 'Username already exists' },
-        { status: 400 }
-      );
-    }
-
     // Create new user
     const newUser: User = {
       id: `user${Date.now()}`,
@@ -49,8 +39,7 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    users.push(newUser);
-    await writeUsers(users);
+    await addUser(newUser);
 
     // Return user without password
     const { password: _, ...safeUser } = newUser;
@@ -74,9 +63,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
 
-    const users = await readUsers();
-    const filteredUsers = users.filter((u) => u.id !== id);
-    await writeUsers(filteredUsers);
+    await deleteUser(id);
 
     return NextResponse.json({ success: true });
   } catch (error) {

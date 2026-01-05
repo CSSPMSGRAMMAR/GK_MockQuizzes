@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { connectToDatabase, isMongoDBEnvironment } from './mongodb';
 
 export type User = {
   id: string;
@@ -10,128 +11,67 @@ export type User = {
 };
 
 const USERS_FILE = path.join(process.cwd(), 'data', 'users.json');
-const USERS_KEY = 'pmsgk:users';
+const USERS_COLLECTION = 'users';
 
-// Check if we're in a production environment with Redis
-function isRedisEnvironment(): boolean {
-  return !!(process.env.REDIS_URL || (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN));
-}
-
-// Cached Redis clients
-let kvClient: any = null;
-let redisClient: any = null;
-let redisClientPromise: Promise<any> | null = null;
-
-// Get Vercel KV client (cached)
-async function getKVClient(): Promise<any> {
-  if (kvClient) return kvClient;
-  
-  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-    try {
-      const kvModule = await import('@vercel/kv');
-      kvClient = kvModule.kv;
-      return kvClient;
-    } catch {
-      return null;
-    }
-  }
-  return null;
-}
-
-// Get standard Redis client (cached, with connection reuse)
-async function getStandardRedisClient(): Promise<any> {
-  if (redisClient) return redisClient;
-  
-  if (redisClientPromise) {
-    return redisClientPromise;
-  }
-  
-  if (process.env.REDIS_URL) {
-    redisClientPromise = (async () => {
-      try {
-        const { createClient } = await import('redis');
-        const client = createClient({ 
-          url: process.env.REDIS_URL,
-          socket: {
-            reconnectStrategy: (retries) => {
-              if (retries > 10) {
-                return new Error('Too many reconnection attempts');
-              }
-              return Math.min(retries * 100, 3000);
-            }
-          }
-        });
-        
-        client.on('error', (err) => console.error('Redis Client Error:', err));
-        
-        if (!client.isOpen) {
-          await client.connect();
-        }
-        
-        redisClient = client;
-        return redisClient;
-      } catch (error) {
-        console.error('Failed to connect to Redis:', error);
-        redisClientPromise = null;
-        return null;
-      }
-    })();
-    
-    return redisClientPromise;
-  }
-  
-  return null;
-}
-
-async function readUsersFromRedis(): Promise<User[]> {
-  if (!isRedisEnvironment()) return [];
-  
+// MongoDB storage (for production)
+async function readUsersFromMongoDB(): Promise<User[]> {
   try {
-    // Try Vercel KV first
-    const kv = await getKVClient();
-    if (kv) {
-      const users = await kv.get(USERS_KEY) as User[] | null;
-      return users || [];
-    }
-    
-    // Try standard Redis
-    const redis = await getStandardRedisClient();
-    if (redis) {
-      const data = await redis.get(USERS_KEY);
-      if (!data) return [];
-      return JSON.parse(data) as User[];
-    }
-    
-    return [];
+    const db = await connectToDatabase();
+    const collection = db.collection<User>(USERS_COLLECTION);
+    const users = await collection.find({}).toArray();
+    return users;
   } catch (error) {
-    console.error('Error reading users from Redis:', error);
+    console.error('Error reading users from MongoDB:', error);
     return [];
   }
 }
 
-async function writeUsersToRedis(users: User[]): Promise<void> {
-  if (!isRedisEnvironment()) {
-    throw new Error('Redis environment not configured');
-  }
-  
+async function writeUsersToMongoDB(users: User[]): Promise<void> {
   try {
-    // Try Vercel KV first
-    const kv = await getKVClient();
-    if (kv) {
-      await kv.set(USERS_KEY, users);
-      return;
-    }
+    const db = await connectToDatabase();
+    const collection = db.collection<User>(USERS_COLLECTION);
     
-    // Try standard Redis
-    const redis = await getStandardRedisClient();
-    if (redis) {
-      await redis.set(USERS_KEY, JSON.stringify(users));
-      return;
+    // Clear existing users and insert all
+    await collection.deleteMany({});
+    if (users.length > 0) {
+      await collection.insertMany(users);
     }
-    
-    throw new Error('No Redis client available');
   } catch (error) {
-    console.error('Error writing users to Redis:', error);
+    console.error('Error writing users to MongoDB:', error);
+    throw error;
+  }
+}
+
+async function addUserToMongoDB(user: User): Promise<User> {
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection<User>(USERS_COLLECTION);
+    
+    // Check if user exists
+    const existing = await collection.findOne({ username: user.username });
+    if (existing) {
+      throw new Error('Username already exists');
+    }
+    
+    // Insert new user
+    await collection.insertOne(user);
+    return user;
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('already exists')) {
+      throw error;
+    }
+    console.error('Error adding user to MongoDB:', error);
+    throw error;
+  }
+}
+
+async function deleteUserFromMongoDB(id: string): Promise<void> {
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection<User>(USERS_COLLECTION);
+    await collection.deleteOne({ id });
+  } catch (error) {
+    console.error('Error deleting user from MongoDB:', error);
     throw error;
   }
 }
@@ -157,17 +97,43 @@ async function writeUsersToFile(users: User[]): Promise<void> {
 
 // Unified storage functions
 export async function readUsers(): Promise<User[]> {
-  if (isRedisEnvironment()) {
-    return readUsersFromRedis();
+  if (isMongoDBEnvironment()) {
+    return readUsersFromMongoDB();
   }
   return readUsersFromFile();
 }
 
 export async function writeUsers(users: User[]): Promise<void> {
-  if (isRedisEnvironment()) {
-    await writeUsersToRedis(users);
+  if (isMongoDBEnvironment()) {
+    await writeUsersToMongoDB(users);
   } else {
     await writeUsersToFile(users);
   }
+}
+
+export async function addUser(user: User): Promise<User> {
+  if (isMongoDBEnvironment()) {
+    return addUserToMongoDB(user);
+  }
+  
+  // File-based storage (local development)
+  const users = await readUsersFromFile();
+  if (users.some((u) => u.username === user.username)) {
+    throw new Error('Username already exists');
+  }
+  users.push(user);
+  await writeUsersToFile(users);
+  return user;
+}
+
+export async function deleteUser(id: string): Promise<void> {
+  if (isMongoDBEnvironment()) {
+    return deleteUserFromMongoDB(id);
+  }
+  
+  // File-based storage (local development)
+  const users = await readUsersFromFile();
+  const filteredUsers = users.filter((u) => u.id !== id);
+  await writeUsersToFile(filteredUsers);
 }
 

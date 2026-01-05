@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { connectToDatabase, isMongoDBEnvironment } from './mongodb';
 
 export type QuizUser = {
   username: string;
@@ -7,7 +8,7 @@ export type QuizUser = {
 };
 
 const QUIZ_USERS_FILE = path.join(process.cwd(), 'data', 'quiz-users.json');
-const QUIZ_USERS_KEY = 'pmsgk:quiz-users';
+const QUIZ_USERS_COLLECTION = 'quiz-users';
 
 // Default admin credentials (can be overridden via env)
 export const ADMIN_USERNAME = process.env.QUIZ_ADMIN_USERNAME || 'NimraG';
@@ -18,126 +19,39 @@ export function validateAdminCredentials(username: string, password: string): bo
   return username === ADMIN_USERNAME && password === adminPassword;
 }
 
-// Check if we're in a production environment with Redis
-function isRedisEnvironment(): boolean {
-  return !!(process.env.REDIS_URL || (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN));
-}
-
-// Cached Redis clients
-let kvClient: any = null;
-let redisClient: any = null;
-let redisClientPromise: Promise<any> | null = null;
-
-// Get Vercel KV client (cached)
-async function getKVClient(): Promise<any> {
-  if (kvClient) return kvClient;
-  
-  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-    try {
-      const kvModule = await import('@vercel/kv');
-      kvClient = kvModule.kv;
-      return kvClient;
-    } catch {
-      return null;
-    }
-  }
-  return null;
-}
-
-// Get standard Redis client (cached, with connection reuse)
-async function getStandardRedisClient(): Promise<any> {
-  if (redisClient) return redisClient;
-  
-  if (redisClientPromise) {
-    return redisClientPromise;
-  }
-  
-  if (process.env.REDIS_URL) {
-    redisClientPromise = (async () => {
-      try {
-        const { createClient } = await import('redis');
-        const client = createClient({ 
-          url: process.env.REDIS_URL,
-          socket: {
-            reconnectStrategy: (retries) => {
-              if (retries > 10) {
-                return new Error('Too many reconnection attempts');
-              }
-              return Math.min(retries * 100, 3000);
-            }
-          }
-        });
-        
-        client.on('error', (err) => console.error('Redis Client Error:', err));
-        
-        if (!client.isOpen) {
-          await client.connect();
-        }
-        
-        redisClient = client;
-        return redisClient;
-      } catch (error) {
-        console.error('Failed to connect to Redis:', error);
-        redisClientPromise = null;
-        return null;
-      }
-    })();
-    
-    return redisClientPromise;
-  }
-  
-  return null;
-}
-
-async function readQuizUsersFromRedis(): Promise<QuizUser[]> {
-  if (!isRedisEnvironment()) return [];
-  
+// MongoDB storage (for production)
+async function readQuizUsersFromMongoDB(): Promise<QuizUser[]> {
   try {
-    // Try Vercel KV first
-    const kv = await getKVClient();
-    if (kv) {
-      const users = await kv.get(QUIZ_USERS_KEY) as QuizUser[] | null;
-      return users || [];
-    }
-    
-    // Try standard Redis
-    const redis = await getStandardRedisClient();
-    if (redis) {
-      const data = await redis.get(QUIZ_USERS_KEY);
-      if (!data) return [];
-      return JSON.parse(data) as QuizUser[];
-    }
-    
-    return [];
+    const db = await connectToDatabase();
+    const collection = db.collection<QuizUser>(QUIZ_USERS_COLLECTION);
+    const users = await collection.find({}).toArray();
+    return users;
   } catch (error) {
-    console.error('Error reading from Redis:', error);
+    console.error('Error reading quiz users from MongoDB:', error);
     return [];
   }
 }
 
-async function writeQuizUsersToRedis(users: QuizUser[]): Promise<void> {
-  if (!isRedisEnvironment()) {
-    throw new Error('Redis environment not configured');
-  }
-  
+async function addQuizUserToMongoDB(username: string, password: string): Promise<QuizUser> {
   try {
-    // Try Vercel KV first
-    const kv = await getKVClient();
-    if (kv) {
-      await kv.set(QUIZ_USERS_KEY, users);
-      return;
+    const db = await connectToDatabase();
+    const collection = db.collection<QuizUser>(QUIZ_USERS_COLLECTION);
+    
+    // Check if user exists
+    const existing = await collection.findOne({ username });
+    if (existing) {
+      throw new Error('User with this username already exists');
     }
     
-    // Try standard Redis
-    const redis = await getStandardRedisClient();
-    if (redis) {
-      await redis.set(QUIZ_USERS_KEY, JSON.stringify(users));
-      return;
-    }
-    
-    throw new Error('No Redis client available');
+    // Insert new user
+    const newUser: QuizUser = { username, password };
+    await collection.insertOne(newUser);
+    return newUser;
   } catch (error) {
-    console.error('Error writing to Redis:', error);
+    if (error instanceof Error && error.message.includes('already exists')) {
+      throw error;
+    }
+    console.error('Error adding quiz user to MongoDB:', error);
     throw error;
   }
 }
@@ -174,18 +88,10 @@ async function writeQuizUsersToFile(users: QuizUser[]): Promise<void> {
 
 // Unified storage functions
 async function readQuizUsers(): Promise<QuizUser[]> {
-  if (isRedisEnvironment()) {
-    return readQuizUsersFromRedis();
+  if (isMongoDBEnvironment()) {
+    return readQuizUsersFromMongoDB();
   }
   return readQuizUsersFromFile();
-}
-
-async function writeQuizUsers(users: QuizUser[]): Promise<void> {
-  if (isRedisEnvironment()) {
-    await writeQuizUsersToRedis(users);
-  } else {
-    await writeQuizUsersToFile(users);
-  }
 }
 
 export async function getQuizUsers(): Promise<QuizUser[]> {
@@ -193,7 +99,12 @@ export async function getQuizUsers(): Promise<QuizUser[]> {
 }
 
 export async function addQuizUser(username: string, password: string): Promise<QuizUser> {
-  const users = await readQuizUsers();
+  if (isMongoDBEnvironment()) {
+    return addQuizUserToMongoDB(username, password);
+  }
+  
+  // File-based storage (local development)
+  const users = await readQuizUsersFromFile();
   const existing = users.find((u) => u.username === username);
   if (existing) {
     throw new Error('User with this username already exists');
@@ -201,7 +112,7 @@ export async function addQuizUser(username: string, password: string): Promise<Q
 
   const newUser: QuizUser = { username, password };
   const updated = [...users, newUser];
-  await writeQuizUsers(updated);
+  await writeQuizUsersToFile(updated);
   return newUser;
 }
 
