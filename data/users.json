@@ -5,5 +5,12 @@
     "password": "1",
     "name": "jamshaid",
     "createdAt": "2026-01-05T15:16:56.948Z"
+  },
+  {
+    "id": "user1767629971545",
+    "username": "Nimra",
+    "password": "Nimra1014",
+    "name": "Nimra",
+    "createdAt": "2026-01-05T16:19:31.545Z"
   }
 ]
