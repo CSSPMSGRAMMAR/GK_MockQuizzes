@@ -1,0 +1,39 @@
+[
+  {
+    "id": "pms-gk-mock-1",
+    "title": "PMS GK Mock Paper 1",
+    "description": "First mock test for PMS General Knowledge preparation",
+    "totalQuestions": 100,
+    "totalMarks": 100,
+    "durationMinutes": 120,
+    "negativeMarking": 0.25,
+    "passingPercentage": 50,
+    "available": true,
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "pms-gk-mock-2",
+    "title": "PMS GK Mock Paper 2",
+    "description": "Second mock test for PMS General Knowledge preparation",
+    "totalQuestions": 100,
+    "totalMarks": 100,
+    "durationMinutes": 120,
+    "negativeMarking": 0.25,
+    "passingPercentage": 50,
+    "available": false,
+    "createdAt": "2024-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "pms-gk-mock-3",
+    "title": "PMS GK Mock Paper 3",
+    "description": "Third mock test for PMS General Knowledge preparation",
+    "totalQuestions": 100,
+    "totalMarks": 100,
+    "durationMinutes": 120,
+    "negativeMarking": 0.25,
+    "passingPercentage": 50,
+    "available": false,
+    "createdAt": "2024-01-03T00:00:00.000Z"
+  }
+]
+

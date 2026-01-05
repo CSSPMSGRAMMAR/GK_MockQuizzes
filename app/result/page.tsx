@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useExamStore } from '@/stores/examStore';
+import { isUserLoggedIn } from '@/lib/auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
 import {
   CheckCircle2,
   XCircle,
@@ -19,13 +21,23 @@ import {
   TrendingUp,
   Home,
   RotateCcw,
+  Download,
 } from 'lucide-react';
 
 export default function ResultPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const quizId = searchParams.get('quiz');
   const { result, isExamCompleted, questions, userAnswers, resetExam } = useExamStore();
 
   useEffect(() => {
+    // Check authentication
+    if (!isUserLoggedIn()) {
+      router.push('/login');
+      return;
+    }
+
+    // Redirect if exam not completed
     if (!isExamCompleted || !result) {
       router.push('/');
     }
@@ -33,9 +45,9 @@ export default function ResultPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Loading results...</p>
+          <p className="text-muted-foreground">Loading results...</p>
         </div>
       </div>
     );
@@ -54,13 +66,22 @@ export default function ResultPage() {
 
   const handleRetakeExam = () => {
     resetExam();
-    router.push('/');
+    if (quizId) {
+      router.push(`/quiz/${quizId}`);
+    } else {
+      router.push('/quizzes');
+    }
+  };
+
+  const handleDownloadReport = () => {
+    // In a real app, generate PDF report
+    alert('Download report feature coming soon!');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-white">
+      <header className="border-b bg-background">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">Exam Results</h1>
@@ -86,8 +107,8 @@ export default function ResultPage() {
           <Card
             className={`border-2 ${
               result.isPassed
-                ? 'border-green-500 bg-green-50'
-                : 'border-red-500 bg-red-50'
+                ? 'border-green-500 bg-green-50 dark:bg-green-950/20'
+                : 'border-red-500 bg-red-50 dark:bg-red-950/20'
             }`}
           >
             <CardContent className="pt-6">
@@ -103,7 +124,7 @@ export default function ResultPage() {
                   <h2 className="text-3xl font-bold mb-2">
                     {result.isPassed ? 'Congratulations!' : 'Keep Practicing!'}
                   </h2>
-                  <p className="text-lg text-gray-600">
+                  <p className="text-lg text-muted-foreground">
                     {result.isPassed
                       ? 'You have successfully passed the exam'
                       : 'You need more preparation to pass'}
@@ -113,17 +134,17 @@ export default function ResultPage() {
                 <div className="flex items-center justify-center gap-8 mt-6">
                   <div className="text-center">
                     <div className="text-4xl font-bold">{result.obtainedMarks.toFixed(2)}</div>
-                    <div className="text-sm text-gray-600">Marks Obtained</div>
+                    <div className="text-sm text-muted-foreground">Marks Obtained</div>
                   </div>
-                  <div className="border-l h-16"></div>
+                  <Separator orientation="vertical" className="h-16" />
                   <div className="text-center">
                     <div className="text-4xl font-bold">{result.percentage.toFixed(2)}%</div>
-                    <div className="text-sm text-gray-600">Percentage</div>
+                    <div className="text-sm text-muted-foreground">Percentage</div>
                   </div>
-                  <div className="border-l h-16"></div>
+                  <Separator orientation="vertical" className="h-16" />
                   <div className="text-center">
                     <div className="text-4xl font-bold">{result.totalMarks}</div>
-                    <div className="text-sm text-gray-600">Total Marks</div>
+                    <div className="text-sm text-muted-foreground">Total Marks</div>
                   </div>
                 </div>
               </div>
@@ -135,12 +156,12 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-green-100">
+                  <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/30">
                     <CheckCircle2 className="h-6 w-6 text-green-600" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{result.correct}</div>
-                    <div className="text-sm text-gray-600">Correct</div>
+                    <div className="text-sm text-muted-foreground">Correct</div>
                   </div>
                 </div>
               </CardContent>
@@ -149,12 +170,12 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-red-100">
+                  <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900/30">
                     <XCircle className="h-6 w-6 text-red-600" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{result.incorrect}</div>
-                    <div className="text-sm text-gray-600">Incorrect</div>
+                    <div className="text-sm text-muted-foreground">Incorrect</div>
                   </div>
                 </div>
               </CardContent>
@@ -163,12 +184,12 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-gray-200">
+                  <div className="p-3 rounded-lg bg-muted">
                     <Circle className="h-6 w-6" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{result.unattempted}</div>
-                    <div className="text-sm text-gray-600">Unattempted</div>
+                    <div className="text-sm text-muted-foreground">Unattempted</div>
                   </div>
                 </div>
               </CardContent>
@@ -177,12 +198,12 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-yellow-100">
+                  <div className="p-3 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
                     <Flag className="h-6 w-6 text-yellow-600" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{result.markedForReview}</div>
-                    <div className="text-sm text-gray-600">Marked</div>
+                    <div className="text-sm text-muted-foreground">Marked</div>
                   </div>
                 </div>
               </CardContent>
@@ -194,9 +215,9 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <Clock className="h-8 w-8 text-blue-600" />
+                  <Clock className="h-8 w-8 text-primary" />
                   <div>
-                    <div className="text-sm text-gray-600">Time Taken</div>
+                    <div className="text-sm text-muted-foreground">Time Taken</div>
                     <div className="text-xl font-semibold">{formatTime(result.timeTaken)}</div>
                   </div>
                 </div>
@@ -206,9 +227,9 @@ export default function ResultPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
-                  <Target className="h-8 w-8 text-blue-600" />
+                  <Target className="h-8 w-8 text-primary" />
                   <div>
-                    <div className="text-sm text-gray-600">Accuracy</div>
+                    <div className="text-sm text-muted-foreground">Accuracy</div>
                     <div className="text-xl font-semibold">
                       {result.attempted > 0
                         ? ((result.correct / result.attempted) * 100).toFixed(2)
@@ -236,7 +257,7 @@ export default function ResultPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{category.category}</Badge>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-muted-foreground">
                           {category.correct}/{category.total} correct
                         </span>
                       </div>
@@ -251,16 +272,91 @@ export default function ResultPage() {
             </CardContent>
           </Card>
 
+          {/* Detailed Solutions (Optional) */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Detailed Solutions</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Review all questions with correct answers
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {questions.map((question) => {
+                  const answer = userAnswers.get(question.id);
+                  const correctOption = question.options.find((opt) => opt.isCorrect);
+                  const selectedOption = question.options.find(
+                    (opt) => opt.id === answer?.selectedOptionId
+                  );
+                  const isCorrect = selectedOption?.isCorrect || false;
+                  const wasAttempted = !!answer?.selectedOptionId;
+
+                  return (
+                    <div
+                      key={question.id}
+                      className={`p-4 rounded-lg border-2 ${
+                        !wasAttempted
+                          ? 'border-muted bg-muted/20'
+                          : isCorrect
+                          ? 'border-green-200 bg-green-50 dark:bg-green-950/20'
+                          : 'border-red-200 bg-red-50 dark:bg-red-950/20'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1">
+                          {!wasAttempted ? (
+                            <Circle className="h-5 w-5 text-muted-foreground" />
+                          ) : isCorrect ? (
+                            <CheckCircle2 className="h-5 w-5 text-green-600" />
+                          ) : (
+                            <XCircle className="h-5 w-5 text-red-600" />
+                          )}
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-xs">
+                              Q{question.questionNumber}
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              {question.category}
+                            </Badge>
+                          </div>
+                          <p className="font-medium">{question.question}</p>
+
+                          {wasAttempted && !isCorrect && (
+                            <div className="text-sm">
+                              <span className="text-red-600 font-medium">Your answer: </span>
+                              <span className="text-red-600">{selectedOption?.text}</span>
+                            </div>
+                          )}
+
+                          <div className="text-sm">
+                            <span className="text-green-600 font-medium">Correct answer: </span>
+                            <span className="text-green-600">{correctOption?.text}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={handleRetakeExam}>
               <RotateCcw className="h-4 w-4 mr-2" />
               Retake Exam
             </Button>
-            <Link href="/">
+            <Button size="lg" variant="outline" onClick={handleDownloadReport}>
+              <Download className="h-4 w-4 mr-2" />
+              Download Report
+            </Button>
+            <Link href="/quizzes">
               <Button size="lg" variant="outline">
                 <Home className="h-4 w-4 mr-2" />
-                Back to Home
+                Back to Mock Papers
               </Button>
             </Link>
           </div>
@@ -269,4 +365,3 @@ export default function ResultPage() {
     </div>
   );
 }
-

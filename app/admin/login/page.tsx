@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { setUserSession } from '@/lib/auth';
-import { Lock, User, BookOpen } from 'lucide-react';
+import { setAdminSession } from '@/lib/auth';
+import { Lock, User } from 'lucide-react';
 
-export default function UserLoginPage() {
+export default function AdminLoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +21,7 @@ export default function UserLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/user/login', {
+      const response = await fetch('/api/auth/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -31,8 +30,8 @@ export default function UserLoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setUserSession({ username: data.username, name: data.name });
-        router.push('/quizzes');
+        setAdminSession();
+        router.push('/admin/dashboard');
       } else {
         setError(data.error || 'Invalid credentials');
       }
@@ -47,14 +46,9 @@ export default function UserLoginPage() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 rounded-full bg-primary/10">
-              <BookOpen className="h-8 w-8 text-primary" />
-            </div>
-          </div>
-          <CardTitle className="text-2xl font-bold">PMS GK Quiz Login</CardTitle>
+          <CardTitle className="text-2xl font-bold">Admin Login</CardTitle>
           <p className="text-sm text-muted-foreground mt-2">
-            Enter your credentials to access the quiz
+            Enter your admin credentials to access the dashboard
           </p>
         </CardHeader>
         <CardContent>
@@ -100,20 +94,21 @@ export default function UserLoginPage() {
 
             <Button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full"
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login to Quiz'}
+              {loading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
 
           <div className="mt-4 text-center text-sm text-muted-foreground">
-            <Link href="/admin/login" className="hover:underline">
-              Admin Login
-            </Link>
+            <a href="/" className="hover:underline">
+              Back to Quiz
+            </a>
           </div>
         </CardContent>
       </Card>
     </div>
   );
 }
+

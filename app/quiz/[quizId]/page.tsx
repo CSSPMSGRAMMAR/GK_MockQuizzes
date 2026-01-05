@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, useParams } from 'next/navigation';
 import { useExamStore } from '@/stores/examStore';
-import { isUserLoggedIn, getCurrentUser, clearUserSession } from '@/lib/auth';
+import { isUserLoggedIn } from '@/lib/auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,24 +21,60 @@ import {
   Flag,
   Circle,
   Play,
+  ArrowLeft,
 } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Home() {
+interface QuizConfig {
+  id: string;
+  title: string;
+  description: string;
+  totalQuestions: number;
+  totalMarks: number;
+  durationMinutes: number;
+  negativeMarking: number;
+  passingPercentage: number;
+}
+
+export default function QuizInstructionsPage() {
   const router = useRouter();
-  const { config, initializeExam, startExam } = useExamStore();
+  const params = useParams();
+  const quizId = params.quizId as string;
+  const { initializeExam, startExam } = useExamStore();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [user, setUser] = useState<{ username: string; name: string } | null>(null);
+  const [quiz, setQuiz] = useState<QuizConfig | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
+    // Check authentication
     if (!isUserLoggedIn()) {
       router.push('/login');
       return;
     }
-    setUser(getCurrentUser());
-    // Redirect to quiz selection instead
-    router.push('/quizzes');
-  }, [router]);
+
+    // Load quiz config
+    loadQuiz();
+  }, [router, quizId]);
+
+  const loadQuiz = async () => {
+    try {
+      const response = await fetch('/api/quizzes');
+      if (response.ok) {
+        const quizzes = await response.json();
+        const foundQuiz = quizzes.find((q: QuizConfig) => q.id === quizId);
+        if (foundQuiz) {
+          setQuiz(foundQuiz);
+        } else {
+          router.push('/quizzes');
+        }
+      }
+    } catch (err) {
+      console.error('Error loading quiz:', err);
+      router.push('/quizzes');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleStartExam = () => {
     if (!agreedToTerms) {
@@ -47,22 +82,20 @@ export default function Home() {
       return;
     }
 
+    if (!quiz) return;
+
+    // Initialize exam with quiz config
     initializeExam();
     startExam();
-    router.push('/exam');
+    router.push(`/exam?quiz=${quizId}`);
   };
 
-  const handleLogout = () => {
-    clearUserSession();
-    router.push('/login');
-  };
-
-  if (!user) {
+  if (loading || !quiz) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading...</p>
+          <p className="mt-4 text-muted-foreground">Loading quiz...</p>
         </div>
       </div>
     );
@@ -70,39 +103,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with user info */}
-      <header className="border-b bg-background">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-lg font-semibold">PMS GK Quiz</h1>
-              <p className="text-sm text-muted-foreground">
-                Welcome, {user.name}
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/admin/login">
-                <button className="text-sm text-muted-foreground hover:text-foreground">
-                  Admin
-                </button>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-6">
+          {/* Back Button */}
+          <Link href="/quizzes">
+            <Button variant="outline" size="sm">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Mock Papers
+            </Button>
+          </Link>
+
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-display font-bold">{config.title}</h1>
-            <p className="text-lg text-muted-foreground">{config.description}</p>
+            <h1 className="text-4xl font-display font-bold">{quiz.title}</h1>
+            <p className="text-lg text-muted-foreground">{quiz.description}</p>
           </div>
 
           {/* Exam Overview */}
@@ -121,7 +135,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Total Questions</div>
-                    <div className="text-2xl font-bold">{config.totalQuestions}</div>
+                    <div className="text-2xl font-bold">{quiz.totalQuestions}</div>
                   </div>
                 </div>
 
@@ -131,7 +145,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Total Marks</div>
-                    <div className="text-2xl font-bold">{config.totalMarks}</div>
+                    <div className="text-2xl font-bold">{quiz.totalMarks}</div>
                   </div>
                 </div>
 
@@ -141,7 +155,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Duration</div>
-                    <div className="text-2xl font-bold">{config.durationMinutes} minutes</div>
+                    <div className="text-2xl font-bold">{quiz.durationMinutes} minutes</div>
                   </div>
                 </div>
 
@@ -151,7 +165,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Negative Marking</div>
-                    <div className="text-2xl font-bold">-{config.negativeMarking}</div>
+                    <div className="text-2xl font-bold">-{quiz.negativeMarking}</div>
                   </div>
                 </div>
               </div>
@@ -173,13 +187,13 @@ export default function Home() {
                   <li className="flex gap-2">
                     <span className="text-primary">•</span>
                     <span>
-                      The test consists of <strong>{config.totalQuestions} multiple-choice questions</strong>.
+                      The test consists of <strong>{quiz.totalQuestions} multiple-choice questions</strong>.
                     </span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-primary">•</span>
                     <span>
-                      Total duration is <strong>{config.durationMinutes} minutes</strong>. The timer will start as soon as you begin the test.
+                      Total duration is <strong>{quiz.durationMinutes} minutes</strong>. The timer will start as soon as you begin the test.
                     </span>
                   </li>
                   <li className="flex gap-2">
@@ -191,7 +205,7 @@ export default function Home() {
                   <li className="flex gap-2">
                     <span className="text-red-600">•</span>
                     <span className="text-red-600">
-                      <strong>Negative marking:</strong> {config.negativeMarking} marks will be deducted for each wrong answer.
+                      <strong>Negative marking:</strong> {quiz.negativeMarking} marks will be deducted for each wrong answer.
                     </span>
                   </li>
                   <li className="flex gap-2">
@@ -216,18 +230,6 @@ export default function Home() {
                     <span className="text-primary">•</span>
                     <span>
                       The exam will auto-submit when time expires.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Make sure you have a stable internet connection throughout the test.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Do not refresh the page during the exam as your progress is automatically saved.
                     </span>
                   </li>
                 </ul>
@@ -299,7 +301,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between">
                     <span>Wrong Answer:</span>
-                    <Badge variant="destructive">-{config.negativeMarking} Mark</Badge>
+                    <Badge variant="destructive">-{quiz.negativeMarking} Mark</Badge>
                   </div>
                   <div className="flex justify-between">
                     <span>Unattempted:</span>
@@ -308,7 +310,7 @@ export default function Home() {
                   <Separator />
                   <div className="flex justify-between font-semibold">
                     <span>Passing Percentage:</span>
-                    <span>{config.passingPercentage}%</span>
+                    <span>{quiz.passingPercentage}%</span>
                   </div>
                 </div>
               </div>
@@ -344,6 +346,11 @@ export default function Home() {
               <Play className="h-5 w-5 mr-2" />
               Start Exam
             </Button>
+            <Link href="/quizzes">
+              <Button size="lg" variant="outline">
+                Back to Mock Papers
+              </Button>
+            </Link>
           </div>
 
           {/* Warning */}
@@ -364,3 +371,4 @@ export default function Home() {
     </div>
   );
 }
+

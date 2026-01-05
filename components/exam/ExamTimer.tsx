@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Clock, AlertTriangle } from 'lucide-react';
 import { useExamStore } from '@/stores/examStore';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const ExamTimer = () => {
   const { timeRemaining, updateTimer, isExamStarted, isExamCompleted } = useExamStore();
@@ -59,10 +60,10 @@ export const ExamTimer = () => {
       </div>
 
       {showWarning && (
-        <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-700 text-sm animate-in slide-in-from-top">
+        <Alert variant="destructive" className="animate-in slide-in-from-top">
           <AlertTriangle className="h-4 w-4" />
-          <span>Only 10 minutes remaining!</span>
-        </div>
+          <AlertDescription>Only 10 minutes remaining!</AlertDescription>
+        </Alert>
       )}
     </div>
   );
