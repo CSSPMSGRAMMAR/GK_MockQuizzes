@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
+import { useEffect, Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useExamStore } from '@/stores/examStore';
@@ -30,17 +30,23 @@ function ResultContent() {
   const { result, isExamCompleted, questions, userAnswers, resetExam } = useExamStore();
 
   useEffect(() => {
-    // Check authentication
-    if (!isUserLoggedIn()) {
-      router.push('/login');
-      return;
+    // Don't redirect if result exists - user is viewing results
+    // Only redirect if there's absolutely no result after hydration
+    if (!result) {
+      // Give Zustand time to hydrate from localStorage
+      const timeoutId = setTimeout(() => {
+        // Re-check result from store after hydration
+        const storeResult = useExamStore.getState().result;
+        if (!storeResult) {
+          // Only redirect if still no result after waiting
+          router.push('/');
+        }
+      }, 2000);
+      
+      return () => clearTimeout(timeoutId);
     }
-
-    // Redirect if exam not completed
-    if (!isExamCompleted || !result) {
-      router.push('/');
-    }
-  }, [isExamCompleted, result, router]);
+    // If result exists, stay on page - don't redirect
+  }, [result, router]);
 
   if (!result) {
     return (

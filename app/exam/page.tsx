@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useExamStore } from '@/stores/examStore';
 import { isUserLoggedIn } from '@/lib/auth';
 import { ExamTimer } from '@/components/exam/ExamTimer';
@@ -21,8 +21,10 @@ import {
 import { ChevronLeft, ChevronRight, Send, Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
-export default function ExamPage() {
+function ExamPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const quizId = searchParams.get('quiz');
   const {
     questions,
     currentQuestionIndex,
@@ -33,34 +35,81 @@ export default function ExamPage() {
     submitExam,
     initializeExam,
     startExam,
+    currentQuizId,
   } = useExamStore();
 
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [checkingAccess, setCheckingAccess] = useState(true);
 
   useEffect(() => {
-    // Check authentication
-    if (!isUserLoggedIn()) {
-      router.push('/login');
-      return;
-    }
+    // Check if quiz is public and allow access
+    const checkAccess = async () => {
+      if (!quizId) {
+        router.push('/');
+        return;
+      }
 
-    // Initialize exam if questions are not loaded
-    if (questions.length === 0) {
-      initializeExam();
-      return;
-    }
+      // Load quiz info to check if it's public
+      try {
+        const response = await fetch('/api/quizzes');
+        if (response.ok) {
+          const quizzes = await response.json();
+          const foundQuiz = quizzes.find((q: any) => q.id === quizId);
+          
+          if (!foundQuiz) {
+            router.push('/');
+            return;
+          }
 
-    // Start exam if not started and not completed
-    if (!isExamStarted && !isExamCompleted && questions.length > 0) {
+          // If quiz is not public, require login
+          if (!foundQuiz.isPublic && !isUserLoggedIn()) {
+            router.push('/login');
+            return;
+          }
+
+          // Initialize exam with quiz ID if not already initialized for this quiz
+          if (questions.length === 0 || currentQuizId !== quizId) {
+            const examConfig = {
+              id: foundQuiz.id,
+              title: foundQuiz.title,
+              description: foundQuiz.description,
+              totalQuestions: foundQuiz.totalQuestions,
+              totalMarks: foundQuiz.totalMarks,
+              durationMinutes: foundQuiz.durationMinutes,
+              negativeMarking: foundQuiz.negativeMarking,
+              passingPercentage: foundQuiz.passingPercentage,
+            };
+            initializeExam(quizId, examConfig);
+          }
+        }
+      } catch (err) {
+        console.error('Error checking quiz access:', err);
+        router.push('/');
+      } finally {
+        setCheckingAccess(false);
+      }
+    };
+
+    checkAccess();
+  }, [quizId, router, initializeExam, questions.length, currentQuizId]);
+
+  useEffect(() => {
+    // Start exam if not started and not completed and questions are loaded
+    if (!checkingAccess && !isExamStarted && !isExamCompleted && questions.length > 0) {
       startExam();
     }
-  }, [isExamStarted, isExamCompleted, initializeExam, startExam, questions.length, router]);
+  }, [checkingAccess, isExamStarted, isExamCompleted, startExam, questions.length]);
 
   useEffect(() => {
     // Redirect to result if exam is completed
+    // Add small delay to ensure result is saved to store
     if (isExamCompleted) {
-      router.push('/result');
+      const timeoutId = setTimeout(() => {
+        router.push('/result');
+      }, 500); // Small delay to ensure state is persisted
+      
+      return () => clearTimeout(timeoutId);
     }
   }, [isExamCompleted, router]);
 
@@ -90,7 +139,7 @@ export default function ExamPage() {
   const isFirstQuestion = currentQuestionIndex === 0;
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
-  if (!isExamStarted) {
+  if (checkingAccess || !isExamStarted || questions.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -104,25 +153,30 @@ export default function ExamPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header - Minimal and Distraction-Free */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <h1 className="text-lg font-semibold">PMS GK Test 2026</h1>
-              <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+        <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+                <h1 className="text-sm sm:text-lg font-semibold truncate">PMS GK Test 2026</h1>
+              <div className="hidden md:flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
                 <span>
                   Question {currentQuestionIndex + 1} of {questions.length}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <ExamTimer />
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+              <div className="hidden sm:block">
+                <ExamTimer />
+              </div>
+              <div className="sm:hidden">
+                <ExamTimer />
+              </div>
 
               {/* Mobile Navigator Toggle */}
               <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
                 <SheetTrigger asChild className="lg:hidden">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="h-8 w-8 p-0">
                     <Menu className="h-4 w-4" />
                   </Button>
                 </SheetTrigger>
@@ -136,42 +190,48 @@ export default function ExamPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Question Area */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-4 sm:space-y-6">
             {currentQuestion && <QuestionCard question={currentQuestion} />}
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-2 sm:gap-4 flex-wrap">
               <Button
                 variant="outline"
                 onClick={previousQuestion}
                 disabled={isFirstQuestion}
-                className="flex-1 sm:flex-none"
+                className="flex-1 sm:flex-none text-xs sm:text-sm"
+                size="sm"
               >
-                <ChevronLeft className="h-4 w-4 mr-2" />
-                Previous
+                <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Previous</span>
+                <span className="sm:hidden">Prev</span>
               </Button>
 
-              <div className="flex gap-2">
-                <Button
-                  variant="default"
-                  onClick={nextQuestion}
-                  disabled={isLastQuestion}
-                  className="flex-1 sm:flex-none"
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4 ml-2" />
-                </Button>
+              <div className="flex gap-2 flex-1 sm:flex-none">
+                {!isLastQuestion && (
+                  <Button
+                    variant="default"
+                    onClick={nextQuestion}
+                    className="flex-1 sm:flex-none text-xs sm:text-sm"
+                    size="sm"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <span className="sm:hidden">Next</span>
+                    <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" />
+                  </Button>
+                )}
 
                 {isLastQuestion && (
                   <Button
                     variant="default"
                     onClick={handleSubmit}
-                    className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none"
+                    className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none text-xs sm:text-sm transition-all hover:shadow-lg"
+                    size="sm"
                   >
-                    <Send className="h-4 w-4 mr-2" />
+                    <Send className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Submit
                   </Button>
                 )}
@@ -179,7 +239,7 @@ export default function ExamPage() {
             </div>
 
             {/* Mobile Question Counter */}
-            <div className="lg:hidden text-center text-sm text-muted-foreground">
+            <div className="lg:hidden text-center text-xs sm:text-sm text-muted-foreground">
               Question {currentQuestionIndex + 1} of {questions.length}
             </div>
           </div>
@@ -192,7 +252,7 @@ export default function ExamPage() {
               <Button
                 variant="default"
                 onClick={handleSubmit}
-                className="w-full mt-4 bg-green-600 hover:bg-green-700"
+                className="w-full mt-4 bg-green-600 hover:bg-green-700 transition-all hover:shadow-lg"
                 size="lg"
               >
                 <Send className="h-4 w-4 mr-2" />
@@ -251,5 +311,22 @@ export default function ExamPage() {
         </AlertDialogContent>
       </AlertDialog>
     </div>
+  );
+}
+
+export default function ExamPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">Loading exam...</p>
+          </div>
+        </div>
+      }
+    >
+      <ExamPageContent />
+    </Suspense>
   );
 }

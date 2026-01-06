@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { isAdmin, clearAdminSession } from '@/lib/auth';
+import { BRANDING } from '@/lib/branding';
 import {
   UserPlus,
   Users,
@@ -14,6 +17,7 @@ import {
   Trash2,
   Plus,
   X,
+  Shield,
 } from 'lucide-react';
 
 interface User {
@@ -130,38 +134,56 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background academic-hero">
       {/* Header */}
-      <header className="border-b bg-background">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-              <p className="text-sm text-muted-foreground">
-                Manage quiz users
-              </p>
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <Link href="/" className="flex items-center space-x-3 group shrink-0">
+              <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-full overflow-hidden shadow-elegant transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src={BRANDING.logo}
+                  alt={BRANDING.name}
+                  fill
+                  sizes="(max-width: 640px) 40px, 48px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="hidden sm:block">
+                <span className="font-display font-bold text-lg sm:text-xl bg-academic-gradient bg-clip-text text-transparent">
+                  {BRANDING.name}
+                </span>
+                <p className="text-xs text-muted-foreground font-accent">{BRANDING.tagline}</p>
+              </div>
+            </Link>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+                <Shield className="h-4 w-4" />
+                <span>Admin Panel</span>
+              </div>
+              <Button variant="outline" onClick={handleLogout} size="sm" className="text-xs sm:text-sm">
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Logout</span>
+              </Button>
             </div>
-            <Button variant="outline" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <main className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-on-scroll">
+            <Card className="hover:shadow-elegant transition-all border-2">
               <CardContent className="pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Users className="h-6 w-6 text-primary" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="p-2 sm:p-3 rounded-lg bg-primary/10">
+                    <Users className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">{users.length}</div>
-                    <div className="text-sm text-muted-foreground">Total Users</div>
+                    <div className="text-xl sm:text-2xl font-bold">{users.length}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">Total Users</div>
                   </div>
                 </div>
               </CardContent>
@@ -212,9 +234,9 @@ export default function AdminDashboardPage() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="username">Username</Label>
+                      <Label htmlFor="username" className="text-sm">Username</Label>
                       <input
                         id="username"
                         type="text"
@@ -222,14 +244,14 @@ export default function AdminDashboardPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, username: e.target.value })
                         }
-                        className="w-full px-4 py-2 border rounded-md bg-background"
+                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter username"
                         required
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
+                      <Label htmlFor="password" className="text-sm">Password</Label>
                       <input
                         id="password"
                         type="password"
@@ -237,14 +259,14 @@ export default function AdminDashboardPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, password: e.target.value })
                         }
-                        className="w-full px-4 py-2 border rounded-md bg-background"
+                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter password"
                         required
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="name" className="text-sm">Full Name</Label>
                       <input
                         id="name"
                         type="text"
@@ -252,7 +274,7 @@ export default function AdminDashboardPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full px-4 py-2 border rounded-md bg-background"
+                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter full name"
                         required
                       />

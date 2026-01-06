@@ -34,6 +34,7 @@ interface QuizConfig {
   durationMinutes: number;
   negativeMarking: number;
   passingPercentage: number;
+  isPublic?: boolean;
 }
 
 export default function QuizInstructionsPage() {
@@ -46,13 +47,7 @@ export default function QuizInstructionsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check authentication
-    if (!isUserLoggedIn()) {
-      router.push('/login');
-      return;
-    }
-
-    // Load quiz config
+    // Load quiz config first to check if it's public
     loadQuiz();
   }, [router, quizId]);
 
@@ -63,14 +58,19 @@ export default function QuizInstructionsPage() {
         const quizzes = await response.json();
         const foundQuiz = quizzes.find((q: QuizConfig) => q.id === quizId);
         if (foundQuiz) {
+          // Check if quiz requires authentication
+          if (!foundQuiz.isPublic && !isUserLoggedIn()) {
+            router.push('/login');
+            return;
+          }
           setQuiz(foundQuiz);
         } else {
-          router.push('/quizzes');
+          router.push('/');
         }
       }
     } catch (err) {
       console.error('Error loading quiz:', err);
-      router.push('/quizzes');
+      router.push('/');
     } finally {
       setLoading(false);
     }
@@ -84,8 +84,19 @@ export default function QuizInstructionsPage() {
 
     if (!quiz) return;
 
-    // Initialize exam with quiz config
-    initializeExam();
+    // Initialize exam with quiz config and quiz ID
+    const examConfig = {
+      id: quiz.id,
+      title: quiz.title,
+      description: quiz.description,
+      totalQuestions: quiz.totalQuestions,
+      totalMarks: quiz.totalMarks,
+      durationMinutes: quiz.durationMinutes,
+      negativeMarking: quiz.negativeMarking,
+      passingPercentage: quiz.passingPercentage,
+    };
+    
+    initializeExam(quizId, examConfig);
     startExam();
     router.push(`/exam?quiz=${quizId}`);
   };
@@ -106,10 +117,10 @@ export default function QuizInstructionsPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Back Button */}
-          <Link href="/quizzes">
+          <Link href="/">
             <Button variant="outline" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Mock Papers
+              Back to Home
             </Button>
           </Link>
 
@@ -346,9 +357,9 @@ export default function QuizInstructionsPage() {
               <Play className="h-5 w-5 mr-2" />
               Start Exam
             </Button>
-            <Link href="/quizzes">
+            <Link href="/">
               <Button size="lg" variant="outline">
-                Back to Mock Papers
+                Back to Home
               </Button>
             </Link>
           </div>

@@ -47,22 +47,22 @@ export const ExamTimer = () => {
   return (
     <div className="space-y-2">
       <div
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-lg font-semibold transition-colors ${
+        className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg font-mono text-sm sm:text-lg font-semibold transition-all ${
           isCriticalTime
-            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 shadow-sm'
             : isLowTime
-            ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+            ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 shadow-sm'
             : 'bg-muted text-foreground'
         }`}
       >
-        <Clock className={`h-5 w-5 ${isCriticalTime ? 'animate-pulse' : ''}`} />
-        <span>{formatTime(timeRemaining)}</span>
+        <Clock className={`h-4 w-4 sm:h-5 sm:w-5 shrink-0 ${isCriticalTime ? 'animate-pulse' : ''}`} />
+        <span className="whitespace-nowrap">{formatTime(timeRemaining)}</span>
       </div>
 
       {showWarning && (
-        <Alert variant="destructive" className="animate-in slide-in-from-top">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>Only 10 minutes remaining!</AlertDescription>
+        <Alert variant="destructive" className="animate-in slide-in-from-top text-xs sm:text-sm">
+          <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4" />
+          <AlertDescription className="text-xs sm:text-sm">Only 10 minutes remaining!</AlertDescription>
         </Alert>
       )}
     </div>

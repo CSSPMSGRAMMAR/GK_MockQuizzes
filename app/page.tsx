@@ -3,64 +3,99 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useExamStore } from '@/stores/examStore';
+import Image from 'next/image';
 import { isUserLoggedIn, getCurrentUser, clearUserSession } from '@/lib/auth';
+import { motion } from 'framer-motion';
+import { BRANDING } from '@/lib/branding';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
 import {
-  AlertCircle,
   BookOpen,
   Clock,
-  FileText,
   Target,
   TrendingDown,
-  CheckCircle2,
-  XCircle,
-  Flag,
-  Circle,
   Play,
+  Lock,
+  LogIn,
+  LogOut,
+  User,
+  Sparkles,
 } from 'lucide-react';
+
+interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  totalQuestions: number;
+  totalMarks: number;
+  durationMinutes: number;
+  negativeMarking: number;
+  passingPercentage: number;
+  available: boolean;
+  isPublic: boolean;
+  createdAt: string;
+}
 
 export default function Home() {
   const router = useRouter();
-  const { config, initializeExam, startExam } = useExamStore();
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ username: string; name: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in
-    if (!isUserLoggedIn()) {
+    // Ensure this only runs on client
+    setMounted(true);
+    if (isUserLoggedIn()) {
+      const currentUser = getCurrentUser();
+      setUser(currentUser);
+    }
+    loadQuizzes();
+  }, []);
+
+  const loadQuizzes = async () => {
+    try {
+      const response = await fetch('/api/quizzes');
+      if (response.ok) {
+        const data = await response.json();
+        setQuizzes(data);
+      } else {
+        // If API fails, set empty array to prevent infinite loading
+        setQuizzes([]);
+      }
+    } catch (err) {
+      console.error('Error loading quizzes:', err);
+      // Set empty array on error to prevent infinite loading
+      setQuizzes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStartQuiz = (quizId: string, isPublic: boolean) => {
+    if (!isPublic && !isUserLoggedIn()) {
       router.push('/login');
       return;
     }
-    setUser(getCurrentUser());
-  }, [router]);
-
-  const handleStartExam = () => {
-    if (!agreedToTerms) {
-      alert('Please agree to the terms and conditions');
-      return;
-    }
-
-    initializeExam();
-    startExam();
-    router.push('/exam');
+    router.push(`/quiz/${quizId}`);
   };
 
   const handleLogout = () => {
     clearUserSession();
-    router.push('/login');
+    setUser(null);
   };
 
-  if (!user) {
+  const publicQuizzes = quizzes.filter((q) => q.isPublic && q.available);
+  const paidQuizzes = quizzes.filter((q) => !q.isPublic && q.available);
+
+  // Show loading only while fetching quizzes
+  if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading...</p>
+          <p className="mt-4 text-muted-foreground">Loading quizzes...</p>
         </div>
       </div>
     );
@@ -68,295 +103,278 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with user info */}
-      <header className="border-b bg-background">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-lg font-semibold">PMS GK Quiz</h1>
-              <p className="text-sm text-muted-foreground">
-                Welcome, {user.name}
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/admin/login">
-                <button className="text-sm text-muted-foreground hover:text-foreground">
-                  Admin
-                </button>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
-                Logout
-              </button>
+      {/* Header */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <Link href="/" className="flex items-center space-x-3 group shrink-0">
+              <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-full overflow-hidden shadow-elegant transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src={BRANDING.logo}
+                  alt={BRANDING.name}
+                  fill
+                  sizes="(max-width: 640px) 40px, 48px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="hidden sm:block">
+                <span className="font-display font-bold text-lg sm:text-xl bg-academic-gradient bg-clip-text text-transparent">
+                  {BRANDING.name}
+                </span>
+                <p className="text-xs text-muted-foreground font-accent">{BRANDING.tagline}</p>
+              </div>
+            </Link>
+            <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+              {mounted && user ? (
+                <>
+                  <div className="hidden sm:flex items-center gap-2 text-sm">
+                    <User className="h-4 w-4" />
+                    <span className="truncate max-w-[100px]">{user.name}</span>
+                  </div>
+                  <Link href="/quizzes">
+                    <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                      My Quizzes
+                    </Button>
+                  </Link>
+                  <Link href="/admin/login">
+                    <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                      Admin
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" size="sm" onClick={handleLogout} className="text-xs sm:text-sm">
+                    <LogOut className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Logout</span>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button size="sm" className="text-xs sm:text-sm">
+                      <LogIn className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/admin/login">
+                    <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                      Admin
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-display font-bold">{config.title}</h1>
-            <p className="text-lg text-muted-foreground">{config.description}</p>
-          </div>
-
-          {/* Exam Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                Exam Overview
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <FileText className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Total Questions</div>
-                    <div className="text-2xl font-bold">{config.totalQuestions}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Target className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Total Marks</div>
-                    <div className="text-2xl font-bold">{config.totalMarks}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Clock className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Duration</div>
-                    <div className="text-2xl font-bold">{config.durationMinutes} minutes</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900/30">
-                    <TrendingDown className="h-6 w-6 text-red-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Negative Marking</div>
-                    <div className="text-2xl font-bold">-{config.negativeMarking}</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Instructions */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <AlertCircle className="h-5 w-5" />
-                Important Instructions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <h3 className="font-semibold text-lg">General Instructions:</h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      The test consists of <strong>{config.totalQuestions} multiple-choice questions</strong>.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Total duration is <strong>{config.durationMinutes} minutes</strong>. The timer will start as soon as you begin the test.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Each correct answer carries <strong>1 mark</strong>.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-red-600">•</span>
-                    <span className="text-red-600">
-                      <strong>Negative marking:</strong> {config.negativeMarking} marks will be deducted for each wrong answer.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Unattempted questions will carry <strong>0 marks</strong>.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      You can navigate between questions using the question palette or Previous/Next buttons.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      You can mark questions for review and come back to them later.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      The exam will auto-submit when time expires.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Make sure you have a stable internet connection throughout the test.
-                    </span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>
-                      Do not refresh the page during the exam as your progress is automatically saved.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-3">
-                <h3 className="font-semibold text-lg">Question Status Legend:</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-green-500 flex items-center justify-center">
-                      <CheckCircle2 className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Answered</div>
-                      <div className="text-xs text-muted-foreground">
-                        You have selected an answer
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-muted flex items-center justify-center">
-                      <Circle className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Not Answered</div>
-                      <div className="text-xs text-muted-foreground">
-                        Question not attempted yet
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-yellow-500 flex items-center justify-center">
-                      <Flag className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Marked for Review</div>
-                      <div className="text-xs text-muted-foreground">
-                        Question marked to review later
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-purple-500 flex items-center justify-center">
-                      <AlertCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Answered & Marked</div>
-                      <div className="text-xs text-muted-foreground">
-                        Answered but marked for review
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-3">
-                <h3 className="font-semibold text-lg">Scoring System:</h3>
-                <div className="bg-muted p-4 rounded-lg space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Correct Answer:</span>
-                    <Badge variant="default" className="bg-green-600">+1 Mark</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Wrong Answer:</span>
-                    <Badge variant="destructive">-{config.negativeMarking} Mark</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Unattempted:</span>
-                    <Badge variant="outline">0 Mark</Badge>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between font-semibold">
-                    <span>Passing Percentage:</span>
-                    <span>{config.passingPercentage}%</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Terms and Conditions */}
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-3">
-                <Checkbox
-                  id="terms"
-                  checked={agreedToTerms}
-                  onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
-                />
-                <label htmlFor="terms" className="text-sm cursor-pointer">
-                  I have read and understood all the instructions. I agree to abide by the rules
-                  and regulations of this examination. I understand that any violation may result
-                  in disqualification.
-                </label>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              onClick={handleStartExam}
-              disabled={!agreedToTerms}
-              className="bg-green-600 hover:bg-green-700"
+      <main className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-3 sm:space-y-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex items-center justify-center gap-2 mb-2"
             >
-              <Play className="h-5 w-5 mr-2" />
-              Start Exam
-            </Button>
-          </div>
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+              </motion.div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold bg-academic-gradient bg-clip-text text-transparent">
+                Welcome to PMS GK Quiz Platform
+              </h2>
+              <motion.div
+                animate={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+              </motion.div>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4"
+            >
+              Practice with our free demo quizzes or access premium mock tests to excel in your
+              PMS General Knowledge exam preparation.
+            </motion.p>
+          </motion.div>
 
-          {/* Warning */}
-          <Card className="border-yellow-500 bg-yellow-50 dark:bg-yellow-950/20">
+          {/* Public Demo Quizzes */}
+          {publicQuizzes.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-xl sm:text-2xl font-display font-semibold">Free Demo Quizzes</h3>
+                <Badge variant="secondary" className="text-xs sm:text-sm">
+                  No Login Required
+                </Badge>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {publicQuizzes.map((quiz, index) => (
+                  <motion.div
+                    key={quiz.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Card className="hover:shadow-elegant transition-all duration-300 border-2 hover:border-primary/50 group h-full">
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-base sm:text-lg line-clamp-2">{quiz.title}</CardTitle>
+                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 shrink-0">
+                          Free
+                        </Badge>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2">{quiz.description}</p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span className="truncate">{quiz.totalQuestions} Questions</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span>{quiz.durationMinutes} min</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Target className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span>{quiz.totalMarks} Marks</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 text-red-500 shrink-0" />
+                          <span>-{quiz.negativeMarking}</span>
+                        </div>
+                      </div>
+                      <Button
+                        className="w-full bg-green-600 hover:bg-green-700 transition-all group-hover:shadow-lg"
+                        onClick={() => handleStartQuiz(quiz.id, true)}
+                      >
+                        <Play className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                        Start Quiz
+                      </Button>
+                    </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Paid Quizzes */}
+          {paidQuizzes.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-xl sm:text-2xl font-display font-semibold">Premium Mock Tests</h3>
+                <Badge variant="secondary" className="text-xs sm:text-sm">
+                  Login Required
+                </Badge>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {paidQuizzes.map((quiz, index) => (
+                  <motion.div
+                    key={quiz.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Card className="hover:shadow-elegant transition-all duration-300 border-2 hover:border-primary/50 group h-full">
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-base sm:text-lg line-clamp-2">{quiz.title}</CardTitle>
+                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 shrink-0">
+                          Premium
+                        </Badge>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2">{quiz.description}</p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span className="truncate">{quiz.totalQuestions} Questions</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span>{quiz.durationMinutes} min</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Target className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                          <span>{quiz.totalMarks} Marks</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 text-red-500 shrink-0" />
+                          <span>-{quiz.negativeMarking}</span>
+                        </div>
+                      </div>
+                      {mounted && isUserLoggedIn() && user ? (
+                        <Button
+                          className="w-full transition-all group-hover:shadow-lg"
+                          onClick={() => handleStartQuiz(quiz.id, false)}
+                        >
+                          <Play className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                          Start Quiz
+                        </Button>
+                      ) : (
+                        <Button
+                          className="w-full transition-all"
+                          variant="outline"
+                          onClick={() => router.push('/login')}
+                        >
+                          <Lock className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                          Login to Access
+                        </Button>
+                      )}
+                    </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <Card className="bg-muted/50 border-2">
             <CardContent className="pt-6">
-              <div className="flex gap-3">
-                <AlertCircle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-                <div className="text-sm text-yellow-800 dark:text-yellow-200">
-                  <strong>Important:</strong> Once you start the exam, the timer will begin
-                  immediately. Make sure you are in a quiet environment with a stable internet
-                  connection. You cannot pause the exam once started.
-                </div>
+              <div className="text-center space-y-2">
+                <h3 className="font-display font-semibold text-lg sm:text-xl">About Our Quizzes</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto px-4">
+                  Our platform offers comprehensive PMS General Knowledge preparation with free demo
+                  quizzes to get you started and premium mock tests for advanced practice. All
+                  quizzes follow the official exam pattern with negative marking and time limits.
+                </p>
               </div>
             </CardContent>
           </Card>
+          </motion.div>
         </div>
       </main>
     </div>

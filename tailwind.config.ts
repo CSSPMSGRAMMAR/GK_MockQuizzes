@@ -153,7 +153,9 @@ export default {
 			boxShadow: {
 				'course-card': 'var(--shadow-course-card)',
 				'hero': 'var(--shadow-hero)',
-				'floating': 'var(--shadow-floating)'
+				'floating': 'var(--shadow-floating)',
+				'elegant': 'var(--shadow-elegant)',
+				'elegant-hover': 'var(--shadow-elegant-hover)'
 			},
 			transitionTimingFunction: {
 				'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',

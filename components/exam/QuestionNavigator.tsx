@@ -105,23 +105,23 @@ export const QuestionNavigator = () => {
       </CardHeader>
 
       <CardContent>
-        <ScrollArea className="h-[400px] pr-4">
-          <div className="grid grid-cols-5 gap-2">
+        <ScrollArea className="h-[300px] sm:h-[400px] pr-2 sm:pr-4">
+          <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
             {questions.map((question, index) => (
               <Button
                 key={question.id}
                 variant={currentQuestionIndex === index ? 'default' : 'outline'}
                 size="sm"
-                className={`h-10 w-full ${
+                className={`h-8 sm:h-10 w-full text-xs transition-all hover:scale-105 ${
                   currentQuestionIndex === index
-                    ? ''
+                    ? 'ring-2 ring-primary'
                     : getStatusColor(question.id)
                 }`}
                 onClick={() => navigateToQuestion(index)}
               >
                 <div className="flex flex-col items-center gap-0.5">
                   {getStatusIcon(question.id)}
-                  <span className="text-xs">{question.questionNumber}</span>
+                  <span className="text-[10px] sm:text-xs">{question.questionNumber}</span>
                 </div>
               </Button>
             ))}

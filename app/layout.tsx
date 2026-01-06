@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ScrollAnimation } from "@/components/ScrollAnimation";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PMS GK Quiz - Punjab Management Service General Knowledge Test",
+  title: "PMS GK Quiz - EduReach Academy",
   description: "Complete 100 MCQs test for PMS GK preparation with timed exam, negative marking, and detailed analytics.",
 };
 
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ScrollAnimation />
+        {children}
+      </body>
     </html>
   );
 }

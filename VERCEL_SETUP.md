@@ -40,14 +40,39 @@ After deployment:
 
 ## Troubleshooting
 
-If users still aren't being created:
-1. **Check Vercel logs**: **Deployments** → Click on deployment → **Functions** tab → Look for MongoDB connection errors
-2. **Verify environment variables**:
-   - Ensure `MONGODB_URI` is set correctly in Vercel
-   - Check that the connection string includes the password
-   - Verify network access: MongoDB Atlas allows connections from specific IPs (add `0.0.0.0/0` for Vercel)
-3. **Test MongoDB connection**: The code will log errors if MongoDB connection fails
-4. **Check packages**: Ensure `mongodb` package is in `package.json` (it's included)
+### SSL/TLS Connection Errors
+
+If you see errors like `tlsv1 alert internal error` or `MongoServerSelectionError`:
+
+1. **Check MongoDB Atlas Network Access** (MOST COMMON FIX):
+   - Go to MongoDB Atlas → **Network Access**
+   - Ensure `0.0.0.0/0` is in the allowed IP list
+   - If not, add it and wait 2-3 minutes
+   - Check that your cluster is **running** (not paused)
+
+2. **Verify Connection String**:
+   - Ensure `MONGODB_URI` in Vercel matches your MongoDB connection string
+   - Format: `mongodb+srv://username:password@cluster.mongodb.net/`
+   - Make sure password is URL-encoded if it contains special characters
+
+3. **Check MongoDB Atlas Database User**:
+   - Go to MongoDB Atlas → **Database Access**
+   - Verify the user `csspmsgrammar_db_user` exists and has read/write permissions
+   - Check that the password is correct
+
+4. **Check Vercel Logs**:
+   - Go to **Deployments** → Click on deployment → **Functions** tab
+   - Look for detailed MongoDB connection errors
+   - The logs will show if it's a network, authentication, or SSL issue
+
+5. **Test Connection Locally**:
+   - Set `MONGODB_URI` in your local `.env.local` file
+   - Try creating a user locally to verify the connection string works
+
+### Other Issues
+
+- **Users not persisting**: Check MongoDB Atlas → **Collections** → Verify data is being saved
+- **Slow connections**: MongoDB Atlas free tier has connection limits, consider upgrading if needed
 
 ## MongoDB Atlas Network Access (CRITICAL)
 

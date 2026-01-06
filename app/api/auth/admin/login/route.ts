@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ADMIN_CREDENTIALS } from '@/lib/auth';
+import { validateAdminCredentials, ADMIN_USERNAME } from '@/lib/quizAccess';
 
 // POST - Admin login
 export async function POST(request: NextRequest) {
@@ -14,12 +14,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check hard-coded admin credentials
-    if (
-      username === ADMIN_CREDENTIALS.username &&
-      password === ADMIN_CREDENTIALS.password
-    ) {
-      return NextResponse.json({ success: true, role: 'admin' });
+    // Check admin credentials using quiz access validation
+    if (validateAdminCredentials(username, password)) {
+      return NextResponse.json({ 
+        success: true, 
+        role: 'admin',
+        username: ADMIN_USERNAME 
+      });
     }
 
     return NextResponse.json(

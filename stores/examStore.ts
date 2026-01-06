@@ -8,7 +8,7 @@ import {
   QuestionStatus,
   CategoryPerformance,
 } from '@/types/exam';
-import { pmsGkMcqs } from '@/data/pms-gk-mcqs';
+import { getQuizQuestions } from '@/lib/quizLoader';
 
 interface ExamStore {
   // State
@@ -22,9 +22,10 @@ interface ExamStore {
   isExamStarted: boolean;
   isExamCompleted: boolean;
   result: ExamResult | null;
+  currentQuizId: string | null;
 
   // Actions
-  initializeExam: () => void;
+  initializeExam: (quizId?: string, config?: ExamConfig) => void;
   startExam: () => void;
   selectAnswer: (questionId: string, optionId: string) => void;
   clearAnswer: (questionId: string) => void;
@@ -64,29 +65,36 @@ export const useExamStore = create<ExamStore>()(
       isExamStarted: false,
       isExamCompleted: false,
       result: null,
+      currentQuizId: null,
 
       // Initialize exam with questions
-      initializeExam: () => {
+      initializeExam: (quizId?: string, customConfig?: ExamConfig) => {
+        const configToUse = customConfig || defaultConfig;
+        const questionsToLoad = quizId ? getQuizQuestions(quizId) : getQuizQuestions('pms-gk-demo-1');
+        
         set({
-          questions: pmsGkMcqs,
+          config: configToUse,
+          questions: questionsToLoad,
           userAnswers: new Map(),
           currentQuestionIndex: 0,
           startTime: null,
           endTime: null,
-          timeRemaining: defaultConfig.durationMinutes * 60,
+          timeRemaining: configToUse.durationMinutes * 60,
           isExamStarted: false,
           isExamCompleted: false,
           result: null,
+          currentQuizId: quizId || null,
         });
       },
 
       // Start the exam
       startExam: () => {
+        const { config } = get();
         const now = Date.now();
         set({
           isExamStarted: true,
           startTime: now,
-          timeRemaining: defaultConfig.durationMinutes * 60,
+          timeRemaining: config.durationMinutes * 60,
         });
       },
 
@@ -284,7 +292,8 @@ export const useExamStore = create<ExamStore>()(
 
       // Reset exam
       resetExam: () => {
-        get().initializeExam();
+        const { currentQuizId, config } = get();
+        get().initializeExam(currentQuizId || undefined, config);
       },
     }),
     {
