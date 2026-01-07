@@ -41,6 +41,7 @@ function ExamPageContent() {
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
+  const [isPublicQuiz, setIsPublicQuiz] = useState(false);
 
   useEffect(() => {
     // Check if quiz is public and allow access
@@ -62,6 +63,9 @@ function ExamPageContent() {
             return;
           }
 
+          // Store if quiz is public
+          setIsPublicQuiz(foundQuiz.isPublic || false);
+          
           // If quiz is not public, require login
           if (!foundQuiz.isPublic && !isUserLoggedIn()) {
             router.push('/login');
@@ -138,6 +142,18 @@ function ExamPageContent() {
     const currentUser = getCurrentUser();
     const quizIdToRecord = currentQuizId || quizId || 'unknown';
     
+    // Track free quiz attempt if it's a public quiz
+    if (isPublicQuiz) {
+      fetch('/api/analytics/free-quiz-attempt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quizId: quizIdToRecord }),
+      }).catch(() => {
+        // Silently fail - analytics shouldn't break the app
+      });
+    }
+    
+    // Track registered user attempt if logged in
     if (currentUser?.id) {
       // Fire and forget - don't block submission
       fetch(`/api/users/${currentUser.id}/attempts`, {

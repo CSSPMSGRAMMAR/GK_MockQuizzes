@@ -49,6 +49,13 @@ export default function QuizInstructionsPage() {
   useEffect(() => {
     // Load quiz config first to check if it's public
     loadQuiz();
+    
+    // Track website visit (non-blocking)
+    fetch('/api/analytics/visit', {
+      method: 'POST',
+    }).catch(() => {
+      // Silently fail - analytics shouldn't break the app
+    });
   }, [router, quizId]);
 
   const loadQuiz = async () => {

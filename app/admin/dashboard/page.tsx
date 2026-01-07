@@ -24,6 +24,9 @@ import {
   ArrowDown,
   Activity,
   AlertTriangle,
+  Eye,
+  TrendingUp,
+  FileText,
 } from 'lucide-react';
 
 interface User {
@@ -55,6 +58,13 @@ export default function AdminDashboardPage() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [analytics, setAnalytics] = useState({
+    currentVisitors: 0,
+    totalVisits: 0,
+    totalFreeQuizAttempts: 0,
+    freeQuizAttemptsByQuiz: {} as Record<string, number>,
+  });
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   useEffect(() => {
     if (!isAdmin()) {
@@ -62,6 +72,11 @@ export default function AdminDashboardPage() {
       return;
     }
     loadUsers();
+    loadAnalytics();
+    
+    // Refresh analytics every 30 seconds for real-time updates
+    const interval = setInterval(loadAnalytics, 30000);
+    return () => clearInterval(interval);
   }, [router]);
 
   useEffect(() => {
@@ -79,6 +94,19 @@ export default function AdminDashboardPage() {
       console.error('Error loading users:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAnalytics = async () => {
+    try {
+      const response = await fetch('/api/analytics/summary');
+      if (response.ok) {
+        const data = await response.json();
+        setAnalytics(data);
+        setLastUpdated(new Date());
+      }
+    } catch (err) {
+      console.error('Error loading analytics:', err);
     }
   };
 
@@ -247,7 +275,120 @@ export default function AdminDashboardPage() {
 
       <main className="container mx-auto px-4 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto space-y-6">
-          {/* Simplified Stats */}
+          {/* Analytics Header */}
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 className="text-2xl font-display font-bold">Analytics Dashboard</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Last updated: {lastUpdated.toLocaleTimeString()}
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={loadAnalytics}
+              className="text-xs sm:text-sm"
+            >
+              <Activity className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
+
+          {/* Traffic & Analytics Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-blue-500/10">
+                    <Eye className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{analytics.currentVisitors}</div>
+                    <div className="text-sm text-muted-foreground">Current Visitors</div>
+                    <div className="text-xs text-muted-foreground mt-1">Last 15 min</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-purple-500/10">
+                    <TrendingUp className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{analytics.totalVisits.toLocaleString()}</div>
+                    <div className="text-sm text-muted-foreground">Total Visits</div>
+                    <div className="text-xs text-muted-foreground mt-1">All time</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-green-500/10">
+                    <FileText className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{analytics.totalFreeQuizAttempts.toLocaleString()}</div>
+                    <div className="text-sm text-muted-foreground">Free Quiz Attempts</div>
+                    <div className="text-xs text-muted-foreground mt-1">Anonymous users</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{users.length}</div>
+                    <div className="text-sm text-muted-foreground">Registered Users</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Free Quiz Attempts Breakdown */}
+          {Object.keys(analytics.freeQuizAttemptsByQuiz).length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Free Quiz Attempts by Quiz
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {Object.entries(analytics.freeQuizAttemptsByQuiz)
+                    .sort(([, a], [, b]) => (b || 0) - (a || 0))
+                    .map(([quizId, count]) => (
+                      <div
+                        key={quizId}
+                        className="p-4 border rounded-lg bg-muted/50"
+                      >
+                        <div className="text-sm font-semibold text-muted-foreground mb-1">
+                          {quizId}
+                        </div>
+                        <div className="text-2xl font-bold text-primary">
+                          {count.toLocaleString()}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">attempts</div>
+                      </div>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* User Management Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card className="hover:shadow-elegant transition-all border-2">
               <CardContent className="pt-6">
@@ -271,7 +412,7 @@ export default function AdminDashboardPage() {
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{totalAttempts}</div>
-                    <div className="text-sm text-muted-foreground">Quiz Attempts</div>
+                    <div className="text-sm text-muted-foreground">Registered User Attempts</div>
                   </div>
                 </div>
               </CardContent>

@@ -53,6 +53,13 @@ export default function Home() {
       setUser(currentUser);
     }
     loadQuizzes();
+    
+    // Track website visit (non-blocking)
+    fetch('/api/analytics/visit', {
+      method: 'POST',
+    }).catch(() => {
+      // Silently fail - analytics shouldn't break the app
+    });
   }, []);
 
   const loadQuizzes = async () => {
