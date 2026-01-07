@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getAnalyticsSummary } from '@/lib/analytics';
 
+// Force dynamic rendering - no caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+
 // GET - Get analytics summary for admin dashboard
 export async function GET() {
   try {

@@ -1,13 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readUsers, addUser, deleteUser, type User } from '@/lib/userStorage';
 
+// Force dynamic rendering - no caching for admin routes
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+
 // GET - Get all users (admin only)
 export async function GET(request: NextRequest) {
   try {
     const users = await readUsers();
     // Remove passwords from response
     const safeUsers = users.map(({ password, ...user }) => user);
-    return NextResponse.json(safeUsers);
+    return NextResponse.json(safeUsers, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
   } catch (error) {
     console.error('Error reading users:', error);
     return NextResponse.json(

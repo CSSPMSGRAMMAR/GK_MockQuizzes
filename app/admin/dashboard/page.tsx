@@ -85,10 +85,23 @@ export default function AdminDashboardPage() {
 
   const loadUsers = async () => {
     try {
-      const response = await fetch('/api/users');
+      // Force fresh data fetch with cache busting and timestamp
+      const timestamp = Date.now();
+      const response = await fetch(`/api/users?t=${timestamp}`, {
+        cache: 'no-store',
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+      
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
+      } else {
+        console.error('Failed to load users:', response.status, response.statusText);
       }
     } catch (err) {
       console.error('Error loading users:', err);
@@ -99,11 +112,24 @@ export default function AdminDashboardPage() {
 
   const loadAnalytics = async () => {
     try {
-      const response = await fetch('/api/analytics/summary');
+      // Force fresh data fetch with cache busting and timestamp
+      const timestamp = Date.now();
+      const response = await fetch(`/api/analytics/summary?t=${timestamp}`, {
+        cache: 'no-store',
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+      
       if (response.ok) {
         const data = await response.json();
         setAnalytics(data);
         setLastUpdated(new Date());
+      } else {
+        console.error('Failed to load analytics:', response.status, response.statusText);
       }
     } catch (err) {
       console.error('Error loading analytics:', err);
