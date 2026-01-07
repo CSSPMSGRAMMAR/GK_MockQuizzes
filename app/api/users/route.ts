@@ -37,6 +37,8 @@ export async function POST(request: NextRequest) {
       password, // In production, hash this!
       name,
       createdAt: new Date().toISOString(),
+      totalAttempts: 0,
+      quizAttempts: {},
     };
 
     await addUser(newUser);

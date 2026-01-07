@@ -30,6 +30,7 @@ interface Quiz {
   negativeMarking: number;
   passingPercentage: number;
   available: boolean;
+  isPublic?: boolean;
   createdAt: string;
 }
 
@@ -55,7 +56,9 @@ export default function QuizzesPage() {
       const response = await fetch('/api/quizzes');
       if (response.ok) {
         const data = await response.json();
-        setQuizzes(data);
+        // Only show premium quizzes (not free/public ones) for logged-in users
+        const premiumQuizzes = data.filter((q: Quiz & { isPublic?: boolean }) => !q.isPublic && q.available);
+        setQuizzes(premiumQuizzes);
       }
     } catch (err) {
       console.error('Error loading quizzes:', err);

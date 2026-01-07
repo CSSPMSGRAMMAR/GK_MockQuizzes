@@ -34,7 +34,7 @@ export default function UserLoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setUserSession({ username: data.username, name: data.name });
+        setUserSession({ id: data.id, username: data.username, name: data.name });
         router.push('/quizzes');
       } else {
         setError(data.error || 'Invalid credentials');

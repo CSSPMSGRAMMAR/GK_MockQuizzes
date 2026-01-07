@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useExamStore } from '@/stores/examStore';
-import { isUserLoggedIn } from '@/lib/auth';
+import { isUserLoggedIn, getCurrentUser } from '@/lib/auth';
 import { ExamTimer } from '@/components/exam/ExamTimer';
 import { QuestionCard } from '@/components/exam/QuestionCard';
 import { QuestionNavigator } from '@/components/exam/QuestionNavigator';
@@ -130,9 +130,27 @@ function ExamPageContent() {
     setShowSubmitDialog(true);
   };
 
-  const confirmSubmit = () => {
+  const confirmSubmit = async () => {
     submitExam();
     setShowSubmitDialog(false);
+    
+    // Record quiz attempt (non-blocking)
+    const currentUser = getCurrentUser();
+    const quizIdToRecord = currentQuizId || quizId || 'unknown';
+    
+    if (currentUser?.id) {
+      // Fire and forget - don't block submission
+      fetch(`/api/users/${currentUser.id}/attempts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quizId: quizIdToRecord }),
+      }).catch((error) => {
+        console.error('Failed to record quiz attempt:', error);
+      });
+    }
+    
+    // Navigate to results
+    router.push('/result');
   };
 
   const currentQuestion = questions[currentQuestionIndex];

@@ -25,7 +25,7 @@ export function isUserLoggedIn(): boolean {
 }
 
 // Get current user
-export function getCurrentUser(): { username: string; name: string } | null {
+export function getCurrentUser(): { id?: string; username: string; name: string } | null {
   if (typeof window === 'undefined') return null;
   const userStr = localStorage.getItem(USER_SESSION_KEY);
   if (!userStr) return null;
@@ -43,7 +43,7 @@ export function setAdminSession() {
 }
 
 // Set user session
-export function setUserSession(user: { username: string; name: string }) {
+export function setUserSession(user: { id?: string; username: string; name: string }) {
   if (typeof window === 'undefined') return;
   localStorage.setItem(USER_SESSION_KEY, JSON.stringify(user));
 }

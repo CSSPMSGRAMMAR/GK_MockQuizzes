@@ -43,6 +43,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ username: string; name: string } | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<'free' | 'premium'>('free');
 
   useEffect(() => {
     // Ensure this only runs on client
@@ -102,7 +103,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background academic-hero relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-background to-primary/5"></div>
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      </div>
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3 sm:py-4">
@@ -167,7 +174,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 sm:py-8">
+      <main className="container mx-auto px-4 py-6 sm:py-8 relative z-10">
         <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
           {/* Hero Section */}
           <motion.div
@@ -209,21 +216,60 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          {/* Public Demo Quizzes */}
-          {publicQuizzes.length > 0 && (
+          {/* Tab Navigation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center justify-center gap-2 border-b"
+          >
+            <button
+              onClick={() => setActiveTab('free')}
+              className={`px-6 py-3 font-semibold transition-all relative ${
+                activeTab === 'free'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Free Mock Tests
+              {activeTab === 'free' && publicQuizzes.length > 0 && (
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  {publicQuizzes.length}
+                </Badge>
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab('premium')}
+              className={`px-6 py-3 font-semibold transition-all relative ${
+                activeTab === 'premium'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Premium Mock Tests
+              {activeTab === 'premium' && paidQuizzes.length > 0 && (
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  {paidQuizzes.length}
+                </Badge>
+              )}
+            </button>
+          </motion.div>
+
+          {/* Free Mock Tests Tab */}
+          {activeTab === 'free' && publicQuizzes.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               className="space-y-4"
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <h3 className="text-xl sm:text-2xl font-display font-semibold">Free Demo Quizzes</h3>
+                <h3 className="text-xl sm:text-2xl font-display font-semibold">Free Mock Tests</h3>
                 <Badge variant="secondary" className="text-xs sm:text-sm">
                   No Login Required
                 </Badge>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {publicQuizzes.map((quiz, index) => (
                   <motion.div
                     key={quiz.id}
@@ -277,30 +323,32 @@ export default function Home() {
             </motion.div>
           )}
 
-          {/* Paid Quizzes */}
-          {paidQuizzes.length > 0 && (
+          {/* Premium Mock Tests Tab */}
+          {activeTab === 'premium' && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               className="space-y-4"
             >
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <h3 className="text-xl sm:text-2xl font-display font-semibold">Premium Mock Tests</h3>
-                <Badge variant="secondary" className="text-xs sm:text-sm">
-                  Login Required
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                {paidQuizzes.map((quiz, index) => (
-                  <motion.div
-                    key={quiz.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
+              {paidQuizzes.length > 0 ? (
+                <>
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <h3 className="text-xl sm:text-2xl font-display font-semibold">Premium Mock Tests</h3>
+                    <Badge variant="secondary" className="text-xs sm:text-sm">
+                      Login Required
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    {paidQuizzes.map((quiz, index) => (
+                      <motion.div
+                        key={quiz.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                        whileHover={{ scale: 1.02, y: -5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
                     <Card className="hover:shadow-elegant transition-all duration-300 border-2 hover:border-primary/50 group h-full">
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2">
@@ -350,9 +398,32 @@ export default function Home() {
                       )}
                     </CardContent>
                     </Card>
-                  </motion.div>
-                ))}
-              </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <Card className="border-2">
+                  <CardContent className="pt-6">
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Lock className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="font-semibold mb-2">Premium Mock Tests</p>
+                      <p className="text-sm">Login required to access premium mock tests.</p>
+                      {!mounted || !isUserLoggedIn() ? (
+                        <Button
+                          className="mt-4"
+                          onClick={() => router.push('/login')}
+                        >
+                          <LogIn className="h-4 w-4 mr-2" />
+                          Login to Access
+                        </Button>
+                      ) : (
+                        <p className="text-sm mt-2">No premium quizzes available at the moment.</p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </motion.div>
           )}
 

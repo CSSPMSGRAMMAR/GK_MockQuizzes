@@ -1,6 +1,4 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { connectToDatabase, isMongoDBEnvironment } from './mongodb';
+import { connectToDatabase } from './mongodb';
 
 export type User = {
   id: string;
@@ -8,13 +6,16 @@ export type User = {
   password: string;
   name: string;
   createdAt: string;
+  // Attempt tracking
+  totalAttempts: number;
+  quizAttempts: Record<string, number>; // quizId -> attempt count
+  lastAttemptAt?: string; // ISO timestamp of last quiz submission
 };
 
-const USERS_FILE = path.join(process.cwd(), 'data', 'users.json');
 const USERS_COLLECTION = 'users';
 
-// MongoDB storage (for production)
-async function readUsersFromMongoDB(): Promise<User[]> {
+// Read all users from MongoDB
+export async function readUsers(): Promise<User[]> {
   try {
     const db = await connectToDatabase();
     const collection = db.collection<User>(USERS_COLLECTION);
@@ -26,7 +27,8 @@ async function readUsersFromMongoDB(): Promise<User[]> {
   }
 }
 
-async function writeUsersToMongoDB(users: User[]): Promise<void> {
+// Write all users to MongoDB (replaces all existing users)
+export async function writeUsers(users: User[]): Promise<void> {
   try {
     const db = await connectToDatabase();
     const collection = db.collection<User>(USERS_COLLECTION);
@@ -42,7 +44,8 @@ async function writeUsersToMongoDB(users: User[]): Promise<void> {
   }
 }
 
-async function addUserToMongoDB(user: User): Promise<User> {
+// Add a new user to MongoDB
+export async function addUser(user: User): Promise<User> {
   try {
     const db = await connectToDatabase();
     const collection = db.collection<User>(USERS_COLLECTION);
@@ -53,9 +56,16 @@ async function addUserToMongoDB(user: User): Promise<User> {
       throw new Error('Username already exists');
     }
     
+    // Initialize attempt tracking for new user
+    const newUser: User = {
+      ...user,
+      totalAttempts: user.totalAttempts || 0,
+      quizAttempts: user.quizAttempts || {},
+    };
+    
     // Insert new user
-    await collection.insertOne(user);
-    return user;
+    await collection.insertOne(newUser);
+    return newUser;
   } catch (error) {
     if (error instanceof Error && error.message.includes('already exists')) {
       throw error;
@@ -65,7 +75,8 @@ async function addUserToMongoDB(user: User): Promise<User> {
   }
 }
 
-async function deleteUserFromMongoDB(id: string): Promise<void> {
+// Delete a user from MongoDB
+export async function deleteUser(id: string): Promise<void> {
   try {
     const db = await connectToDatabase();
     const collection = db.collection<User>(USERS_COLLECTION);
@@ -76,64 +87,35 @@ async function deleteUserFromMongoDB(id: string): Promise<void> {
   }
 }
 
-// File storage (for local development)
-async function readUsersFromFile(): Promise<User[]> {
+// Record a quiz attempt for a user
+export async function recordQuizAttempt(userId: string, quizId: string): Promise<void> {
   try {
-    const raw = await fs.readFile(USERS_FILE, 'utf8');
-    return JSON.parse(raw) as User[];
-  } catch (error: any) {
-    if (error?.code === 'ENOENT') {
-      return [];
+    const db = await connectToDatabase();
+    const collection = db.collection<User>(USERS_COLLECTION);
+    
+    const user = await collection.findOne({ id: userId });
+    if (!user) {
+      throw new Error('User not found');
     }
-    console.error('Error reading users from file:', error);
-    return [];
+    
+    // Initialize attempt tracking if not present
+    const totalAttempts = (user.totalAttempts || 0) + 1;
+    const quizAttempts = user.quizAttempts || {};
+    quizAttempts[quizId] = (quizAttempts[quizId] || 0) + 1;
+    
+    await collection.updateOne(
+      { id: userId },
+      {
+        $set: {
+          totalAttempts,
+          quizAttempts,
+          lastAttemptAt: new Date().toISOString(),
+        },
+      }
+    );
+  } catch (error) {
+    console.error('Error recording quiz attempt in MongoDB:', error);
+    throw error;
   }
-}
-
-async function writeUsersToFile(users: User[]): Promise<void> {
-  await fs.mkdir(path.dirname(USERS_FILE), { recursive: true });
-  await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
-}
-
-// Unified storage functions
-export async function readUsers(): Promise<User[]> {
-  if (isMongoDBEnvironment()) {
-    return readUsersFromMongoDB();
-  }
-  return readUsersFromFile();
-}
-
-export async function writeUsers(users: User[]): Promise<void> {
-  if (isMongoDBEnvironment()) {
-    await writeUsersToMongoDB(users);
-  } else {
-    await writeUsersToFile(users);
-  }
-}
-
-export async function addUser(user: User): Promise<User> {
-  if (isMongoDBEnvironment()) {
-    return addUserToMongoDB(user);
-  }
-  
-  // File-based storage (local development)
-  const users = await readUsersFromFile();
-  if (users.some((u) => u.username === user.username)) {
-    throw new Error('Username already exists');
-  }
-  users.push(user);
-  await writeUsersToFile(users);
-  return user;
-}
-
-export async function deleteUser(id: string): Promise<void> {
-  if (isMongoDBEnvironment()) {
-    return deleteUserFromMongoDB(id);
-  }
-  
-  // File-based storage (local development)
-  const users = await readUsersFromFile();
-  const filteredUsers = users.filter((u) => u.id !== id);
-  await writeUsersToFile(filteredUsers);
 }
 

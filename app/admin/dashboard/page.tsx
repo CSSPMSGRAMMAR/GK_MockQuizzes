@@ -18,6 +18,12 @@ import {
   Plus,
   X,
   Shield,
+  Search,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  Activity,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface User {
@@ -25,13 +31,23 @@ interface User {
   username: string;
   name: string;
   createdAt: string;
+  totalAttempts?: number;
+  quizAttempts?: Record<string, number>;
+  lastAttemptAt?: string;
 }
+
+type SortField = 'name' | 'attempts' | 'created';
+type SortOrder = 'asc' | 'desc';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState<SortField>('attempts');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,14 +57,16 @@ export default function AdminDashboardPage() {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    // Check admin authentication
     if (!isAdmin()) {
       router.push('/admin/login');
       return;
     }
-
     loadUsers();
   }, [router]);
+
+  useEffect(() => {
+    filterAndSortUsers();
+  }, [users, searchQuery, sortField, sortOrder]);
 
   const loadUsers = async () => {
     try {
@@ -61,6 +79,58 @@ export default function AdminDashboardPage() {
       console.error('Error loading users:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const filterAndSortUsers = () => {
+    let filtered = [...users];
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (user) =>
+          user.name.toLowerCase().includes(query) ||
+          user.username.toLowerCase().includes(query)
+      );
+    }
+
+    // Sort users
+    filtered.sort((a, b) => {
+      let aValue: string | number = 0;
+      let bValue: string | number = 0;
+
+      switch (sortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'attempts':
+          aValue = a.totalAttempts || 0;
+          bValue = b.totalAttempts || 0;
+          break;
+        case 'created':
+          aValue = new Date(a.createdAt).getTime();
+          bValue = new Date(b.createdAt).getTime();
+          break;
+      }
+
+      if (sortOrder === 'asc') {
+        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+      } else {
+        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+      }
+    });
+
+    setFilteredUsers(filtered);
+  };
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortOrder('desc');
     }
   };
 
@@ -133,6 +203,10 @@ export default function AdminDashboardPage() {
     );
   }
 
+  const totalAttempts = users.reduce((sum, u) => sum + (u.totalAttempts || 0), 0);
+  const activeUsers = users.filter((u) => (u.totalAttempts || 0) > 0).length;
+  const highActivityUsers = users.filter((u) => (u.totalAttempts || 0) > 10).length;
+
   return (
     <div className="min-h-screen bg-background academic-hero">
       {/* Header */}
@@ -172,28 +246,56 @@ export default function AdminDashboardPage() {
       </header>
 
       <main className="container mx-auto px-4 py-6 sm:py-8">
-        <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-on-scroll">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Simplified Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card className="hover:shadow-elegant transition-all border-2">
               <CardContent className="pt-6">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="p-2 sm:p-3 rounded-lg bg-primary/10">
-                    <Users className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Users className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <div className="text-xl sm:text-2xl font-bold">{users.length}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">Total Users</div>
+                    <div className="text-2xl font-bold">{users.length}</div>
+                    <div className="text-sm text-muted-foreground">Total Users</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-green-500/10">
+                    <Activity className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{totalAttempts}</div>
+                    <div className="text-sm text-muted-foreground">Quiz Attempts</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-red-500/10">
+                    <AlertTriangle className="h-6 w-6 text-red-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{highActivityUsers}</div>
+                    <div className="text-sm text-muted-foreground">High Activity ({'>'}10 attempts)</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Add User Section */}
+          {/* User Management Card */}
           <Card>
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap gap-4">
                 <CardTitle className="flex items-center gap-2">
                   <UserPlus className="h-5 w-5" />
                   User Management
@@ -205,6 +307,7 @@ export default function AdminDashboardPage() {
                     setSuccess('');
                   }}
                   variant={showAddForm ? 'outline' : 'default'}
+                  size="sm"
                 >
                   {showAddForm ? (
                     <>
@@ -220,9 +323,10 @@ export default function AdminDashboardPage() {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              {/* Add User Form */}
               {showAddForm && (
-                <form onSubmit={handleAddUser} className="space-y-4 mb-6 p-4 border rounded-lg bg-muted/50">
+                <form onSubmit={handleAddUser} className="p-4 border rounded-lg bg-muted/50 space-y-4">
                   {error && (
                     <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">
                       {error}
@@ -241,10 +345,8 @@ export default function AdminDashboardPage() {
                         id="username"
                         type="text"
                         value={formData.username}
-                        onChange={(e) =>
-                          setFormData({ ...formData, username: e.target.value })
-                        }
-                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                        className="w-full px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter username"
                         required
                       />
@@ -256,10 +358,8 @@ export default function AdminDashboardPage() {
                         id="password"
                         type="password"
                         value={formData.password}
-                        onChange={(e) =>
-                          setFormData({ ...formData, password: e.target.value })
-                        }
-                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        className="w-full px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter password"
                         required
                       />
@@ -271,56 +371,153 @@ export default function AdminDashboardPage() {
                         id="name"
                         type="text"
                         value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        className="w-full px-3 sm:px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                         placeholder="Enter full name"
                         required
                       />
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full md:w-auto">
+                  <Button type="submit" className="w-full sm:w-auto">
                     <UserPlus className="h-4 w-4 mr-2" />
                     Create User
                   </Button>
                 </form>
               )}
 
+              {/* Search and Sort Controls */}
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search users by name or username..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border-2 rounded-md bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm text-muted-foreground">Sort by:</span>
+                  <Button
+                    variant={sortField === 'attempts' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleSort('attempts')}
+                    className="text-xs"
+                  >
+                    Attempts
+                    {sortField === 'attempts' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />
+                    )}
+                  </Button>
+                  <Button
+                    variant={sortField === 'name' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleSort('name')}
+                    className="text-xs"
+                  >
+                    Name
+                    {sortField === 'name' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />
+                    )}
+                  </Button>
+                  <Button
+                    variant={sortField === 'created' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleSort('created')}
+                    className="text-xs"
+                  >
+                    Created
+                    {sortField === 'created' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+
               {/* Users List */}
-              <div className="space-y-2">
-                <h3 className="font-semibold mb-4">All Users ({users.length})</h3>
-                {users.length === 0 ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">
+                    Users ({filteredUsers.length}{searchQuery && ` of ${users.length}`})
+                  </h3>
+                </div>
+
+                {filteredUsers.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
-                    No users found. Add your first user above.
+                    {searchQuery ? 'No users found matching your search.' : 'No users found. Add your first user above.'}
                   </div>
                 ) : (
-                  <div className="space-y-2">
-                    {users.map((user) => (
-                      <div
-                        key={user.id}
-                        className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-semibold">{user.name}</span>
-                            <Badge variant="outline">{user.username}</Badge>
-                          </div>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            Created: {new Date(user.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleDeleteUser(user.id)}
+                  <div className="space-y-3">
+                    {filteredUsers.map((user) => {
+                      const totalAttempts = user.totalAttempts || 0;
+                      const quizAttempts = user.quizAttempts || {};
+                      const isSuspicious = totalAttempts > 10;
+
+                      return (
+                        <div
+                          key={user.id}
+                          className={`p-4 border rounded-lg hover:bg-muted/50 transition-colors ${
+                            isSuspicious ? 'border-red-300 dark:border-red-700 bg-red-50/50 dark:bg-red-950/20' : ''
+                          }`}
                         >
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Delete
-                        </Button>
-                      </div>
-                    ))}
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap mb-2">
+                                <span className="font-semibold">{user.name}</span>
+                                <Badge variant="outline" className="text-xs">{user.username}</Badge>
+                                {isSuspicious && (
+                                  <Badge variant="destructive" className="text-xs">
+                                    <AlertTriangle className="h-3 w-3 mr-1" />
+                                    High Activity
+                                  </Badge>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
+                                <span>Created: {new Date(user.createdAt).toLocaleDateString()}</span>
+                                {user.lastAttemptAt && (
+                                  <span>Last attempt: {new Date(user.lastAttemptAt).toLocaleDateString()}</span>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                              <div className="text-right">
+                                <div className="text-2xl font-bold text-primary">{totalAttempts}</div>
+                                <div className="text-xs text-muted-foreground">Attempts</div>
+                              </div>
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => handleDeleteUser(user.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+
+                          {/* Quiz Breakdown */}
+                          {Object.keys(quizAttempts).length > 0 && (
+                            <div className="mt-3 pt-3 border-t">
+                              <div className="text-xs font-semibold text-muted-foreground mb-2">
+                                Quiz Attempts:
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {Object.entries(quizAttempts)
+                                  .sort(([, a], [, b]) => (b || 0) - (a || 0))
+                                  .map(([quizId, count]) => (
+                                    <Badge key={quizId} variant="secondary" className="text-xs">
+                                      {quizId}: {count}
+                                    </Badge>
+                                  ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -331,4 +528,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-

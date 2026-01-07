@@ -1,13 +1,10 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { connectToDatabase, isMongoDBEnvironment } from './mongodb';
+import { connectToDatabase } from './mongodb';
 
 export type QuizUser = {
   username: string;
   password: string;
 };
 
-const QUIZ_USERS_FILE = path.join(process.cwd(), 'data', 'quiz-users.json');
 const QUIZ_USERS_COLLECTION = 'quiz-users';
 
 // Default admin credentials (can be overridden via env)
@@ -19,8 +16,8 @@ export function validateAdminCredentials(username: string, password: string): bo
   return username === ADMIN_USERNAME && password === adminPassword;
 }
 
-// MongoDB storage (for production)
-async function readQuizUsersFromMongoDB(): Promise<QuizUser[]> {
+// Read all quiz users from MongoDB
+async function readQuizUsers(): Promise<QuizUser[]> {
   try {
     const db = await connectToDatabase();
     const collection = db.collection<QuizUser>(QUIZ_USERS_COLLECTION);
@@ -32,6 +29,7 @@ async function readQuizUsersFromMongoDB(): Promise<QuizUser[]> {
   }
 }
 
+// Add a new quiz user to MongoDB
 async function addQuizUserToMongoDB(username: string, password: string): Promise<QuizUser> {
   try {
     const db = await connectToDatabase();
@@ -56,64 +54,12 @@ async function addQuizUserToMongoDB(username: string, password: string): Promise
   }
 }
 
-// File storage (for local development)
-async function readQuizUsersFromFile(): Promise<QuizUser[]> {
-  try {
-    const raw = await fs.readFile(QUIZ_USERS_FILE, 'utf8');
-    const parsed = JSON.parse(raw);
-
-    if (Array.isArray(parsed)) {
-      return parsed as QuizUser[];
-    }
-
-    if (Array.isArray(parsed.users)) {
-      return parsed.users as QuizUser[];
-    }
-
-    return [];
-  } catch (error: any) {
-    if (error?.code === 'ENOENT') {
-      // File does not exist yet
-      return [];
-    }
-    throw error;
-  }
-}
-
-async function writeQuizUsersToFile(users: QuizUser[]): Promise<void> {
-  await fs.mkdir(path.dirname(QUIZ_USERS_FILE), { recursive: true });
-  const payload = JSON.stringify({ users }, null, 2);
-  await fs.writeFile(QUIZ_USERS_FILE, payload, 'utf8');
-}
-
-// Unified storage functions
-async function readQuizUsers(): Promise<QuizUser[]> {
-  if (isMongoDBEnvironment()) {
-    return readQuizUsersFromMongoDB();
-  }
-  return readQuizUsersFromFile();
-}
-
 export async function getQuizUsers(): Promise<QuizUser[]> {
   return readQuizUsers();
 }
 
 export async function addQuizUser(username: string, password: string): Promise<QuizUser> {
-  if (isMongoDBEnvironment()) {
-    return addQuizUserToMongoDB(username, password);
-  }
-  
-  // File-based storage (local development)
-  const users = await readQuizUsersFromFile();
-  const existing = users.find((u) => u.username === username);
-  if (existing) {
-    throw new Error('User with this username already exists');
-  }
-
-  const newUser: QuizUser = { username, password };
-  const updated = [...users, newUser];
-  await writeQuizUsersToFile(updated);
-  return newUser;
+  return addQuizUserToMongoDB(username, password);
 }
 
 export async function validateQuizUser(username: string, password: string): Promise<boolean> {
