@@ -47,21 +47,41 @@ export default function QuizzesPage() {
       return;
     }
 
-    setUser(getCurrentUser());
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
+    
+    // Load quizzes with cache busting to ensure fresh data
     loadQuizzes();
   }, [router]);
 
+  // Also reload quizzes when user changes (e.g., after login)
+  useEffect(() => {
+    if (user) {
+      loadQuizzes();
+    }
+  }, [user?.username]);
+
   const loadQuizzes = async () => {
     try {
-      const response = await fetch('/api/quizzes');
+      // Add cache busting to ensure fresh data
+      const response = await fetch('/api/quizzes', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
       if (response.ok) {
         const data = await response.json();
         // Only show premium quizzes (not free/public ones) for logged-in users
         const premiumQuizzes = data.filter((q: Quiz & { isPublic?: boolean }) => !q.isPublic && q.available);
         setQuizzes(premiumQuizzes);
+      } else {
+        console.error('Failed to load quizzes:', response.status);
+        setQuizzes([]);
       }
     } catch (err) {
       console.error('Error loading quizzes:', err);
+      setQuizzes([]);
     } finally {
       setLoading(false);
     }

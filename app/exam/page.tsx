@@ -144,13 +144,28 @@ function ExamPageContent() {
     
     // Track free quiz attempt if it's a public quiz
     if (isPublicQuiz) {
-      fetch('/api/analytics/free-quiz-attempt', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quizId: quizIdToRecord }),
-      }).catch(() => {
-        // Silently fail - analytics shouldn't break the app
-      });
+      const trackAttempt = async (retries = 3) => {
+        try {
+          const response = await fetch('/api/analytics/free-quiz-attempt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quizId: quizIdToRecord }),
+            cache: 'no-store',
+          });
+          
+          if (!response.ok && retries > 0) {
+            // Retry on failure
+            setTimeout(() => trackAttempt(retries - 1), 1000);
+          }
+        } catch (error) {
+          // Silently fail - analytics shouldn't break the app
+          if (retries > 0) {
+            setTimeout(() => trackAttempt(retries - 1), 1000);
+          }
+        }
+      };
+      
+      trackAttempt();
     }
     
     // Track registered user attempt if logged in

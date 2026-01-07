@@ -14,8 +14,9 @@ export async function connectToDatabase(): Promise<Db> {
       // Test if connection is still alive (lightweight check)
       await cachedClient.db('admin').command({ ping: 1 });
       return cachedDb;
-    } catch {
+    } catch (error) {
       // Connection is dead, reset cache
+      console.warn('Cached MongoDB connection is dead, creating new connection:', error);
       cachedClient = null;
       cachedDb = null;
     }
@@ -24,12 +25,16 @@ export async function connectToDatabase(): Promise<Db> {
   // Clean up connection string - ensure it ends properly
   let connectionString = MONGODB_URI.trim();
   
+  if (!connectionString) {
+    throw new Error('MONGODB_URI environment variable is not set');
+  }
+  
   // Remove trailing slash if present (before query params)
   if (connectionString.endsWith('/') && !connectionString.includes('?')) {
     connectionString = connectionString.slice(0, -1);
   }
 
-  // Create new connection with optimized settings for serverless
+  // Create new connection with optimized settings for serverless/Vercel
   const client = new MongoClient(connectionString, {
     maxPoolSize: 1, // Smaller pool for serverless
     minPoolSize: 0, // Allow pool to shrink
@@ -38,6 +43,8 @@ export async function connectToDatabase(): Promise<Db> {
     connectTimeoutMS: 10000,
     retryWrites: true,
     retryReads: true,
+    // Optimize for serverless environments
+    maxIdleTimeMS: 30000,
     // Let MongoDB handle TLS automatically for mongodb+srv://
   });
 
@@ -49,14 +56,21 @@ export async function connectToDatabase(): Promise<Db> {
     
     const db = client.db(MONGODB_DB);
     
-    // Cache the connection
+    // Cache the connection (only in non-serverless environments)
+    // In Vercel serverless, each function invocation may be isolated
+    // so caching might not persist, but it's still worth trying
     cachedClient = client;
     cachedDb = db;
     
     return db;
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
-    console.error('Connection string (masked):', MONGODB_URI.replace(/:[^:@]+@/, ':****@'));
+    const maskedUri = MONGODB_URI.replace(/:[^:@]+@/, ':****@');
+    console.error('Connection string (masked):', maskedUri);
+    console.error('MongoDB connection error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     
     // Don't cache failed connections
     cachedClient = null;

@@ -4,14 +4,35 @@ import { trackVisit } from '@/lib/analytics';
 // POST - Track a website visit
 export async function POST(request: NextRequest) {
   try {
+    // Track visit (non-blocking, errors are handled internally)
     await trackVisit();
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error tracking visit:', error);
+    
+    // Always return success to prevent client-side errors
+    // Analytics failures shouldn't break the user experience
     return NextResponse.json(
-      { error: 'Failed to track visit' },
-      { status: 500 }
+      { success: true },
+      {
+        status: 200,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      }
+    );
+  } catch (error) {
+    // Log error but still return success
+    console.error('Error in visit tracking API:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to track visit' },
+      {
+        status: 200, // Return 200 to prevent client-side errors
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      }
     );
   }
 }
+
 

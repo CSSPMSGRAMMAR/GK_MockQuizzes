@@ -9,19 +9,43 @@ export async function POST(request: NextRequest) {
 
     if (!quizId) {
       return NextResponse.json(
-        { error: 'Quiz ID is required' },
-        { status: 400 }
+        { success: false, error: 'Quiz ID is required' },
+        { 
+          status: 200, // Return 200 to prevent client-side errors
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          },
+        }
       );
     }
 
+    // Track attempt (non-blocking, errors are handled internally)
     await trackFreeQuizAttempt(quizId);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error tracking free quiz attempt:', error);
+    
     return NextResponse.json(
-      { error: 'Failed to track free quiz attempt' },
-      { status: 500 }
+      { success: true },
+      {
+        status: 200,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      }
+    );
+  } catch (error) {
+    // Log error but still return success
+    console.error('Error in free quiz attempt tracking API:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to track free quiz attempt' },
+      {
+        status: 200, // Return 200 to prevent client-side errors
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      }
     );
   }
 }
+
 

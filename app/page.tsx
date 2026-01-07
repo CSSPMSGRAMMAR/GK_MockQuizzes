@@ -54,12 +54,30 @@ export default function Home() {
     }
     loadQuizzes();
     
-    // Track website visit (non-blocking)
-    fetch('/api/analytics/visit', {
-      method: 'POST',
-    }).catch(() => {
-      // Silently fail - analytics shouldn't break the app
-    });
+    // Track website visit (non-blocking with retry logic)
+    const trackVisit = async (retries = 3) => {
+      try {
+        const response = await fetch('/api/analytics/visit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store',
+        });
+        
+        if (!response.ok && retries > 0) {
+          // Retry on failure
+          setTimeout(() => trackVisit(retries - 1), 1000);
+        }
+      } catch (error) {
+        // Silently fail - analytics shouldn't break the app
+        if (retries > 0) {
+          setTimeout(() => trackVisit(retries - 1), 1000);
+        }
+      }
+    };
+    
+    trackVisit();
   }, []);
 
   const loadQuizzes = async () => {

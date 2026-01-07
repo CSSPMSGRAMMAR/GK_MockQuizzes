@@ -14,7 +14,13 @@ export async function GET() {
     const quizzes = JSON.parse(readFileSync(QUIZZES_FILE, 'utf-8'));
     // Return only available quizzes
     const availableQuizzes = quizzes.filter((q: any) => q.available !== false);
-    return NextResponse.json(availableQuizzes);
+    return NextResponse.json(availableQuizzes, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
   } catch (error) {
     console.error('Error reading quizzes:', error);
     return NextResponse.json(
