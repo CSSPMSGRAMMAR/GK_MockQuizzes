@@ -8,6 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import { isAdmin, clearAdminSession } from '@/lib/auth';
 import { BRANDING } from '@/lib/branding';
 import {
@@ -27,6 +31,11 @@ import {
   Eye,
   TrendingUp,
   FileText,
+  Megaphone,
+  Edit,
+  Calendar,
+  Link as LinkIcon,
+  Share2,
 } from 'lucide-react';
 
 interface User {
@@ -37,6 +46,20 @@ interface User {
   totalAttempts?: number;
   quizAttempts?: Record<string, number>;
   lastAttemptAt?: string;
+}
+
+interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  isActive: boolean;
+  priority: 'high' | 'medium' | 'low';
+  hideOtherContent: boolean;
+  createdAt: string;
+  updatedAt: string;
+  expiresAt?: string;
+  linkUrl?: string;
+  linkText?: string;
 }
 
 type SortField = 'name' | 'attempts' | 'created';
@@ -65,6 +88,20 @@ export default function AdminDashboardPage() {
     freeQuizAttemptsByQuiz: {} as Record<string, number>,
   });
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [showAnnouncementForm, setShowAnnouncementForm] = useState(false);
+  const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
+  const [activeTab, setActiveTab] = useState<'users' | 'announcements'>('users');
+  const [announcementForm, setAnnouncementForm] = useState({
+    title: '',
+    content: '',
+    isActive: true,
+    priority: 'medium' as 'high' | 'medium' | 'low',
+    hideOtherContent: false,
+    expiresAt: '',
+    linkUrl: '',
+    linkText: '',
+  });
 
   useEffect(() => {
     if (!isAdmin()) {
@@ -73,6 +110,7 @@ export default function AdminDashboardPage() {
     }
     loadUsers();
     loadAnalytics();
+    loadAnnouncements();
     
     // Refresh analytics every 30 seconds for real-time updates
     const interval = setInterval(loadAnalytics, 30000);
@@ -241,6 +279,148 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const loadAnnouncements = async () => {
+    try {
+      const timestamp = Date.now();
+      const response = await fetch(`/api/announcements?admin=true&t=${timestamp}`, {
+        cache: 'no-store',
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setAnnouncements(data);
+      }
+    } catch (err) {
+      console.error('Error loading announcements:', err);
+    }
+  };
+
+  // Auto-format plain text (convert newlines to <br> tags)
+  const formatContent = (text: string): string => {
+    // If it already contains HTML tags, return as is
+    if (/<[^>]+>/.test(text)) {
+      return text;
+    }
+    // Otherwise, convert newlines to <br> tags and preserve formatting
+    return text
+      .split('\n')
+      .map((line) => {
+        const trimmed = line.trim();
+        // Preserve empty lines as breaks
+        if (trimmed === '') return '<br>';
+        return trimmed;
+      })
+      .join('<br>');
+  };
+
+  const handleCreateAnnouncement = async () => {
+    try {
+      // Auto-format content if it's plain text
+      const formattedContent = formatContent(announcementForm.content);
+      
+      const response = await fetch('/api/announcements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...announcementForm,
+          content: formattedContent,
+          expiresAt: announcementForm.expiresAt || undefined,
+          linkUrl: announcementForm.linkUrl || undefined,
+          linkText: announcementForm.linkText || undefined,
+        }),
+      });
+
+      if (response.ok) {
+        setSuccess('Announcement created successfully!');
+        setAnnouncementForm({
+          title: '',
+          content: '',
+          isActive: true,
+          priority: 'medium',
+          hideOtherContent: false,
+          expiresAt: '',
+          linkUrl: '',
+          linkText: '',
+        });
+        setShowAnnouncementForm(false);
+        loadAnnouncements();
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to create announcement');
+      }
+    } catch (err) {
+      setError('Failed to create announcement. Please try again.');
+    }
+  };
+
+  const handleUpdateAnnouncement = async (id: string, updates: Partial<Announcement>) => {
+    try {
+      // Auto-format content if it's plain text
+      const formattedUpdates = {
+        ...updates,
+        content: updates.content ? formatContent(updates.content) : undefined,
+      };
+      
+      const response = await fetch(`/api/announcements/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formattedUpdates),
+      });
+
+      if (response.ok) {
+        setSuccess('Announcement updated successfully!');
+        setEditingAnnouncement(null);
+        loadAnnouncements();
+      } else {
+        setError('Failed to update announcement');
+      }
+    } catch (err) {
+      setError('Failed to update announcement. Please try again.');
+    }
+  };
+
+  const handleDeleteAnnouncement = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this announcement?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/announcements/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setSuccess('Announcement deleted successfully!');
+        loadAnnouncements();
+      } else {
+        setError('Failed to delete announcement');
+      }
+    } catch (err) {
+      setError('Failed to delete announcement. Please try again.');
+    }
+  };
+
+  const handleEditAnnouncement = (announcement: Announcement) => {
+    setEditingAnnouncement(announcement);
+    setAnnouncementForm({
+      title: announcement.title,
+      content: announcement.content,
+      isActive: announcement.isActive,
+      priority: announcement.priority,
+      hideOtherContent: announcement.hideOtherContent,
+      expiresAt: announcement.expiresAt || '',
+      linkUrl: announcement.linkUrl || '',
+      linkText: announcement.linkText || '',
+    });
+    setShowAnnouncementForm(true);
+  };
+
   const handleLogout = () => {
     clearAdminSession();
     router.push('/admin/login');
@@ -304,7 +484,7 @@ export default function AdminDashboardPage() {
           {/* Analytics Header */}
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-2xl font-display font-bold">Analytics Dashboard</h2>
+              <h2 className="text-2xl font-display font-bold">Admin Dashboard</h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </p>
@@ -320,7 +500,35 @@ export default function AdminDashboardPage() {
             </Button>
           </div>
 
-          {/* Traffic & Analytics Stats */}
+          {/* Tab Navigation - Professional Style */}
+          <div className="border border-border bg-card rounded-lg overflow-hidden shadow-sm">
+            <div className="flex gap-1 p-1.5 bg-muted/30">
+              <button
+                onClick={() => setActiveTab('users')}
+                className={`flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${
+                  activeTab === 'users'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-background'
+                }`}
+              >
+                <Users className="h-4 w-4" />
+                User Management
+              </button>
+              <button
+                onClick={() => setActiveTab('announcements')}
+                className={`flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${
+                  activeTab === 'announcements'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-background'
+                }`}
+              >
+                <Megaphone className="h-4 w-4" />
+                Announcements
+              </button>
+            </div>
+          </div>
+
+          {/* Traffic & Analytics Stats - Always Visible */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card className="hover:shadow-elegant transition-all border-2">
               <CardContent className="pt-6">
@@ -414,6 +622,9 @@ export default function AdminDashboardPage() {
             </Card>
           )}
 
+          {/* User Management Tab Content */}
+          {activeTab === 'users' && (
+            <>
           {/* User Management Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card className="hover:shadow-elegant transition-all border-2">
@@ -690,6 +901,306 @@ export default function AdminDashboardPage() {
               </div>
             </CardContent>
           </Card>
+          </>
+          )}
+
+          {/* Announcements Management Tab Content */}
+          {activeTab === 'announcements' && (
+            <>
+          {/* Announcements Management */}
+          <Card className="hover:shadow-elegant transition-all border-2">
+            <CardHeader>
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-2">
+                  <Megaphone className="h-5 w-5 text-primary" />
+                  <CardTitle>Announcements Management</CardTitle>
+                </div>
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => {
+                    setShowAnnouncementForm(true);
+                    setEditingAnnouncement(null);
+                    setAnnouncementForm({
+                      title: '',
+                      content: '',
+                      isActive: true,
+                      priority: 'medium',
+                      hideOtherContent: false,
+                      expiresAt: '',
+                      linkUrl: '',
+                      linkText: '',
+                    });
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Announcement
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {showAnnouncementForm && (
+                <div className="mb-6 p-4 border rounded-lg bg-muted/50 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">
+                      {editingAnnouncement ? 'Edit Announcement' : 'New Announcement'}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setShowAnnouncementForm(false);
+                        setEditingAnnouncement(null);
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="announcement-title">Title *</Label>
+                      <Input
+                        id="announcement-title"
+                        value={announcementForm.title}
+                        onChange={(e) =>
+                          setAnnouncementForm({ ...announcementForm, title: e.target.value })
+                        }
+                        placeholder="e.g., FPSC Result 2026 Announced!"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="announcement-content">Content * (HTML supported)</Label>
+                      <Textarea
+                        id="announcement-content"
+                        value={announcementForm.content}
+                        onChange={(e) =>
+                          setAnnouncementForm({ ...announcementForm, content: e.target.value })
+                        }
+                        placeholder="Enter announcement content. You can use HTML tags like &lt;strong&gt;, &lt;em&gt;, &lt;br&gt;, etc."
+                        rows={6}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="announcement-priority">Priority</Label>
+                        <Select
+                          value={announcementForm.priority}
+                          onValueChange={(value) =>
+                            setAnnouncementForm({ ...announcementForm, priority: value as 'high' | 'medium' | 'low' })
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="high">High (Prominent Banner)</SelectItem>
+                            <SelectItem value="medium">Medium (Normal)</SelectItem>
+                            <SelectItem value="low">Low (Subtle)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="announcement-expires">Expires At (Optional)</Label>
+                        <Input
+                          id="announcement-expires"
+                          type="datetime-local"
+                          value={announcementForm.expiresAt}
+                          onChange={(e) =>
+                            setAnnouncementForm({ ...announcementForm, expiresAt: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="announcement-link-url">Link URL (Optional)</Label>
+                        <Input
+                          id="announcement-link-url"
+                          type="url"
+                          value={announcementForm.linkUrl}
+                          onChange={(e) =>
+                            setAnnouncementForm({ ...announcementForm, linkUrl: e.target.value })
+                          }
+                          placeholder="https://example.com"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="announcement-link-text">Link Text (Optional)</Label>
+                        <Input
+                          id="announcement-link-text"
+                          value={announcementForm.linkText}
+                          onChange={(e) =>
+                            setAnnouncementForm({ ...announcementForm, linkText: e.target.value })
+                          }
+                          placeholder="e.g., Check Result"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                      <div className="flex items-center gap-2">
+                        <Switch
+                          id="announcement-active"
+                          checked={announcementForm.isActive}
+                          onCheckedChange={(checked) =>
+                            setAnnouncementForm({ ...announcementForm, isActive: checked })
+                          }
+                        />
+                        <Label htmlFor="announcement-active">Active</Label>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <Switch
+                          id="announcement-hide-content"
+                          checked={announcementForm.hideOtherContent}
+                          onCheckedChange={(checked) =>
+                            setAnnouncementForm({ ...announcementForm, hideOtherContent: checked })
+                          }
+                        />
+                        <Label htmlFor="announcement-hide-content">Hide Other Content</Label>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => {
+                          if (editingAnnouncement) {
+                            handleUpdateAnnouncement(editingAnnouncement.id, announcementForm);
+                          } else {
+                            handleCreateAnnouncement();
+                          }
+                        }}
+                        disabled={!announcementForm.title || !announcementForm.content}
+                      >
+                        {editingAnnouncement ? 'Update' : 'Create'} Announcement
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setShowAnnouncementForm(false);
+                          setEditingAnnouncement(null);
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {announcements.length === 0 ? (
+                <p className="text-muted-foreground text-center py-8">
+                  No announcements yet. Click &quot;Add Announcement&quot; to create one.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {announcements.map((announcement) => (
+                    <div
+                      key={announcement.id}
+                      className="p-4 border rounded-lg bg-card hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h4 className="font-semibold">{announcement.title}</h4>
+                            <Badge
+                              variant={
+                                announcement.priority === 'high'
+                                  ? 'destructive'
+                                  : announcement.priority === 'medium'
+                                  ? 'default'
+                                  : 'secondary'
+                              }
+                            >
+                              {announcement.priority}
+                            </Badge>
+                            {announcement.isActive ? (
+                              <Badge variant="outline" className="text-green-600 border-green-600">
+                                Active
+                              </Badge>
+                            ) : (
+                              <Badge variant="outline" className="text-gray-500">
+                                Inactive
+                              </Badge>
+                            )}
+                            {announcement.hideOtherContent && (
+                              <Badge variant="outline" className="text-orange-600 border-orange-600">
+                                Hides Content
+                              </Badge>
+                            )}
+                          </div>
+                          <div
+                            className="text-sm text-muted-foreground mb-2 line-clamp-2"
+                            dangerouslySetInnerHTML={{ __html: announcement.content }}
+                          />
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            <span>Created: {new Date(announcement.createdAt).toLocaleDateString()}</span>
+                            {announcement.expiresAt && (
+                              <span>
+                                Expires: {new Date(announcement.expiresAt).toLocaleDateString()}
+                              </span>
+                            )}
+                            <div className="flex items-center gap-2">
+                              {announcement.linkUrl && (
+                                <a
+                                  href={announcement.linkUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1 text-primary hover:underline text-xs"
+                                >
+                                  <LinkIcon className="h-3 w-3" />
+                                  External Link
+                                </a>
+                              )}
+                              <button
+                                onClick={() => {
+                                  const url = `${window.location.origin}/announcements/${announcement.id}`;
+                                  navigator.clipboard.writeText(url).then(() => {
+                                    setSuccess('Shareable link copied to clipboard!');
+                                    setTimeout(() => setSuccess(''), 3000);
+                                  }).catch(() => {
+                                    setError('Failed to copy link');
+                                  });
+                                }}
+                                className="flex items-center gap-1 text-primary hover:underline text-xs"
+                              >
+                                <Share2 className="h-3 w-3" />
+                                Copy Share Link
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleEditAnnouncement(announcement)}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => handleDeleteAnnouncement(announcement.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          </>
+          )}
         </div>
       </main>
     </div>

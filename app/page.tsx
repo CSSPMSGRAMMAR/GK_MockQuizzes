@@ -10,6 +10,8 @@ import { BRANDING } from '@/lib/branding';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { AnnouncementBanner } from '@/components/AnnouncementBanner';
+import type { Announcement } from '@/lib/announcements';
 import {
   BookOpen,
   Clock,
@@ -44,6 +46,8 @@ export default function Home() {
   const [user, setUser] = useState<{ username: string; name: string } | null>(null);
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<'free' | 'premium'>('free');
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [showMainContent, setShowMainContent] = useState(true);
 
   useEffect(() => {
     // Ensure this only runs on client
@@ -53,6 +57,7 @@ export default function Home() {
       setUser(currentUser);
     }
     loadQuizzes();
+    loadAnnouncements();
     
     // Track website visit (non-blocking with retry logic)
     const trackVisit = async (retries = 3) => {
@@ -96,6 +101,46 @@ export default function Home() {
       setQuizzes([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAnnouncements = async () => {
+    try {
+      const timestamp = Date.now();
+      const response = await fetch(`/api/announcements?t=${timestamp}`, {
+        cache: 'no-store',
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setAnnouncements(data);
+        
+        // Check if any announcement should hide other content
+        const shouldHideContent = data.some(
+          (ann: Announcement) => ann.isActive && ann.hideOtherContent
+        );
+        setShowMainContent(!shouldHideContent);
+      }
+    } catch (err) {
+      console.error('Error loading announcements:', err);
+    }
+  };
+
+  const handleAnnouncementDismiss = (id: string) => {
+    // Check if dismissed announcement was hiding content
+    const dismissedAnnouncement = announcements.find((a) => a.id === id);
+    if (dismissedAnnouncement?.hideOtherContent) {
+      // Check if any other active announcement still hides content
+      const otherHidingAnnouncements = announcements.filter(
+        (a) => a.id !== id && a.isActive && a.hideOtherContent
+      );
+      setShowMainContent(otherHidingAnnouncements.length === 0);
     }
   };
 
@@ -201,7 +246,35 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-6 sm:py-8 relative z-10">
         <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
+          {/* Announcement Banner */}
+          {announcements.length > 0 && (
+            <AnnouncementBanner
+              announcements={announcements}
+              onDismiss={handleAnnouncementDismiss}
+            />
+          )}
+
+          {/* Show/Hide Main Content Button (if announcement hides content) */}
+          {!showMainContent && announcements.some((a) => a.isActive && a.hideOtherContent) && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setShowMainContent(true)}
+                className="shadow-elegant"
+              >
+                Show Quizzes & Content
+              </Button>
+            </motion.div>
+          )}
+
           {/* Hero Section */}
+          {showMainContent && (
+            <>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -471,6 +544,8 @@ export default function Home() {
             </CardContent>
           </Card>
           </motion.div>
+          </>
+          )}
         </div>
       </main>
     </div>
