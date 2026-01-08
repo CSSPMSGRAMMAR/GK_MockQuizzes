@@ -37,5 +37,18 @@
     "available": true,
     "isPublic": false,
     "createdAt": "2024-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "pms-gk-mock-paper-2",
+    "title": "PMS GK Mock Paper 2",
+    "description": "Premium mock test with 100 MCQs covering General Knowledge, Pakistan Affairs, International Relations, and more. Includes detailed explanations for each question.",
+    "totalQuestions": 100,
+    "totalMarks": 100,
+    "durationMinutes": 120,
+    "negativeMarking": 0.25,
+    "passingPercentage": 50,
+    "available": true,
+    "isPublic": false,
+    "createdAt": "2024-01-04T00:00:00.000Z"
   }
 ]

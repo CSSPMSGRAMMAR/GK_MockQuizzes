@@ -39,27 +39,47 @@ export default function QuizzesPage() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ username: string; name: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure component is mounted on client before checking auth
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
-    // Check authentication
-    if (!isUserLoggedIn()) {
-      router.push('/login');
-      return;
-    }
+    // Wait for component to mount before checking auth
+    if (!mounted) return;
 
-    const currentUser = getCurrentUser();
-    setUser(currentUser);
+    // Check authentication with a small delay to ensure localStorage is ready
+    const checkAuth = () => {
+      if (!isUserLoggedIn()) {
+        router.push('/login');
+        return;
+      }
+
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+        // Load quizzes with cache busting to ensure fresh data
+        loadQuizzes();
+      } else {
+        // If no user found, redirect to login
+        router.push('/login');
+      }
+    };
+
+    // Small delay to ensure localStorage is ready after redirect
+    const timeoutId = setTimeout(checkAuth, 100);
     
-    // Load quizzes with cache busting to ensure fresh data
-    loadQuizzes();
-  }, [router]);
+    return () => clearTimeout(timeoutId);
+  }, [router, mounted]);
 
   // Also reload quizzes when user changes (e.g., after login)
   useEffect(() => {
-    if (user) {
+    if (user && mounted) {
       loadQuizzes();
     }
-  }, [user?.username]);
+  }, [user?.username, mounted]);
 
   const loadQuizzes = async () => {
     try {
@@ -96,7 +116,8 @@ export default function QuizzesPage() {
     router.push(`/quiz/${quizId}`);
   };
 
-  if (loading) {
+  // Show loading if not mounted or still loading
+  if (!mounted || loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">

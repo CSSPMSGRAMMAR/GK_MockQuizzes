@@ -2,6 +2,7 @@ import { MCQuestion } from '@/types/exam';
 import { pmsGkMcqs } from '@/data/pms-gk-mcqs';
 import { pmsGkMcqsAdditional } from '@/data/pms-gk-mcqs -1';
 import { pmsGkMcqsAdvanced } from '@/data/pms-gk-mcqs-2';
+import { pmsGkMockPaper2 } from '@/data/pms-gk-mock-paper-2';
 
 /**
  * Quiz loader utility to load questions from different sources
@@ -11,6 +12,7 @@ const QUIZ_QUESTIONS_MAP: Record<string, MCQuestion[]> = {
   'pms-gk-demo-1': pmsGkMcqs, // Original 100 questions (q1-q100)
   'pms-gk-demo-2': pmsGkMcqsAdditional, // Additional 100 questions (q101-q200)
   'pms-gk-demo-3': pmsGkMcqsAdvanced, // Advanced 100 questions (q201-q300)
+  'pms-gk-mock-paper-2': pmsGkMockPaper2, // Premium Mock Paper 2 with explanations (100 questions)
 };
 
 /**

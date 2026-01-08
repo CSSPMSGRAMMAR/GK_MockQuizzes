@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Flag, X } from 'lucide-react';
+import { Flag, X, Lightbulb } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface QuestionCardProps {
   question: MCQuestion;
@@ -80,6 +81,32 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
             ))}
           </div>
         </RadioGroup>
+
+        {/* Explanation Display - Shows when answer is selected */}
+        <AnimatePresence>
+          {selectedOptionId && question.explanation && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-start gap-2 mb-2">
+                  <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                  <h4 className="text-sm sm:text-base font-semibold text-blue-900 dark:text-blue-100">
+                    Explanation:
+                  </h4>
+                </div>
+                <div
+                  className="text-sm sm:text-base text-blue-800 dark:text-blue-200 leading-relaxed prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: question.explanation }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="flex gap-2 pt-2 flex-wrap">
           <Button

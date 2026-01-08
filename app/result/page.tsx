@@ -335,6 +335,24 @@ function ResultContent() {
                             <span className="text-green-600 font-medium">Correct answer: </span>
                             <span className="text-green-600">{correctOption?.text}</span>
                           </div>
+
+                          {/* Explanation Section */}
+                          {question.explanation ? (
+                            <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950/20 border-l-4 border-blue-500 rounded-r-lg">
+                              <div className="flex items-start gap-2">
+                                <div className="text-blue-600 dark:text-blue-400 font-semibold text-sm">💡 Explanation:</div>
+                              </div>
+                              <p className="text-sm text-foreground mt-2 leading-relaxed">
+                                {question.explanation}
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="mt-4 p-3 bg-muted/50 border-l-4 border-muted-foreground/30 rounded-r-lg">
+                              <p className="text-xs text-muted-foreground italic">
+                                No explanation available for this question.
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

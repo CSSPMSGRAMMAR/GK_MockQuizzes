@@ -36,10 +36,11 @@ export default function UserLoginPage() {
       if (response.ok) {
         setUserSession({ id: data.id, username: data.username, name: data.name });
         // Use replace instead of push to prevent back button issues
-        // Add a small delay to ensure session is set before navigation
+        // Add a delay to ensure session is set and localStorage is ready before navigation
         setTimeout(() => {
-          router.replace('/quizzes');
-        }, 100);
+          // Force a hard navigation to ensure fresh page load
+          window.location.href = '/quizzes';
+        }, 150);
       } else {
         setError(data.error || 'Invalid credentials');
       }
