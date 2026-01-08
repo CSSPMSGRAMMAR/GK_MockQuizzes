@@ -34,6 +34,17 @@ export default function AnnouncementDetailPage() {
 
   useEffect(() => {
     loadAnnouncement();
+    // Track announcement view
+    if (announcementId) {
+      fetch('/api/analytics/announcement-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ announcementId }),
+        cache: 'no-store',
+      }).catch((error) => {
+        console.error('Failed to track announcement view:', error);
+      });
+    }
   }, [announcementId]);
 
   const loadAnnouncement = async () => {
@@ -335,4 +346,5 @@ export default function AnnouncementDetailPage() {
     </div>
   );
 }
+
 

@@ -155,6 +155,50 @@ export async function updateAnnouncement(
   }
 }
 
+// Get announcement by ID
+export async function getAnnouncementById(id: string): Promise<Announcement | null> {
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection(ANNOUNCEMENTS_COLLECTION);
+
+    // Try to find by _id (ObjectId) or by id field
+    let doc = await collection.findOne({ _id: id as any });
+    if (!doc) {
+      doc = await collection.findOne({ id });
+    }
+    // Also try finding by string _id
+    if (!doc) {
+      const { ObjectId } = await import('mongodb');
+      try {
+        doc = await collection.findOne({ _id: new ObjectId(id) });
+      } catch (e) {
+        // Invalid ObjectId format, ignore
+      }
+    }
+
+    if (!doc) {
+      return null;
+    }
+
+    return {
+      id: doc._id?.toString() || doc.id || id,
+      title: doc.title,
+      content: doc.content,
+      isActive: doc.isActive,
+      priority: doc.priority || 'medium',
+      hideOtherContent: doc.hideOtherContent || false,
+      createdAt: doc.createdAt,
+      updatedAt: doc.updatedAt,
+      expiresAt: doc.expiresAt,
+      linkUrl: doc.linkUrl,
+      linkText: doc.linkText,
+    };
+  } catch (error) {
+    console.error('Error getting announcement by ID:', error);
+    return null;
+  }
+}
+
 // Delete an announcement
 export async function deleteAnnouncement(id: string): Promise<boolean> {
   try {
@@ -168,4 +212,5 @@ export async function deleteAnnouncement(id: string): Promise<boolean> {
     throw error;
   }
 }
+
 

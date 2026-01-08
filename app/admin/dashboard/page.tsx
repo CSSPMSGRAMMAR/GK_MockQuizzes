@@ -86,6 +86,8 @@ export default function AdminDashboardPage() {
     totalVisits: 0,
     totalFreeQuizAttempts: 0,
     freeQuizAttemptsByQuiz: {} as Record<string, number>,
+    totalAnnouncementViews: 0,
+    announcementViewsByAnnouncement: {} as Record<string, number>,
   });
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -588,6 +590,20 @@ export default function AdminDashboardPage() {
                 </div>
               </CardContent>
             </Card>
+            <Card className="hover:shadow-elegant transition-all border-2">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Megaphone className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{analytics.totalAnnouncementViews.toLocaleString()}</div>
+                    <div className="text-sm text-muted-foreground">Announcement Views</div>
+                    <div className="text-xs text-muted-foreground mt-1">Total views</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Free Quiz Attempts Breakdown */}
@@ -617,6 +633,41 @@ export default function AdminDashboardPage() {
                         <div className="text-xs text-muted-foreground mt-1">attempts</div>
                       </div>
                     ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Announcement Views Breakdown */}
+          {Object.keys(analytics.announcementViewsByAnnouncement).length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Megaphone className="h-5 w-5" />
+                  Announcement Views by Announcement
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {Object.entries(analytics.announcementViewsByAnnouncement)
+                    .sort(([, a], [, b]) => (b || 0) - (a || 0))
+                    .map(([announcementId, count]) => {
+                      const announcement = announcements.find(a => a.id === announcementId);
+                      return (
+                        <div
+                          key={announcementId}
+                          className="p-4 border rounded-lg bg-muted/50"
+                        >
+                          <div className="text-sm font-semibold text-muted-foreground mb-1 line-clamp-2">
+                            {announcement?.title || announcementId}
+                          </div>
+                          <div className="text-2xl font-bold text-primary">
+                            {count.toLocaleString()}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">views</div>
+                        </div>
+                      );
+                    })}
                 </div>
               </CardContent>
             </Card>

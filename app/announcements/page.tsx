@@ -8,8 +8,15 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { BRANDING } from '@/lib/branding';
-import { ArrowLeft, ExternalLink, AlertCircle, Info, Bell, Calendar, X, Share2 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, AlertCircle, Info, Bell, Calendar, X, Share2, ChevronDown } from 'lucide-react';
 import type { Announcement } from '@/lib/announcements';
 
 // Helper function to format plain text (convert newlines to breaks)
@@ -26,11 +33,19 @@ function formatText(text: string): string {
     .join('<br>');
 }
 
+// Helper function to get preview text (first 100 chars)
+function getPreviewText(content: string): string {
+  const stripped = content.replace(/<[^>]*>/g, '').trim();
+  return stripped.length > 100 ? stripped.substring(0, 100) + '...' : stripped;
+}
+
 export default function AnnouncementsPage() {
   const router = useRouter();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [dismissedIds, setDismissedIds] = useState<string[]>([]);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     // Load dismissed announcements from localStorage
@@ -76,28 +91,48 @@ export default function AnnouncementsPage() {
     localStorage.setItem('dismissedAnnouncements', JSON.stringify(newDismissed));
   };
 
+  const handleOpenDialog = (announcement: Announcement) => {
+    setSelectedAnnouncement(announcement);
+    setIsDialogOpen(true);
+    // Track view when opening dialog
+    fetch('/api/analytics/announcement-view', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ announcementId: announcement.id }),
+      cache: 'no-store',
+    }).catch((error) => {
+      console.error('Failed to track announcement view:', error);
+    });
+  };
+
   const getPriorityStyles = (priority: string) => {
     switch (priority) {
       case 'high':
         return {
-          bg: 'bg-gradient-to-r from-orange-500 to-red-500',
-          text: 'text-white',
+          bg: 'bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 dark:from-amber-950/20 dark:via-orange-950/20 dark:to-red-950/20',
+          border: 'border-l-4 border-amber-500',
+          iconBg: 'bg-amber-100 dark:bg-amber-900/30',
+          iconColor: 'text-amber-600 dark:text-amber-400',
+          badge: 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20',
           icon: AlertCircle,
-          badge: 'destructive',
         };
       case 'medium':
         return {
-          bg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
-          text: 'text-white',
+          bg: 'bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20',
+          border: 'border-l-4 border-blue-500',
+          iconBg: 'bg-blue-100 dark:bg-blue-900/30',
+          iconColor: 'text-blue-600 dark:text-blue-400',
+          badge: 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20',
           icon: Info,
-          badge: 'default',
         };
       default:
         return {
-          bg: 'bg-gradient-to-r from-purple-500 to-pink-500',
-          text: 'text-white',
+          bg: 'bg-gradient-to-r from-slate-50 via-gray-50 to-zinc-50 dark:from-slate-950/20 dark:via-gray-950/20 dark:to-zinc-950/20',
+          border: 'border-l-4 border-slate-400',
+          iconBg: 'bg-slate-100 dark:bg-slate-900/30',
+          iconColor: 'text-slate-600 dark:text-slate-400',
+          badge: 'bg-slate-500/10 text-slate-700 dark:text-slate-400 border-slate-500/20',
           icon: Bell,
-          badge: 'secondary',
         };
     }
   };
@@ -173,7 +208,7 @@ export default function AnnouncementsPage() {
               {visibleAnnouncements.map((announcement, index) => {
                 const styles = getPriorityStyles(announcement.priority);
                 const Icon = styles.icon;
-                const formattedContent = formatText(announcement.content);
+                const previewText = getPreviewText(announcement.content);
 
                 return (
                   <motion.div
@@ -183,23 +218,26 @@ export default function AnnouncementsPage() {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     <Card
-                      className={`${styles.bg} ${styles.text} border-0 shadow-lg hover:shadow-xl transition-shadow`}
+                      className={`${styles.bg} ${styles.border} border-t border-r border-b shadow-lg hover:shadow-xl transition-all cursor-pointer`}
+                      onClick={() => handleOpenDialog(announcement)}
                     >
-                      <CardHeader>
+                      <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-start gap-3 flex-1">
-                            <Icon className="h-5 w-5 sm:h-6 sm:w-6 mt-1 flex-shrink-0" />
+                            <div className={`${styles.iconBg} rounded-lg p-2 flex-shrink-0`}>
+                              <Icon className={`h-5 w-5 ${styles.iconColor}`} />
+                            </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-2 flex-wrap">
                                 <CardTitle className="text-lg sm:text-xl">
                                   {announcement.title}
                                 </CardTitle>
-                                <Badge variant={styles.badge as any} className="text-xs">
+                                <Badge variant="outline" className={styles.badge}>
                                   {announcement.priority}
                                 </Badge>
                               </div>
                               {announcement.createdAt && (
-                                <div className="flex items-center gap-2 text-xs opacity-80">
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                   <Calendar className="h-3 w-3" />
                                   <span>
                                     {new Date(announcement.createdAt).toLocaleDateString('en-US', {
@@ -212,37 +250,45 @@ export default function AnnouncementsPage() {
                               )}
                             </div>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDismiss(announcement.id)}
-                            className={`${styles.text} hover:bg-white/20 h-8 w-8 p-0 flex-shrink-0`}
-                            aria-label="Dismiss announcement"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDismiss(announcement.id);
+                              }}
+                              className="h-8 w-8 p-0 flex-shrink-0"
+                              aria-label="Dismiss announcement"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
                       </CardHeader>
-                      <CardContent>
-                        <div
-                          className="text-sm sm:text-base leading-relaxed mb-4 prose prose-invert max-w-none"
-                          dangerouslySetInnerHTML={{ __html: formattedContent }}
-                        />
-                        <div className="flex items-center gap-3 flex-wrap mt-4">
-                          {announcement.linkUrl && (
-                            <a
-                              href={announcement.linkUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold underline hover:opacity-80 transition-opacity"
-                            >
-                              {announcement.linkText || 'Read More'}
-                              <ExternalLink className="h-4 w-4" />
-                            </a>
-                          )}
+                      <CardContent className="pt-0">
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                          {previewText}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDialog(announcement);
+                            }}
+                            className="text-xs"
+                          >
+                            Read More
+                            <ChevronDown className="h-4 w-4 ml-2" />
+                          </Button>
                           <button
-                            onClick={() => router.push(`/announcements/${announcement.id}`)}
-                            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/announcements/${announcement.id}`);
+                            }}
+                            className="inline-flex items-center gap-2 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
                           >
                             <Share2 className="h-4 w-4" />
                             Share
@@ -257,7 +303,64 @@ export default function AnnouncementsPage() {
           )}
         </div>
       </main>
+
+      {/* Dialog for full announcement */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          {selectedAnnouncement && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-2 mb-2">
+                  <DialogTitle className="text-2xl">{selectedAnnouncement.title}</DialogTitle>
+                  <Badge variant="outline" className={getPriorityStyles(selectedAnnouncement.priority).badge}>
+                    {selectedAnnouncement.priority}
+                  </Badge>
+                </div>
+                {selectedAnnouncement.createdAt && (
+                  <DialogDescription className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>
+                      {new Date(selectedAnnouncement.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </span>
+                  </DialogDescription>
+                )}
+              </DialogHeader>
+              <div
+                className="text-base leading-relaxed mb-4 prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: formatText(selectedAnnouncement.content) }}
+              />
+              {selectedAnnouncement.linkUrl && (
+                <div className="mb-4">
+                  <a
+                    href={selectedAnnouncement.linkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                  >
+                    {selectedAnnouncement.linkText || 'Read More'}
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </div>
+              )}
+              <div className="flex items-center gap-2 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => router.push(`/announcements/${selectedAnnouncement.id}`)}
+                  className="text-xs"
+                >
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share Link
+                </Button>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
-

@@ -2,6 +2,7 @@ import { connectToDatabase } from './mongodb';
 
 const VISITS_COLLECTION = 'visits';
 const FREE_QUIZ_ATTEMPTS_COLLECTION = 'free-quiz-attempts';
+const ANNOUNCEMENT_VIEWS_COLLECTION = 'announcement-views';
 const STATS_COLLECTION = 'analytics-stats';
 
 // Track a website visit
@@ -130,21 +131,101 @@ export async function getFreeQuizAttemptsByQuiz(): Promise<Record<string, number
   }
 }
 
+// Track an announcement view
+export async function trackAnnouncementView(announcementId: string): Promise<void> {
+  try {
+    const db = await connectToDatabase();
+    const viewsCollection = db.collection(ANNOUNCEMENT_VIEWS_COLLECTION);
+    
+    // Insert view record
+    await viewsCollection.insertOne({
+      announcementId,
+      timestamp: new Date(),
+      createdAt: new Date().toISOString(),
+    });
+    
+    // Update counters atomically
+    const statsCollection = db.collection(STATS_COLLECTION);
+    
+    // Update total announcement views
+    await statsCollection.updateOne(
+      { type: 'total-announcement-views' },
+      { $inc: { count: 1 } },
+      { upsert: true }
+    );
+    
+    // Update per-announcement counter
+    await statsCollection.updateOne(
+      { type: 'announcement-views', announcementId },
+      { $inc: { count: 1 } },
+      { upsert: true }
+    );
+  } catch (error) {
+    console.error('Error tracking announcement view:', error);
+    // Don't throw - analytics shouldn't break the app
+  }
+}
+
+// Get total announcement views
+export async function getTotalAnnouncementViews(): Promise<number> {
+  try {
+    const db = await connectToDatabase();
+    const statsCollection = db.collection(STATS_COLLECTION);
+    
+    const stats = await statsCollection.findOne({ type: 'total-announcement-views' });
+    return stats?.count || 0;
+  } catch (error) {
+    console.error('Error getting total announcement views:', error);
+    return 0;
+  }
+}
+
+// Get announcement views per announcement
+export async function getAnnouncementViewsByAnnouncement(): Promise<Record<string, number>> {
+  try {
+    const db = await connectToDatabase();
+    const statsCollection = db.collection(STATS_COLLECTION);
+    
+    const stats = await statsCollection.find({ type: 'announcement-views' }).toArray();
+    const result: Record<string, number> = {};
+    
+    stats.forEach((stat: any) => {
+      result[stat.announcementId] = stat.count || 0;
+    });
+    
+    return result;
+  } catch (error) {
+    console.error('Error getting announcement views by announcement:', error);
+    return {};
+  }
+}
+
 // Get analytics summary for admin dashboard
 export interface AnalyticsSummary {
   currentVisitors: number;
   totalVisits: number;
   totalFreeQuizAttempts: number;
   freeQuizAttemptsByQuiz: Record<string, number>;
+  totalAnnouncementViews: number;
+  announcementViewsByAnnouncement: Record<string, number>;
 }
 
 export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   try {
-    const [currentVisitors, totalVisits, totalFreeAttempts, attemptsByQuiz] = await Promise.all([
+    const [
+      currentVisitors,
+      totalVisits,
+      totalFreeAttempts,
+      attemptsByQuiz,
+      totalAnnouncementViews,
+      announcementViewsByAnnouncement,
+    ] = await Promise.all([
       getCurrentVisitors(),
       getTotalVisits(),
       getTotalFreeQuizAttempts(),
       getFreeQuizAttemptsByQuiz(),
+      getTotalAnnouncementViews(),
+      getAnnouncementViewsByAnnouncement(),
     ]);
     
     return {
@@ -152,6 +233,8 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
       totalVisits,
       totalFreeQuizAttempts: totalFreeAttempts,
       freeQuizAttemptsByQuiz: attemptsByQuiz,
+      totalAnnouncementViews,
+      announcementViewsByAnnouncement,
     };
   } catch (error) {
     console.error('Error getting analytics summary:', error);
@@ -160,7 +243,8 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
       totalVisits: 0,
       totalFreeQuizAttempts: 0,
       freeQuizAttemptsByQuiz: {},
+      totalAnnouncementViews: 0,
+      announcementViewsByAnnouncement: {},
     };
   }
 }
-
