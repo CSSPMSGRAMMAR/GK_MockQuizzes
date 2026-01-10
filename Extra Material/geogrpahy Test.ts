@@ -1,6 +1,4 @@
-import { MCQuestion } from '@/types/exam';
-
-export const geographyTestQuestions: MCQuestion[] = [
+[
   {
     "id": "geo_q1",
     "questionNumber": 1,
@@ -1299,4 +1297,4 @@ export const geographyTestQuestions: MCQuestion[] = [
     ],
     "explanation": "Angel Falls, the highest waterfall in the world, is located in Venezuela."
   }
-];
+]

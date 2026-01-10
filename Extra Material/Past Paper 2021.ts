@@ -1,6 +1,4 @@
-import { MCQuestion } from "@/types/exam";
-
-export const pastPaper2021Questions: MCQuestion[] = [
+[
   {
     "id": "q1",
     "questionNumber": 1,

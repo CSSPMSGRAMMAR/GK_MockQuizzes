@@ -1,6 +1,4 @@
-import { MCQuestion } from "@/types/exam";
-
-export const pakistanStudiesTestQuestions: MCQuestion[] = [
+[
   {
     "id": "q1",
     "questionNumber": 1,
@@ -1301,4 +1299,4 @@ export const pakistanStudiesTestQuestions: MCQuestion[] = [
     ],
     "explanation": "The Day of Deliverance was observed on December 22, 1939, after the resignation of Congress ministries."
   }
-];
+]

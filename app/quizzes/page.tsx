@@ -50,102 +50,7 @@ interface Quiz {
   category?: string;
 }
 
-interface SubjectTest {
-  id: string;
-  subject: string;
-  title: string;
-  description: string;
-  totalQuestions: number;
-  totalMarks: number;
-  durationMinutes: number;
-  negativeMarking: number;
-  passingPercentage: number;
-  available: boolean;
-  category: string;
-}
-
-// Subject-specific tests structure (to be populated from Extra Material files)
-const SUBJECT_TESTS: SubjectTest[] = [
-  {
-    id: 'subject-past-paper-2021',
-    subject: 'Past Paper',
-    title: 'Past Paper 2021',
-    description: 'Complete past paper from 2021 covering all subjects',
-    totalQuestions: 100,
-    totalMarks: 100,
-    durationMinutes: 120,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Past Papers',
-  },
-  {
-    id: 'subject-geography',
-    subject: 'Geography',
-    title: 'Geography Test',
-    description: 'Subject-specific test focusing on Geography topics',
-    totalQuestions: 50,
-    totalMarks: 50,
-    durationMinutes: 60,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Geography',
-  },
-  {
-    id: 'subject-general-science-computer',
-    subject: 'Science & Computer',
-    title: 'General Science and Computer Test',
-    description: 'Test covering General Science and Computer topics',
-    totalQuestions: 50,
-    totalMarks: 50,
-    durationMinutes: 60,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Science & Technology',
-  },
-  {
-    id: 'subject-current-affairs',
-    subject: 'Current Affairs',
-    title: 'Current Affairs Test',
-    description: 'Test covering recent current affairs and events',
-    totalQuestions: 50,
-    totalMarks: 50,
-    durationMinutes: 60,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Current Affairs',
-  },
-  {
-    id: 'subject-pakistan-studies',
-    subject: 'Pakistan Studies',
-    title: 'Pakistan Studies Test',
-    description: 'Test focusing on Pakistan Studies topics',
-    totalQuestions: 50,
-    totalMarks: 50,
-    durationMinutes: 60,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Pakistan Studies',
-  },
-  {
-    id: 'subject-islamiat',
-    subject: 'Islamiat',
-    title: 'Islamiat Test',
-    description: 'Test covering Islamic Studies and History',
-    totalQuestions: 50,
-    totalMarks: 50,
-    durationMinutes: 60,
-    negativeMarking: 0.25,
-    passingPercentage: 50,
-    available: true,
-    category: 'Islamic Studies',
-  },
-];
-
+// Subject categories available for filtering
 const SUBJECT_CATEGORIES = [
   'All Subjects',
   'Past Papers',
@@ -159,6 +64,7 @@ const SUBJECT_CATEGORIES = [
 export default function QuizzesPage() {
   const router = useRouter();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [subjectTests, setSubjectTests] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ username: string; name: string } | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -211,14 +117,24 @@ export default function QuizzesPage() {
       if (response.ok) {
         const data = await response.json();
         const premiumQuizzes = data.filter((q: Quiz & { isPublic?: boolean }) => !q.isPublic && q.available);
-        setQuizzes(premiumQuizzes);
+        
+        // Separate mock papers from subject-specific tests
+        // Mock papers: don't have a category or have category like "Mock Paper"
+        // Subject tests: have categories like "Past Papers", "Geography", etc.
+        const mockPapers = premiumQuizzes.filter((q: Quiz) => !q.category || q.category === 'Mock Paper');
+        const subjectTestQuizzes = premiumQuizzes.filter((q: Quiz) => q.category && q.category !== 'Mock Paper');
+        
+        setQuizzes(mockPapers);
+        setSubjectTests(subjectTestQuizzes);
       } else {
         console.error('Failed to load quizzes:', response.status);
         setQuizzes([]);
+        setSubjectTests([]);
       }
     } catch (err) {
       console.error('Error loading quizzes:', err);
       setQuizzes([]);
+      setSubjectTests([]);
     } finally {
       setLoading(false);
     }
@@ -248,21 +164,22 @@ export default function QuizzesPage() {
   });
 
   // Filter and group subject tests
-  const filteredSubjectTests = SUBJECT_TESTS.filter((test) => {
+  const filteredSubjectTests = subjectTests.filter((test) => {
     const matchesCategory = selectedCategory === 'All Subjects' || test.category === selectedCategory;
     const matchesSearch = test.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       test.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      test.category.toLowerCase().includes(searchQuery.toLowerCase());
+      (test.category && test.category.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
   const groupedSubjectTests = filteredSubjectTests.reduce((acc, test) => {
-    if (!acc[test.category]) {
-      acc[test.category] = [];
+    const category = test.category || 'Other';
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[test.category].push(test);
+    acc[category].push(test);
     return acc;
-  }, {} as Record<string, SubjectTest[]>);
+  }, {} as Record<string, Quiz[]>);
 
   if (!mounted || loading) {
     return (

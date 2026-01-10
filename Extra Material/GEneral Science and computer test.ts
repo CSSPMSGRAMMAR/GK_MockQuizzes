@@ -1,6 +1,4 @@
-import { MCQuestion } from "@/types/exam";
-
-export const generalScienceComputerTestQuestions: MCQuestion[] = [
+[
   {
     "id": "q1",
     "questionNumber": 1,
@@ -1431,4 +1429,4 @@ export const generalScienceComputerTestQuestions: MCQuestion[] = [
     ],
     "explanation": "Ctrl + N creates a new presentation document."
   }
-];
+]

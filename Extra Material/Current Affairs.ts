@@ -1,6 +1,4 @@
-import { MCQuestion } from "@/types/exam";
-
-export const currentAffairsTestQuestions: MCQuestion[] = [
+[
   {
     "id": "q1",
     "questionNumber": 1,
@@ -1301,4 +1299,4 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     ],
     "explanation": "Mock event answer: Arif Habib Cooperation (often cited in consortium bids in mocks)."
   }
-];
+]

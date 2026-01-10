@@ -20,11 +20,9 @@ import { islamiatTestQuestions } from '@/data/islamiatTest';
  * Maps quiz IDs to their question arrays
  */
 const QUIZ_QUESTIONS_MAP: Record<string, MCQuestion[]> = {
-  // Free demo quizzes
   'pms-gk-demo-1': pmsGkMcqs, // Original 100 questions (q1-q100)
   'pms-gk-demo-2': pmsGkMcqsAdditional, // Additional 100 questions (q101-q200)
   'pms-gk-demo-3': pmsGkMcqsAdvanced, // Advanced 100 questions (q201-q300)
-  // Paid mock papers
   'pms-gk-mock-paper-2': pmsGkMockPaper2, // Premium Mock Paper 2 with explanations (100 questions)
   'pms-gk-mock-paper-3': pmsGkMockPaper3, // Premium Mock Paper 3 with explanations (100 questions)
   'pms-gk-mock-paper-4': pmsGkMockPaper4, // Premium Mock Paper 4 with explanations (100 questions)

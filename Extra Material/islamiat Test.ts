@@ -1,6 +1,4 @@
-import { MCQuestion } from "@/types/exam";
-
-export const islamiatTestQuestions: MCQuestion[] = [
+[
   {
     "id": "q1",
     "questionNumber": 1,
@@ -1301,4 +1299,4 @@ export const islamiatTestQuestions: MCQuestion[] = [
     ],
     "explanation": "The event of Isra and Miraj took place in the 10th year of Prophethood (10 Nabvi)."
   }
-];
+]
