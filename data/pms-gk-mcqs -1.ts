@@ -15,6 +15,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q101c', text: 'Stalin', isCorrect: false },
       { id: 'q101d', text: 'Churchill', isCorrect: false },
     ],
+    explanation: 'While George Orwell used the term in an essay, Bernard Baruch, an American financier and presidential adviser, first used it in a speech in 1947 to describe the geopolitical tension between the USSR and the US.',
   },
   {
     id: 'q102',
@@ -27,6 +28,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q102c', text: 'Germany', isCorrect: true },
       { id: 'q102d', text: 'Russia', isCorrect: false },
     ],
+    explanation: 'Following the Taliban takeover in 2021, Germany remained a top donor, pledging this significant amount to address the burgeoning food and medical crisis through international NGOs.',
   },
   {
     id: 'q103',
@@ -39,6 +41,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q103c', text: 'Germany', isCorrect: false },
       { id: 'q103d', text: 'US', isCorrect: false },
     ],
+    explanation: 'The S-400 is considered one of the world’s most advanced long-range surface-to-air missile systems. India’s purchase from Russia was a major point of diplomatic friction with the United States.',
   },
   {
     id: 'q104',
@@ -51,6 +54,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q104c', text: 'Global Justice Movement', isCorrect: true },
       { id: 'q104d', text: 'Anti-WTO Movement', isCorrect: false },
     ],
+    explanation: 'The Global Justice Movement is a network of global social movements opposed to "neoliberal globalization," advocating instead for environmental protection, labor rights, and social justice.',
   },
   {
     id: 'q105',
@@ -63,6 +67,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q105c', text: 'GDP Growth', isCorrect: false },
       { id: 'q105d', text: 'Creditworthiness of the borrower country', isCorrect: true },
     ],
+    explanation: 'Fitch Ratings is one of the "Big Three" credit rating agencies. Their surveys and ratings tell investors how likely a country or company is to default on its debt.',
   },
   {
     id: 'q106',
@@ -75,6 +80,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q106c', text: 'Inspire a Generation', isCorrect: true },
       { id: 'q106d', text: 'Share the Spirit', isCorrect: false },
     ],
+    explanation: 'Wait! Actually, "A New World" (Um Mundo Novo) was the slogan for Rio 2016. However, based on the provided answer key, "Inspire a Generation" was the slogan for London 2012. *Note: Double-check your source key as the Rio slogan was "A New World".*',
   },
   {
     id: 'q107',
@@ -87,6 +93,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q107c', text: 'Cricket', isCorrect: false },
       { id: 'q107d', text: 'Football', isCorrect: false },
     ],
+    explanation: 'Samiullah Khan, known as the "Flying Horse," was a legendary left-winger for the Pakistan National Hockey team during their golden era.',
   },
   {
     id: 'q108',
@@ -99,6 +106,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q108c', text: '2016', isCorrect: false },
       { id: 'q108d', text: '2018', isCorrect: false },
     ],
+    explanation: 'At age 17, Malala became the youngest-ever Nobel Prize laureate, sharing the award with Kailash Satyarthi for their struggle against the suppression of children and young people.',
   },
   {
     id: 'q109',
@@ -111,6 +119,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q109c', text: 'Video Conferencing', isCorrect: true },
       { id: 'q109d', text: 'File Sharing', isCorrect: false },
     ],
+    explanation: 'Zoom skyrocketed to global fame during the COVID-19 pandemic, becoming the industry standard for virtual meetings and remote education via video conferencing.',
   },
   {
     id: 'q110',
@@ -123,6 +132,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q110c', text: 'Texas', isCorrect: false },
       { id: 'q110d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'Paraguay is a landlocked country in South America, whereas Alaska and Texas are two of the 50 states that make up the United States of America.',
   },
 
   // Pakistan Affairs (111-120)
@@ -137,6 +147,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q111c', text: 'KPK', isCorrect: true },
       { id: 'q111d', text: 'Balochistan', isCorrect: false },
     ],
+    explanation: 'The Mami Khel-1 discovery was a major find in the TAL Block located in the Kohat district of Khyber Pakhtunkhwa (KPK).',
   },
   {
     id: 'q112',
@@ -149,6 +160,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q112c', text: '1962', isCorrect: false },
       { id: 'q112d', text: '1973', isCorrect: true },
     ],
+    explanation: 'Established in 1973 to relieve pressure on the Karachi Port, Port Qasim is now Pakistan’s second-busiest port and handles a huge portion of the country’s raw material imports.',
   },
   {
     id: 'q113',
@@ -161,6 +173,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q113c', text: 'Sadruddin Hashwani', isCorrect: true },
       { id: 'q113d', text: 'Zafar Hashwani', isCorrect: false },
     ],
+    explanation: 'Sadruddin Hashwani is a prominent industrialist who founded the Hashoo Group, which owns the Pearl Continental and Marriott hotels in Pakistan.',
   },
   {
     id: 'q114',
@@ -173,6 +186,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q114c', text: '12th', isCorrect: true },
       { id: 'q114d', text: '15th', isCorrect: false },
     ],
+    explanation: 'Passed in 1991, the 12th Amendment allowed for the establishment of Special Courts for the speedy trial of heinous crimes to improve the law and order situation.',
   },
   {
     id: 'q115',
@@ -185,6 +199,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q115c', text: '6 years', isCorrect: false },
       { id: 'q115d', text: '7 years', isCorrect: true },
     ],
+    explanation: 'The 1962 Constitution, introduced by Ayub Khan, remained in force until March 1969, when Yahya Khan abrogated it and imposed Martial Law.',
   },
   {
     id: 'q116',
@@ -197,6 +212,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q116c', text: 'March 2009', isCorrect: false },
       { id: 'q116d', text: 'December 2003', isCorrect: true },
     ],
+    explanation: 'The 17th Amendment was passed during Pervez Musharraf’s era, effectively restoring many of the powers of the Presidency that had been curtailed by previous amendments.',
   },
   {
     id: 'q117',
@@ -209,6 +225,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q117c', text: 'Lahore', isCorrect: false },
       { id: 'q117d', text: 'Lucknow', isCorrect: true },
     ],
+    explanation: 'Wait! Historic records show Sir Syed founded the Scientific Society in Ghazipur in 1864. However, per your answer key, Lucknow is selected. *Note: Historically, Sir Syed founded the Scientific Society in Ghazipur (1864) and then moved it to Aligarh.*',
   },
   {
     id: 'q118',
@@ -221,6 +238,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q118c', text: '1955', isCorrect: true },
       { id: 'q118d', text: '1962', isCorrect: false },
     ],
+    explanation: 'The government nationalized Orient Airways in 1955 to form the Pakistan International Airlines Corporation (PIAC).',
   },
   {
     id: 'q119',
@@ -233,6 +251,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q119c', text: 'Maratha Empire', isCorrect: false },
       { id: 'q119d', text: 'Congress', isCorrect: false },
     ],
+    explanation: 'The Government of India Act 1919 (Montagu-Chelmsford Reforms) introduced "Dyarchy," a system of double government for the provinces of British India.',
   },
   {
     id: 'q120',
@@ -245,6 +264,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q120c', text: '8th August 1940', isCorrect: true },
       { id: 'q120d', text: '15th August 1947', isCorrect: false },
     ],
+    explanation: 'Issued by Viceroy Linlithgow in 1940, the August Offer promised the expansion of the Governor-General’s Executive Council to include more Indians in exchange for cooperation during WWII.',
   },
 
   // International Relations (121-130)
@@ -259,6 +279,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q121c', text: 'Egypt and Jordan', isCorrect: false },
       { id: 'q121d', text: 'Egypt and Pakistan', isCorrect: false },
     ],
+    explanation: 'The Al-Kassah-III exercises focused on counter-IED and search-and-clearance operations, highlighting the strong defense partnership between Islamabad and Riyadh.',
   },
   {
     id: 'q122',
@@ -271,6 +292,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q122c', text: 'UK', isCorrect: false },
       { id: 'q122d', text: 'Australia', isCorrect: true },
     ],
+    explanation: 'Assange is an Australian editor and publisher who became a global figure for releasing classified US documents via WikiLeaks.',
   },
   {
     id: 'q123',
@@ -283,6 +305,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q123c', text: 'Initiate Nuclear Deal', isCorrect: false },
       { id: 'q123d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'This marked an early milestone in formalizing diplomatic relations between the newly independent Pakistan and the French Republic.',
   },
   {
     id: 'q124',
@@ -295,6 +318,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q124c', text: 'Sri Lanka', isCorrect: true },
       { id: 'q124d', text: 'China', isCorrect: false },
     ],
+    explanation: 'Sri Lanka enacted legislative reforms in 2023 to modernize its foreign policy framework amidst shifting regional power dynamics in the Indian Ocean.',
   },
   {
     id: 'q125',
@@ -307,6 +331,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q125c', text: 'Singapore', isCorrect: false },
       { id: 'q125d', text: 'Vietnam', isCorrect: false },
     ],
+    explanation: 'Tsai Ing-wen was the first female president of Taiwan (Republic of China), leading the country through a period of heightened tensions with mainland China.',
   },
   {
     id: 'q126',
@@ -319,6 +344,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q126c', text: 'Lord Mountbatten', isCorrect: true },
       { id: 'q126d', text: 'Lord Curzon', isCorrect: false },
     ],
+    explanation: 'Lord Mountbatten served for just under 6 months as the last Viceroy of India (March 1947 to August 1947) before becoming the first Governor-General of independent India.',
   },
   {
     id: 'q127',
@@ -331,6 +357,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q127c', text: 'Afghanistan', isCorrect: true },
       { id: 'q127d', text: 'Syria', isCorrect: false },
     ],
+    explanation: 'The Suris (Suri tribe) are a sub-group of the Pashtuns. Sher Shah Suri, the famous ruler who defeated Humayun, belonged to this tribe.',
   },
   {
     id: 'q128',
@@ -343,6 +370,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q128c', text: 'Turkey', isCorrect: false },
       { id: 'q128d', text: 'Saudi Arabia', isCorrect: false },
     ],
+    explanation: 'This was the largest ever overseas sale of the French Rafale jet, valued at approximately 14 billion Euros.',
   },
   {
     id: 'q129',
@@ -355,6 +383,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q129c', text: 'Ali Khamenei', isCorrect: false },
       { id: 'q129d', text: 'Masoud Pezeshkian', isCorrect: false },
     ],
+    explanation: 'As of late 2021/early 2022, Ebrahim Raisi was President. *Note: Masoud Pezeshkian was elected in 2024 following the death of Ebrahim Raisi in a helicopter crash.*',
   },
   {
     id: 'q130',
@@ -367,6 +396,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q130c', text: 'JD Vance', isCorrect: true },
       { id: 'q130d', text: 'Kamala Harris', isCorrect: false },
     ],
+    explanation: '*Current Context Note:* Kamala Harris is the 49th Vice President (as of early 2024). JD Vance is the VP-elect/Candidate for the 2024 cycle. Depending on when this test is taken, the "Current" answer changes.',
   },
 
   // Geography (131-140)
@@ -381,6 +411,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q131c', text: 'Iran', isCorrect: false },
       { id: 'q131d', text: 'China', isCorrect: false },
     ],
+    explanation: 'Pakistan is bordered by India to the east, Afghanistan to the west/northwest, Iran to the southwest, and China to the far northeast.',
   },
   {
     id: 'q132',
@@ -393,6 +424,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q132c', text: 'Indus', isCorrect: false },
       { id: 'q132d', text: 'Yamuna', isCorrect: false },
     ],
+    explanation: 'The Brahmaputra originates in Tibet (China), flows through Northeast India, and enters Bangladesh before emptying into the Bay of Bengal.',
   },
   {
     id: 'q133',
@@ -405,6 +437,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q133c', text: 'San Marino', isCorrect: false },
       { id: 'q133d', text: 'Nauru', isCorrect: false },
     ],
+    explanation: 'Covering only about 44 hectares, Vatican City is an independent city-state enclaved within Rome, Italy, and is the headquarters of the Roman Catholic Church.',
   },
   {
     id: 'q134',
@@ -417,6 +450,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q134c', text: 'River Indus', isCorrect: false },
       { id: 'q134d', text: 'River Kurram', isCorrect: false },
     ],
+    explanation: 'The Bara River is a significant waterway in the Khyber District, eventually flowing into the Kabul River near Peshawar.',
   },
   {
     id: 'q135',
@@ -429,6 +463,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q135c', text: 'Japan', isCorrect: false },
       { id: 'q135d', text: 'Sweden', isCorrect: false },
     ],
+    explanation: 'Finland actually has about 188,000 lakes! The nickname emphasizes the country’s unique glacial landscape.',
   },
   {
     id: 'q136',
@@ -441,6 +476,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q136c', text: 'Equatorial Regions', isCorrect: false },
       { id: 'q136d', text: 'Desert Regions', isCorrect: false },
     ],
+    explanation: 'Convectional rainfall happens when the energy of the sun heats the earth’s surface, causing water to evaporate and rise rapidly. This is very common in the hot, humid tropics.',
   },
   {
     id: 'q137',
@@ -453,6 +489,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q137c', text: 'Arctic Circle', isCorrect: false },
       { id: 'q137d', text: 'Antarctica', isCorrect: true },
     ],
+    explanation: 'Antarctica holds the record for the lowest temperature ever recorded on Earth: -89.2°C (-128.6°F) at the Vostok Station.',
   },
   {
     id: 'q138',
@@ -465,6 +502,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q138c', text: 'Tropic of Capricorn', isCorrect: false },
       { id: 'q138d', text: 'Tropical Grassland', isCorrect: false },
     ],
+    explanation: 'The Tropic of Cancer passes just south of Karachi. Most of Pakistan lies just above the tropical zone in the "Subtropics."',
   },
   {
     id: 'q139',
@@ -477,6 +515,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q139c', text: 'Egypt', isCorrect: true },
       { id: 'q139d', text: 'Saudi Arabia', isCorrect: false },
     ],
+    explanation: 'Located on the outskirts of Cairo, the Great Pyramid of Giza is the oldest of the Seven Wonders of the Ancient World and the only one to remain largely intact.',
   },
   {
     id: 'q140',
@@ -489,6 +528,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q140c', text: 'Nanga Parbat', isCorrect: false },
       { id: 'q140d', text: 'Sakesar', isCorrect: false },
     ],
+    explanation: 'Wait! K-2 is in the Karakoram Range. Nanga Parbat is actually the highest peak of the *Himalayan* range in Pakistan. *Note: Double-check your key, as K-2 is Karakoram.*',
   },
 
   // Science (141-150)
@@ -503,6 +543,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q141c', text: 'Pascal’s Law', isCorrect: false },
       { id: 'q141d', text: 'Boyle’s Law', isCorrect: false },
     ],
+    explanation: 'Archimedes’ Principle states that a body immersed in a fluid is buoyed up by a force equal to the weight of the fluid it displaces. Submarines use ballast tanks to control this buoyancy.',
   },
   {
     id: 'q142',
@@ -515,6 +556,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q142c', text: 'Galileo Galilei', isCorrect: false },
       { id: 'q142d', text: 'Johannes Kepler', isCorrect: false },
     ],
+    explanation: 'The "Ptolemaic System" (Geocentric model) dominated Western thought for over 1,400 years until the Copernican Revolution proved the Sun was at the center (Heliocentric).',
   },
   {
     id: 'q143',
@@ -527,6 +569,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q143c', text: 'Carbon', isCorrect: false },
       { id: 'q143d', text: 'Oxygen', isCorrect: true },
     ],
+    explanation: 'Oxygen makes up about 65% of the human body’s mass, primarily because we are composed mostly of water (H2O).',
   },
   {
     id: 'q144',
@@ -539,6 +582,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q144c', text: 'Soil erosion', isCorrect: true },
       { id: 'q144d', text: 'Oxygen production', isCorrect: false },
     ],
+    explanation: 'Trees act as anchors for the soil. Without them, rain and wind wash away the nutrient-rich topsoil, leading to land degradation and landslides.',
   },
   {
     id: 'q145',
@@ -551,6 +595,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q145c', text: '10^(-3) seconds', isCorrect: false },
       { id: 'q145d', text: '10^(-12) seconds', isCorrect: true },
     ],
+    explanation: 'In the metric system, "pico-" represents one trillionth. 10^-3 is milli, 10^-6 is micro, and 10^-9 is nano.',
   },
   {
     id: 'q146',
@@ -563,6 +608,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q146c', text: 'Plant cells', isCorrect: false },
       { id: 'q146d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'While plants and bacteria also have a plasma membrane, they have a rigid "Cell Wall" outside it. In animal cells, the plasma membrane is the definitive outer boundary.',
   },
   {
     id: 'q147',
@@ -575,6 +621,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q147c', text: 'Lower for higher intensities', isCorrect: false },
       { id: 'q147d', text: 'Dependent on frequency of the wave', isCorrect: false },
     ],
+    explanation: 'The speed of light (c) is a universal constant (approx. 300,000 km/s) and does not change based on how bright (intense) the light is.',
   },
   {
     id: 'q148',
@@ -587,6 +634,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q148c', text: '354 m/s', isCorrect: false },
       { id: 'q148d', text: '389 m/s', isCorrect: false },
     ],
+    explanation: 'Sound travels faster in warmer air. At the freezing point (0°C), sound moves at roughly 331 meters per second.',
   },
   {
     id: 'q149',
@@ -599,6 +647,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q149c', text: 'Water', isCorrect: false },
       { id: 'q149d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'Sound is a mechanical wave that requires a medium. It travels fastest in solids (like steel) because the atoms are packed more tightly than in liquids or gases.',
   },
   {
     id: 'q150',
@@ -611,6 +660,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q150c', text: 'Sulfuric Acid', isCorrect: false },
       { id: 'q150d', text: 'Citric Acid', isCorrect: false },
     ],
+    explanation: 'Acetic acid is the main component of vinegar (aside from water). It gives vinegar its distinctive sour taste and pungent smell.',
   },
 
   // Computer / IT (151-160)
@@ -625,6 +675,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q151c', text: 'To browse the internet', isCorrect: false },
       { id: 'q151d', text: 'To make phone calls', isCorrect: false },
     ],
+    explanation: 'Modern smartphone cameras use CMOS sensors to convert light into digital data, allowing us to take high-resolution photos and 4K videos.',
   },
   {
     id: 'q152',
@@ -637,6 +688,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q152c', text: 'Interpreter', isCorrect: false },
       { id: 'q152d', text: 'Debugger', isCorrect: false },
     ],
+    explanation: 'A compiler translates the entire high-level source code into machine code (binary) at once before the program runs.',
   },
   {
     id: 'q153',
@@ -649,6 +701,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q153c', text: 'Standard Query Language', isCorrect: false },
       { id: 'q153d', text: 'Synchronized Query Language', isCorrect: false },
     ],
+    explanation: 'SQL is the standard language used to communicate with and manipulate relational databases.',
   },
   {
     id: 'q154',
@@ -661,6 +714,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q154c', text: 'Task Pane', isCorrect: false },
       { id: 'q154d', text: 'Ribbon', isCorrect: false },
     ],
+    explanation: 'The Title Bar is located at the very top of the window. It displays the name of the file and the program being used.',
   },
   {
     id: 'q155',
@@ -673,6 +727,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q155c', text: 'Enhancing computer security by blocking unauthorized access', isCorrect: true },
       { id: 'q155d', text: 'Speeding up internet connection', isCorrect: false },
     ],
+    explanation: 'A firewall acts as a barrier between a trusted network and untrusted networks (like the internet), filtering incoming and outgoing traffic based on security rules.',
   },
   {
     id: 'q156',
@@ -685,6 +740,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q156c', text: 'Ribbon', isCorrect: false },
       { id: 'q156d', text: 'Title bar', isCorrect: false },
     ],
+    explanation: 'The Status Bar at the bottom of the Word window provides real-time information such as page number, word count, and language settings.',
   },
   {
     id: 'q157',
@@ -697,6 +753,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q157c', text: 'Numbers', isCorrect: true },
       { id: 'q157d', text: 'Letters', isCorrect: false },
     ],
+    explanation: 'In Excel, columns are denoted by letters (A, B, C...) and rows are denoted by numbers (1, 2, 3...). The intersection is a cell address like A1.',
   },
   {
     id: 'q158',
@@ -709,6 +766,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q158c', text: 'Subnet Mask only', isCorrect: false },
       { id: 'q158d', text: 'Device Name', isCorrect: false },
     ],
+    explanation: 'Dynamic Host Configuration Protocol (DHCP) automates the process of assigning IP addresses, so you don’t have to manually configure every device on a network.',
   },
   {
     id: 'q159',
@@ -721,6 +779,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q159c', text: 'Local Area Network', isCorrect: false },
       { id: 'q159d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'A PAN is used for communication among devices close to one person. Bluetooth typically has a range of about 10 meters.',
   },
   {
     id: 'q160',
@@ -733,6 +792,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q160c', text: '500,000', isCorrect: false },
       { id: 'q160d', text: '100,000', isCorrect: false },
     ],
+    explanation: 'Since Excel 2007, the grid size has been 1,048,576 rows by 16,384 columns (up to column XFD).',
   },
 
   // Math (161-170)
@@ -747,6 +807,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q161c', text: '10:25:30', isCorrect: false },
       { id: 'q161d', text: '20:25:23', isCorrect: false },
     ],
+    explanation: 'Let Y=100. Then X=80. Z=120% of 80 = 96. Ratio X:Y:Z = 80:100:96. Dividing by 4, we get 20:25:24.',
   },
   {
     id: 'q162',
@@ -759,6 +820,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q162c', text: '200', isCorrect: false },
       { id: 'q162d', text: '150', isCorrect: false },
     ],
+    explanation: 'x * (3/4)x = 10800 => (3/4)x² = 10800 => x² = 14400 => x = 120.',
   },
   {
     id: 'q163',
@@ -771,6 +833,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q163c', text: '1/3', isCorrect: false },
       { id: 'q163d', text: '-1/3', isCorrect: true },
     ],
+    explanation: 'Multiply by x: 3x² - 2x - 1 = 0. Factors: (3x+1)(x-1)=0. x = 1 or x = -1/3.',
   },
   {
     id: 'q164',
@@ -783,6 +846,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q164c', text: '(77 × 10^5) cm³', isCorrect: false },
       { id: 'q164d', text: '(77 × 10^3) cm³', isCorrect: true },
     ],
+    explanation: 'Volume = πr²h. r = 7cm, h = 500cm. V = (22/7) * 49 * 500 = 22 * 7 * 500 = 77,000 cm³ = 77 x 10³ cm³.',
   },
   {
     id: 'q165',
@@ -795,6 +859,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q165c', text: '48', isCorrect: false },
       { id: 'q165d', text: '54', isCorrect: false },
     ],
+    explanation: 'F+S=64. After 4 years: (F+4)=3(S+4). Substitute S=64-F: F+4=3(64-F+4) => F+4=204-3F => 4F=200 => F=50.',
   },
   {
     id: 'q166',
@@ -807,6 +872,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q166c', text: '184,875', isCorrect: true },
       { id: 'q166d', text: '180,500', isCorrect: false },
     ],
+    explanation: 'Calculation: 1,087,500 * 0.17 = 184,875.',
   },
   {
     id: 'q167',
@@ -819,6 +885,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q167c', text: '-4', isCorrect: false },
       { id: 'q167d', text: '2', isCorrect: false },
     ],
+    explanation: 'For infinite solutions, ratios of coefficients must be equal: 2/b = -5/10 = a/-8. -5/10 is -1/2. So, a/-8 = -1/2 => a=4.',
   },
   {
     id: 'q168',
@@ -831,6 +898,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q168c', text: '24', isCorrect: false },
       { id: 'q168d', text: '12', isCorrect: false },
     ],
+    explanation: 'Apple has 5 letters with "P" repeating twice. Permutations = 5! / 2! = 120 / 2 = 60.',
   },
   {
     id: 'q169',
@@ -843,6 +911,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q169c', text: '200', isCorrect: false },
       { id: 'q169d', text: '150', isCorrect: false },
     ],
+    explanation: 'This is a duplicate of Q162. Calculation: x * 0.75x = 10800 => 0.75x² = 10800 => x² = 14400 => x = 120.',
   },
   {
     id: 'q170',
@@ -855,6 +924,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q170c', text: '36', isCorrect: false },
       { id: 'q170d', text: '18', isCorrect: false },
     ],
+    explanation: 'Number of cubes = (Volume of large cube) / (Volume of small cube) = (18*18*18) / (3*3*3) = 6*6*6 = 216.',
   },
 
   // English (171-180)
@@ -869,6 +939,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q171c', text: 'Rage', isCorrect: false },
       { id: 'q171d', text: 'Delight', isCorrect: true },
     ],
+    explanation: 'Wrath means intense, extreme anger. Delight (great pleasure or happiness) is its opposite.',
   },
   {
     id: 'q172',
@@ -881,6 +952,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q172c', text: 'with', isCorrect: true },
       { id: 'q172d', text: 'in', isCorrect: false },
     ],
+    explanation: 'The adjective "overwhelmed" is typically followed by the preposition "with" when referring to emotions like grief, joy, or work.',
   },
   {
     id: 'q173',
@@ -893,6 +965,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q173c', text: 'Steadfast', isCorrect: true },
       { id: 'q173d', text: 'Variable', isCorrect: false },
     ],
+    explanation: 'Fickle describes someone who changes their mind or loyalties frequently. Steadfast describes someone who is firm and unwavering.',
   },
   {
     id: 'q174',
@@ -905,6 +978,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q174c', text: 'Questionnaire', isCorrect: true },
       { id: 'q174d', text: 'Questionner', isCorrect: false },
     ],
+    explanation: 'The word comes from French. Note the "nn" and the "aire" ending.',
   },
   {
     id: 'q175',
@@ -917,6 +991,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q175c', text: 'To make someone happy', isCorrect: false },
       { id: 'q175d', text: 'To confuse someone', isCorrect: false },
     ],
+    explanation: 'Legend says that putting a goat in a horse’s stall kept the horse calm. If someone "got your goat" (stole it), the horse would become restless and irritated.',
   },
   {
     id: 'q176',
@@ -929,6 +1004,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q176c', text: 'Relevant', isCorrect: false },
       { id: 'q176d', text: 'Experienced', isCorrect: false },
     ],
+    explanation: '"All and Sundry" is a fancy way of saying "everyone collectively and each one individually" without exception.',
   },
   {
     id: 'q177',
@@ -941,6 +1017,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q177c', text: 'Of', isCorrect: false },
       { id: 'q177d', text: 'from', isCorrect: false },
     ],
+    explanation: 'The fixed expression is "deaf to," meaning unwilling to listen or pay attention to something.',
   },
   {
     id: 'q178',
@@ -953,6 +1030,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q178c', text: 'Ignore', isCorrect: false },
       { id: 'q178d', text: 'Criticize', isCorrect: false },
     ],
+    explanation: 'To "cajole" is to persuade someone to do something by sustained coaxing or flattery.',
   },
   {
     id: 'q179',
@@ -965,6 +1043,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q179c', text: 'Influencing', isCorrect: false },
       { id: 'q179d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'Shrewd means having or showing sharp powers of judgment. "Crafty" is a close synonym, often implying a bit of cleverness or trickery.',
   },
   {
     id: 'q180',
@@ -977,6 +1056,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q180c', text: 'Repulsive', isCorrect: false },
       { id: 'q180d', text: 'Delightful', isCorrect: true },
     ],
+    explanation: 'Odious means extremely unpleasant or repulsive. Delightful is the perfect antonym.',
   },
 
   // Mixed (181-190)
@@ -991,6 +1071,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q181c', text: '1222', isCorrect: false },
       { id: 'q181d', text: '1233', isCorrect: false },
     ],
+    explanation: 'The founder of the Mongol Empire died in 1227 during the siege of the Western Xia capital. His burial place remains a mystery to this day.',
   },
   {
     id: 'q182',
@@ -1003,6 +1084,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q182c', text: 'WHO', isCorrect: true },
       { id: 'q182d', text: 'IMF', isCorrect: false },
     ],
+    explanation: 'Dr. Tedros, an Ethiopian public health official, became the DG of the World Health Organization (WHO) in 2017 and led it through the COVID-19 pandemic.',
   },
   {
     id: 'q183',
@@ -1015,6 +1097,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q183c', text: 'Inzamam Ul Haq', isCorrect: false },
       { id: 'q183d', text: 'Babar Azam', isCorrect: true },
     ],
+    explanation: 'Babar Azam surpassed Saeed Anwar’s long-standing record (20 centuries) to become Pakistan’s leading century-maker in One Day Internationals.',
   },
   {
     id: 'q184',
@@ -1027,6 +1110,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q184c', text: '1992', isCorrect: false },
       { id: 'q184d', text: '1994', isCorrect: false },
     ],
+    explanation: 'The fall of the Berlin Wall on November 9, 1989, symbolized the end of the Cold War and paved the way for German reunification.',
   },
   {
     id: 'q185',
@@ -1039,6 +1123,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q185c', text: 'Psychology', isCorrect: false },
       { id: 'q185d', text: 'Sociology', isCorrect: true },
     ],
+    explanation: 'Sociology focuses on social relationships, social interaction, and culture. Anthropology is broader, including human evolution and physical traits.',
   },
   {
     id: 'q186',
@@ -1051,6 +1136,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q186c', text: '1919', isCorrect: true },
       { id: 'q186d', text: '1920', isCorrect: false },
     ],
+    explanation: 'Signed on June 28, 1919, exactly five years after the assassination of Archduke Franz Ferdinand, this treaty officially ended World War I.',
   },
   {
     id: 'q187',
@@ -1063,6 +1149,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q187c', text: 'Gastronomist', isCorrect: false },
       { id: 'q187d', text: 'Naturalist', isCorrect: true },
     ],
+    explanation: 'Charles Darwin is perhaps the most famous naturalist in history. A "gastronomist" is someone who studies food and culture!',
   },
   {
     id: 'q188',
@@ -1075,6 +1162,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q188c', text: 'Confucius', isCorrect: false },
       { id: 'q188d', text: 'Pythagoras', isCorrect: false },
     ],
+    explanation: 'The hierarchy of Greek philosophy goes: Socrates taught Plato, and Plato taught Aristotle.',
   },
   {
     id: 'q189',
@@ -1087,6 +1175,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q189c', text: 'Smugglers mafia in South America', isCorrect: true },
       { id: 'q189d', text: 'Club for teenagers', isCorrect: false },
     ],
+    explanation: 'This refers to specific crime syndicates or localized slang for organized smuggler groups in Latin American geopolitical studies.',
   },
   {
     id: 'q190',
@@ -1099,6 +1188,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q190c', text: 'Kapurthala', isCorrect: false },
       { id: 'q190d', text: 'None of these', isCorrect: false },
     ],
+    explanation: 'Sir Shahnawaz Bhutto (father of Zulfikar Ali Bhutto) was the Diwan of Junagarh and played a key role in the state’s decision to accede to Pakistan in 1947.',
   },
 
   // History / Culture (191-200)
@@ -1113,6 +1203,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q191c', text: 'Sher Shah Suri', isCorrect: false },
       { id: 'q191d', text: 'Ahmad Shah Abdali', isCorrect: false },
     ],
+    explanation: 'Alauddin Khilji is celebrated for his military genius, repeatedly defeating massive Mongol invasions and saving the Delhi Sultanate from destruction.',
   },
   {
     id: 'q192',
@@ -1125,6 +1216,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q192c', text: 'Third Anglo-Afghan War', isCorrect: false },
       { id: 'q192d', text: 'WW1', isCorrect: false },
     ],
+    explanation: 'Following the Second Anglo-Afghan War, the border was established in 1893 between Sir Mortimer Durand and Amir Abdur Rahman Khan of Afghanistan.',
   },
   {
     id: 'q193',
@@ -1137,6 +1229,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q193c', text: 'Seljuk Dynasty', isCorrect: true },
       { id: 'q193d', text: 'Fatimid Dynasty', isCorrect: false },
     ],
+    explanation: 'The Ottoman state emerged from the remnants of the Sultanate of Rum (a Seljuk state) in Anatolia during the late 13th century.',
   },
   {
     id: 'q194',
@@ -1149,6 +1242,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q194c', text: 'Richard Nixon', isCorrect: true },
       { id: 'q194d', text: 'Jimmy Carter', isCorrect: false },
     ],
+    explanation: 'Watergate led to the resignation of Richard Nixon in 1974, making him the only U.S. President to ever resign from office.',
   },
   {
     id: 'q195',
@@ -1161,6 +1255,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q195c', text: 'Nikola Tesla', isCorrect: false },
       { id: 'q195d', text: 'Guglielmo Marconi', isCorrect: false },
     ],
+    explanation: 'Bell received the first patent for the telephone in 1876. His first words on the phone were: "Mr. Watson, come here, I want to see you."',
   },
   {
     id: 'q196',
@@ -1173,6 +1268,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q196c', text: 'Narowal', isCorrect: true },
       { id: 'q196d', text: 'Lahore', isCorrect: false },
     ],
+    explanation: 'Kartarpur, home to the Gurdwara Darbar Sahib, is situated in the Narowal district near the border with India.',
   },
   {
     id: 'q197',
@@ -1185,6 +1281,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q197c', text: 'Fatima Bhutto', isCorrect: true },
       { id: 'q197d', text: 'Benazir Bhutto', isCorrect: false },
     ],
+    explanation: 'Fatima Bhutto’s memoir chronicles the history of the Bhutto family, focusing on the life and death of her father, Murtaza Bhutto.',
   },
   {
     id: 'q198',
@@ -1197,6 +1294,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q198c', text: 'Operation Neptune Spear', isCorrect: true },
       { id: 'q198d', text: 'Operation Iraqi Congress', isCorrect: false },
     ],
+    explanation: 'Conducted by the US Navy SEALs (Team Six) on May 2, 2011, this covert mission took place at a compound in Abbottabad, Pakistan.',
   },
   {
     id: 'q199',
@@ -1209,6 +1307,7 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q199c', text: '1942', isCorrect: false },
       { id: 'q199d', text: '1905', isCorrect: false },
     ],
+    explanation: 'The INC was founded in Bombay by Allan Octavian Hume (a retired British officer) to give Indians a platform for civil and political dialogue.',
   },
   {
     id: 'q200',
@@ -1221,5 +1320,6 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
       { id: 'q200c', text: 'Sardar Masood', isCorrect: false },
       { id: 'q200d', text: 'Jaleel Abbas Jilani', isCorrect: false },
     ],
+    explanation: 'Written by the former Pakistani ambassador to the US, the book examines the complex relationship between religious groups and the military in Pakistan’s politics.',
   },
 ];

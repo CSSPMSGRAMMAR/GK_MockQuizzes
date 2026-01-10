@@ -3,16 +3,40 @@ import { pmsGkMcqs } from '@/data/pms-gk-mcqs';
 import { pmsGkMcqsAdditional } from '@/data/pms-gk-mcqs -1';
 import { pmsGkMcqsAdvanced } from '@/data/pms-gk-mcqs-2';
 import { pmsGkMockPaper2 } from '@/data/pms-gk-mock-paper-2';
+import { pmsGkMockPaper3 } from '@/data/pms-gk-mock-paper-3';
+import { pmsGkMockPaper4 } from '@/data/pms-gk-mock-paper-4';
+import { pmsGkMockPaper5 } from '@/data/pms-gk-mock-paper-5';
+import { pmsGkMockPaper6 } from '@/data/pms-gk-mock-paper-6';
+// Subject-specific tests
+import { pastPaper2021Questions } from '@/data/pastPaper2021';
+import { geographyTestQuestions } from '@/data/geographyTest';
+import { generalScienceComputerTestQuestions } from '@/data/generalScienceComputerTest';
+import { currentAffairsTestQuestions } from '@/data/currentAffairsTest';
+import { pakistanStudiesTestQuestions } from '@/data/pakistanStudiesTest';
+import { islamiatTestQuestions } from '@/data/islamiatTest';
 
 /**
  * Quiz loader utility to load questions from different sources
  * Maps quiz IDs to their question arrays
  */
 const QUIZ_QUESTIONS_MAP: Record<string, MCQuestion[]> = {
+  // Free demo quizzes
   'pms-gk-demo-1': pmsGkMcqs, // Original 100 questions (q1-q100)
   'pms-gk-demo-2': pmsGkMcqsAdditional, // Additional 100 questions (q101-q200)
   'pms-gk-demo-3': pmsGkMcqsAdvanced, // Advanced 100 questions (q201-q300)
+  // Paid mock papers
   'pms-gk-mock-paper-2': pmsGkMockPaper2, // Premium Mock Paper 2 with explanations (100 questions)
+  'pms-gk-mock-paper-3': pmsGkMockPaper3, // Premium Mock Paper 3 with explanations (100 questions)
+  'pms-gk-mock-paper-4': pmsGkMockPaper4, // Premium Mock Paper 4 with explanations (100 questions)
+  'pms-gk-mock-paper-5': pmsGkMockPaper5, // Premium Mock Paper 5 with explanations (100 questions)
+  'pms-gk-mock-paper-6': pmsGkMockPaper6, // Premium Mock Paper 6 with explanations (100 questions)
+  // Subject-specific tests
+  'past-paper-2021': pastPaper2021Questions, // Past Paper 2021 (100 questions)
+  'geography-test': geographyTestQuestions, // Geography Test (100 questions)
+  'general-science-computer-test': generalScienceComputerTestQuestions, // General Science and Computer Test (100 questions)
+  'current-affairs-test': currentAffairsTestQuestions, // Current Affairs Test (100 questions)
+  'pakistan-studies-test': pakistanStudiesTestQuestions, // Pakistan Studies Test (100 questions)
+  'islamiat-test': islamiatTestQuestions, // Islamiat Test (100 questions)
 };
 
 /**

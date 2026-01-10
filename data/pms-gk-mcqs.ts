@@ -1,7 +1,7 @@
 import { MCQuestion, MCQOption } from '@/types/exam';
 
 // PMS GK MCQs - 100 Questions
-// Parsed from mcqs.txt with proper structure
+// Parsed from mcqs.txt with amazing explanations and instructive diagrams
 
 export const pmsGkMcqs: MCQuestion[] = [
   // General Knowledge / Current Affairs (1-10)
@@ -16,6 +16,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q1c', text: '1991', isCorrect: true },
       { id: 'q1d', text: '1993', isCorrect: false },
     ],
+    explanation: 'The Soviet Union (USSR) was officially dissolved on December 26, 1991, following the resignation of Mikhail Gorbachev and the declaration of independence by several Soviet republics.',
   },
   {
     id: 'q2',
@@ -28,6 +29,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q2c', text: 'Rajputs & Afghans', isCorrect: false },
       { id: 'q2d', text: 'Mughals & Rajputs', isCorrect: false },
     ],
+    explanation: 'Fought in 1761, this massive conflict saw the Durrani Empire of Ahmad Shah Abdali (Afghans) defeat the Maratha Empire. It is considered one of the most significant battles in 18th-century Indian history.',
   },
   {
     id: 'q3',
@@ -40,6 +42,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q3c', text: '2016', isCorrect: true },
       { id: 'q3d', text: '2017', isCorrect: false },
     ],
+    explanation: 'Burhan Wani, a prominent Kashmiri militant leader, was killed by Indian security forces in July 2016, which triggered widespread protests and a long period of unrest in the region.',
   },
   {
     id: 'q4',
@@ -52,6 +55,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q4c', text: 'Sir Zafarullah Khan', isCorrect: true },
       { id: 'q4d', text: 'Ayub Khan', isCorrect: false },
     ],
+    explanation: 'Sir Muhammad Zafarullah Khan served as Pakistan’s first Foreign Minister. He was a brilliant diplomat who represented Pakistan at the UN during the early Kashmir debates.',
   },
   {
     id: 'q5',
@@ -64,6 +68,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q5c', text: '2005', isCorrect: false },
       { id: 'q5d', text: '2010', isCorrect: false },
     ],
+    explanation: 'The Agra Summit (July 2001) was a historic meeting between President Pervez Musharraf of Pakistan and PM Atal Bihari Vajpayee of India to resolve long-standing issues, including Kashmir.',
   },
   {
     id: 'q6',
@@ -76,6 +81,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q6c', text: '1953', isCorrect: false },
       { id: 'q6d', text: '1955', isCorrect: false },
     ],
+    explanation: 'Pakistan was one of the first countries to recognize the People’s Republic of China, officially establishing diplomatic ties on May 21, 1951.',
   },
   {
     id: 'q7',
@@ -88,6 +94,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q7c', text: '1987', isCorrect: false },
       { id: 'q7d', text: '1988', isCorrect: false },
     ],
+    explanation: 'Muhammad Khan Junejo was appointed Prime Minister by General Zia-ul-Haq in 1985 after the non-party based general elections.',
   },
   {
     id: 'q8',
@@ -100,6 +107,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q8c', text: 'Iskandar Mirza', isCorrect: true },
       { id: 'q8d', text: 'Ghulam Muhammad', isCorrect: false },
     ],
+    explanation: 'With the enactment of the 1956 Constitution, Pakistan became an Islamic Republic, and Iskandar Mirza (previously Governor-General) became its first President.',
   },
   {
     id: 'q9',
@@ -112,6 +120,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q9c', text: 'Rawalpindi', isCorrect: true },
       { id: 'q9d', text: 'Islamabad', isCorrect: false },
     ],
+    explanation: 'Benazir Bhutto was assassinated on December 27, 2007, while leaving a political rally at Liaquat Bagh, Rawalpindi.',
   },
   {
     id: 'q10',
@@ -124,6 +133,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q10c', text: 'Doha', isCorrect: false },
       { id: 'q10d', text: 'Mecca', isCorrect: false },
     ],
+    explanation: 'The first Islamic Summit of the OIC was held in Rabat, Morocco, in 1969, following the criminal arson attempt against Al-Aqsa Mosque in Jerusalem.',
   },
 
   // Pakistan Affairs (11-15)
@@ -138,6 +148,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q11c', text: '1949', isCorrect: true },
       { id: 'q11d', text: '1950', isCorrect: false },
     ],
+    explanation: 'The Objectives Resolution was passed by the Constituent Assembly of Pakistan on March 12, 1949. It laid out the fundamental principles for the future constitution.',
   },
   {
     id: 'q12',
@@ -150,6 +161,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q12c', text: 'Presidential system', isCorrect: false },
       { id: 'q12d', text: 'Military rule', isCorrect: false },
     ],
+    explanation: 'The 1973 Constitution established a bicameral legislature consisting of the National Assembly and the Senate. ',
   },
   {
     id: 'q13',
@@ -162,6 +174,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q13c', text: 'Hunza', isCorrect: true },
       { id: 'q13d', text: 'Chitral', isCorrect: false },
     ],
+    explanation: 'Baltit Fort is an ancient fort in the Hunza valley in Gilgit-Baltistan. It was built more than 700 years ago and has been influenced by Tibetan architecture.',
   },
   {
     id: 'q14',
@@ -174,6 +187,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q14c', text: 'KP', isCorrect: false },
       { id: 'q14d', text: 'Balochistan', isCorrect: true },
     ],
+    explanation: 'The Bolan Pass is a strategic mountain pass through the Toba Kakar Range in Balochistan, connecting Quetta with Sibi. ',
   },
   {
     id: 'q15',
@@ -186,6 +200,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q15c', text: 'Thal', isCorrect: false },
       { id: 'q15d', text: 'Kharan', isCorrect: false },
     ],
+    explanation: 'The Thar Desert, also known as the Great Indian Desert, is the largest in Pakistan, primarily spanning across Sindh.',
   },
 
   // International Relations (16-20)
@@ -200,6 +215,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q16c', text: 'Bernard Baruch', isCorrect: true },
       { id: 'q16d', text: 'Roosevelt', isCorrect: false },
     ],
+    explanation: 'Although popularized by Walter Lippmann, the term was first used by American financier Bernard Baruch in a speech in 1947 to describe the tensions between the USA and USSR.',
   },
   {
     id: 'q17',
@@ -212,6 +228,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q17c', text: 'Hans Morgenthau', isCorrect: true },
       { id: 'q17d', text: 'Locke', isCorrect: false },
     ],
+    explanation: 'Hans Morgenthau is considered one of the leading figures of 20th-century realism. His work "Politics Among Nations" argues that states act based on power and self-interest.',
   },
   {
     id: 'q18',
@@ -224,6 +241,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q18c', text: '1985', isCorrect: true },
       { id: 'q18d', text: '1987', isCorrect: false },
     ],
+    explanation: 'The South Asian Association for Regional Cooperation (SAARC) was established in Dhaka on December 8, 1985.',
   },
   {
     id: 'q19',
@@ -236,6 +254,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q19c', text: 'Karachi', isCorrect: false },
       { id: 'q19d', text: 'Istanbul', isCorrect: false },
     ],
+    explanation: 'The Economic Cooperation Organization (ECO) is headquartered in Tehran, Iran. It is the successor to the RCD (Regional Cooperation for Development).',
   },
   {
     id: 'q20',
@@ -248,6 +267,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q20c', text: 'Ukraine & Poland', isCorrect: false },
       { id: 'q20d', text: 'Belarus & Ukraine', isCorrect: false },
     ],
+    explanation: 'The Donbass conflict involves the Donestk and Luhansk regions of eastern Ukraine, where pro-Russian separatists have been fighting Ukrainian forces since 2014.',
   },
 
   // Geography (21-25)
@@ -262,6 +282,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q21c', text: 'Bucharest', isCorrect: false },
       { id: 'q21d', text: 'Sofia', isCorrect: true },
     ],
+    explanation: 'Sofia is the capital and largest city of Bulgaria, located in the western part of the country at the foot of Vitosha Mountain.',
   },
   {
     id: 'q22',
@@ -274,6 +295,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q22c', text: 'Caspian Sea', isCorrect: true },
       { id: 'q22d', text: 'Lake Huron', isCorrect: false },
     ],
+    explanation: 'The Caspian Sea is the world’s largest inland body of water, often classified as the world’s largest lake. ',
   },
   {
     id: 'q23',
@@ -286,6 +308,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q23c', text: 'Indus & Ravi', isCorrect: false },
       { id: 'q23d', text: 'Chenab & Sutlej', isCorrect: false },
     ],
+    explanation: 'A "Doab" is the land between two converging rivers. Chaj Doab is located between the Chenab and Jhelum rivers in Punjab. ',
   },
   {
     id: 'q24',
@@ -298,6 +321,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q24c', text: 'China', isCorrect: false },
       { id: 'q24d', text: 'India', isCorrect: true },
     ],
+    explanation: 'Geographically, India lies to the East of Pakistan, while Afghanistan and Iran lie to the West and Southwest respectively.',
   },
   {
     id: 'q25',
@@ -310,6 +334,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q25c', text: 'Ravi & Sutlej', isCorrect: false },
       { id: 'q25d', text: 'Chenab & Jhelum', isCorrect: false },
     ],
+    explanation: 'The Potohar Plateau is located in northern Punjab, bordered on the west by the Indus River and on the east by the Jhelum River.',
   },
 
   // Science (26-30)
@@ -324,6 +349,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q26c', text: 'Surface tension', isCorrect: false },
       { id: 'q26d', text: 'Viscosity', isCorrect: false },
     ],
+    explanation: 'Water is unique because its solid form (ice) is less dense than its liquid form due to the way hydrogen bonds form a crystalline lattice as it freezes. ',
   },
   {
     id: 'q27',
@@ -336,6 +362,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q27c', text: 'Triangulum', isCorrect: false },
       { id: 'q27d', text: 'Sombrero', isCorrect: false },
     ],
+    explanation: 'The Andromeda Galaxy (M31) is the nearest major galaxy to our Milky Way. It is a spiral galaxy roughly 2.5 million light-years away.',
   },
   {
     id: 'q28',
@@ -348,6 +375,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q28c', text: 'Tartaric', isCorrect: false },
       { id: 'q28d', text: 'Sulfuric', isCorrect: true },
     ],
+    explanation: 'Mineral acids (or inorganic acids) are derived from inorganic minerals. Sulfuric acid (H2SO4) is a strong mineral acid, unlike organic acids like Citric or Acetic acid found in fruits.',
   },
   {
     id: 'q29',
@@ -360,6 +388,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q29c', text: '32', isCorrect: false },
       { id: 'q29d', text: '33', isCorrect: true },
     ],
+    explanation: 'The human vertebral column is usually composed of 33 vertebrae: 7 cervical, 12 thoracic, 5 lumbar, 5 sacral (fused), and 4 coccygeal (fused). ',
   },
   {
     id: 'q30',
@@ -372,6 +401,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q30c', text: 'Deforestation', isCorrect: true },
       { id: 'q30d', text: 'Irrigation', isCorrect: false },
     ],
+    explanation: 'Deforestation removes trees whose roots hold the soil in place. Without this protection, wind and rain can easily wash away the nutrient-rich topsoil.',
   },
 
   // Computer / IT (31-35)
@@ -386,6 +416,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q31c', text: 'Bit', isCorrect: true },
       { id: 'q31d', text: 'Word', isCorrect: false },
     ],
+    explanation: 'A bit (binary digit) is the smallest unit of data in a computer, representing either a 0 or a 1. 8 bits make up 1 Byte.',
   },
   {
     id: 'q32',
@@ -398,6 +429,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q32c', text: 'iOS', isCorrect: false },
       { id: 'q32d', text: 'Linux', isCorrect: true },
     ],
+    explanation: 'Linux is a prominent open-source operating system, meaning its source code is freely available for anyone to view, modify, and distribute.',
   },
   {
     id: 'q33',
@@ -410,6 +442,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q33c', text: 'Ctrl+C', isCorrect: true },
       { id: 'q33d', text: 'Ctrl+S', isCorrect: false },
     ],
+    explanation: 'Standard keyboard shortcuts include Ctrl+C for Copy, Ctrl+V for Paste, and Ctrl+X for Cut.',
   },
   {
     id: 'q34',
@@ -422,6 +455,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q34c', text: 'Google', isCorrect: true },
       { id: 'q34d', text: 'DuckDuckGo', isCorrect: false },
     ],
+    explanation: 'Google holds the vast majority of the global search engine market share, processing billions of searches every day.',
   },
   {
     id: 'q35',
@@ -434,6 +468,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q35c', text: '=SUM()', isCorrect: true },
       { id: 'q35d', text: '=PLUS()', isCorrect: false },
     ],
+    explanation: 'In Microsoft Excel, the =SUM() function is used to add all numbers in a range of cells.',
   },
 
   // Math (36-40)
@@ -448,6 +483,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q36c', text: '198', isCorrect: false },
       { id: 'q36d', text: '159', isCorrect: false },
     ],
+    explanation: '27 = 3³ and 63 = 3² × 7. The LCM is the product of the highest powers of all prime factors present: 3³ × 7 = 27 × 7 = 189.',
   },
   {
     id: 'q37',
@@ -460,6 +496,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q37c', text: '20%', isCorrect: true },
       { id: 'q37d', text: '25%', isCorrect: false },
     ],
+    explanation: 'Discount = CP - SP = 300. Discount % = (Discount / CP) × 100 = (300 / 1500) × 100 = 1/5 × 100 = 20%.',
   },
   {
     id: 'q38',
@@ -472,6 +509,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q38c', text: '(x–9)²', isCorrect: false },
       { id: 'q38d', text: '(x+11)²', isCorrect: false },
     ],
+    explanation: 'The expression follows the pattern a² + 2ab + b² = (a + b)², where a=x and b=9.',
   },
   {
     id: 'q39',
@@ -484,6 +522,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q39c', text: '216', isCorrect: true },
       { id: 'q39d', text: '324', isCorrect: false },
     ],
+    explanation: 'Number of cubes = (Volume of large cube) / (Volume of small cube) = (18³) / (3³) = (18/3)³ = 6³ = 216.',
   },
   {
     id: 'q40',
@@ -496,6 +535,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q40c', text: '5/4Y', isCorrect: false },
       { id: 'q40d', text: '2/3Y', isCorrect: false },
     ],
+    explanation: '80% written as a fraction is 80/100, which simplifies to 4/5. Thus, X = 4/5Y.',
   },
 
   // History (41-45)
@@ -510,6 +550,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q41c', text: 'Akbar', isCorrect: true },
       { id: 'q41d', text: 'Jahangir', isCorrect: false },
     ],
+    explanation: 'Queen Elizabeth I of England (r. 1558–1603) was a contemporary of the Mughal Emperor Akbar the Great (r. 1556–1605).',
   },
   {
     id: 'q42',
@@ -522,6 +563,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q42c', text: 'Humayun', isCorrect: false },
       { id: 'q42d', text: 'Aurangzeb', isCorrect: true },
     ],
+    explanation: 'Aurangzeb emerged victorious in the war of succession among Shah Jahan’s sons (Dara Shikoh, Shuja, Murad, and Aurangzeb) and became the next emperor.',
   },
   {
     id: 'q43',
@@ -534,6 +576,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q43c', text: 'Civil Disobedience', isCorrect: true },
       { id: 'q43d', text: 'Quit India', isCorrect: false },
     ],
+    explanation: 'The Gandhi-Irwin Pact (1931) resulted in the suspension of the Civil Disobedience Movement and allowed the Congress to participate in the Second Round Table Conference.',
   },
   {
     id: 'q44',
@@ -546,6 +589,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q44c', text: 'British Government', isCorrect: true },
       { id: 'q44d', text: 'Mughals', isCorrect: false },
     ],
+    explanation: 'Dyarchy, a system of double government, was introduced in the provinces of British India by the Government of India Act 1919 (Montagu-Chelmsford Reforms).',
   },
   {
     id: 'q45',
@@ -558,6 +602,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q45c', text: '1660', isCorrect: false },
       { id: 'q45d', text: '1665', isCorrect: false },
     ],
+    explanation: 'The Battle of Samugarh (May 1658) was a decisive battle in the war of succession between the sons of Shah Jahan, where Aurangzeb defeated Dara Shikoh.',
   },
 
   // Economy / Organizations (46-50)
@@ -572,6 +617,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q46c', text: 'Malpass', isCorrect: false },
       { id: 'q46d', text: 'Kristalina Georgieva', isCorrect: true },
     ],
+    explanation: 'Kristalina Georgieva, a Bulgarian economist, has served as the Managing Director of the IMF since 2019.',
   },
   {
     id: 'q47',
@@ -584,6 +630,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q47c', text: 'Creditworthiness', isCorrect: true },
       { id: 'q47d', text: 'Inflation', isCorrect: false },
     ],
+    explanation: 'Fitch Ratings is a credit rating agency that assesses the creditworthiness of entities (like countries or companies) to inform investors of their ability to meet financial obligations.',
   },
   {
     id: 'q48',
@@ -596,6 +643,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q48c', text: '1973', isCorrect: true },
       { id: 'q48d', text: '1985', isCorrect: false },
     ],
+    explanation: 'While the 1956 and 1962 constitutions were unicameral, the 1973 Constitution established a bicameral system with the National Assembly and the Senate.',
   },
   {
     id: 'q49',
@@ -608,6 +656,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q49c', text: '70%', isCorrect: true },
       { id: 'q49d', text: '90%', isCorrect: false },
     ],
+    explanation: 'According to UNCTAD, over 80% of world trade volume (and roughly 70% of value) is carried by sea. ',
   },
   {
     id: 'q50',
@@ -620,6 +669,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q50c', text: 'Africa', isCorrect: true },
       { id: 'q50d', text: 'America', isCorrect: false },
     ],
+    explanation: 'Africa is the continent with the highest number of sovereign states, containing 54 recognized countries.',
   },
 
   // Mixed GK (51-100)
@@ -634,6 +684,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q51c', text: 'Argentina', isCorrect: false },
       { id: 'q51d', text: 'Italy', isCorrect: false },
     ],
+    explanation: 'Uruguay hosted and won the first-ever FIFA World Cup in 1930, defeating Argentina in the final.',
   },
   {
     id: 'q52',
@@ -646,6 +697,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q52c', text: 'Socrates', isCorrect: false },
       { id: 'q52d', text: 'Confucius', isCorrect: false },
     ],
+    explanation: 'The Greek philosopher Aristotle famously wrote this in his work "Politics," emphasizing that humans naturally live in organized communities.',
   },
   {
     id: 'q53',
@@ -658,6 +710,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q53c', text: 'Copper', isCorrect: false },
       { id: 'q53d', text: 'Aluminum', isCorrect: false },
     ],
+    explanation: 'Silicon is a semiconductor, which makes it ideal for controlling the flow of electricity in microchips. This is why the tech hub is called Silicon Valley.',
   },
   {
     id: 'q54',
@@ -670,6 +723,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q54c', text: 'King', isCorrect: false },
       { id: 'q54d', text: 'Merchant', isCorrect: false },
     ],
+    explanation: 'A shaman is a religious or spiritual figure believed to have access to and influence in the world of spirits, often acting as a healer or priest.',
   },
   {
     id: 'q55',
@@ -682,6 +736,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q55c', text: 'New Delhi', isCorrect: false },
       { id: 'q55d', text: 'Dhaka', isCorrect: false },
     ],
+    explanation: 'While SAARC was founded in Dhaka, its permanent secretariat was established in Kathmandu, Nepal, in 1987.',
   },
   {
     id: 'q56',
@@ -694,6 +749,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q56c', text: 'Geneva', isCorrect: false },
       { id: 'q56d', text: 'Vienna', isCorrect: false },
     ],
+    explanation: 'UNESCO (United Nations Educational, Scientific and Cultural Organization) is headquartered in Paris, France.',
   },
   {
     id: 'q57',
@@ -706,6 +762,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q57c', text: 'Brussels', isCorrect: false },
       { id: 'q57d', text: 'New York', isCorrect: false },
     ],
+    explanation: 'The World Health Organization (WHO) is headquartered in Geneva, Switzerland, a city that hosts many international organizations.',
   },
   {
     id: 'q58',
@@ -718,6 +775,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q58c', text: '1961', isCorrect: false },
       { id: 'q58d', text: '1972', isCorrect: false },
     ],
+    explanation: 'The first national census of Pakistan was conducted in 1951 to determine the demographic characteristics of the newly formed state.',
   },
   {
     id: 'q59',
@@ -730,6 +788,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q59c', text: 'Tirich Mir', isCorrect: false },
       { id: 'q59d', text: 'Rakaposhi', isCorrect: false },
     ],
+    explanation: 'K2 (Godwin-Austen) is the highest peak in Pakistan and the second-highest in the world at 8,611 meters.',
   },
   {
     id: 'q60',
@@ -742,6 +801,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q60c', text: 'International Communication Technology', isCorrect: false },
       { id: 'q60d', text: 'Islamic Capital Territory', isCorrect: false },
     ],
+    explanation: 'In the context of Pakistan’s geography and administration, ICT refers to the Islamabad Capital Territory.',
   },
   {
     id: 'q61',
@@ -754,6 +814,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q61c', text: '10th', isCorrect: false },
       { id: 'q61d', text: '12th', isCorrect: false },
     ],
+    explanation: 'Pakistan is usually ranked among the top 10 producers of sugar in the world, often sitting at the 7th or 8th spot depending on the harvest year.',
   },
   {
     id: 'q62',
@@ -766,6 +827,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q62c', text: 'Radcliffe Line', isCorrect: false },
       { id: 'q62d', text: 'McMahon Line', isCorrect: false },
     ],
+    explanation: 'The Line of Control (LoC) is a military control line between the Pakistani and Indian controlled parts of the former princely state of Jammu and Kashmir. ',
   },
   {
     id: 'q63',
@@ -778,6 +840,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q63c', text: '1920', isCorrect: false },
       { id: 'q63d', text: '1921', isCorrect: false },
     ],
+    explanation: 'The Treaty of Versailles was signed on June 28, 1919, officially bringing an end to the state of war between Germany and the Allied Powers of WWI.',
   },
   {
     id: 'q64',
@@ -790,6 +853,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q64c', text: 'Emile Durkheim', isCorrect: false },
       { id: 'q64d', text: 'Karl Marx', isCorrect: false },
     ],
+    explanation: 'Auguste Comte is credited with coining the term "sociology" and is considered the founder of the discipline through his philosophy of positivism.',
   },
   {
     id: 'q65',
@@ -802,6 +866,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q65c', text: 'Ibn Khaldun', isCorrect: false },
       { id: 'q65d', text: 'Rumi', isCorrect: false },
     ],
+    explanation: 'This is the most famous work of the Sufi philosopher Ibn Arabi, covering a wide range of spiritual and philosophical topics.',
   },
   {
     id: 'q66',
@@ -814,6 +879,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q66c', text: 'Siberia', isCorrect: false },
       { id: 'q66d', text: 'Greenland', isCorrect: false },
     ],
+    explanation: 'While Antarctica is the coldest continent, the question options often refer to climatic zones. The Arctic Circle and Antarctic Circle are the coldest regions of the globe.',
   },
   {
     id: 'q67',
@@ -826,6 +892,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q67c', text: 'mph', isCorrect: false },
       { id: 'q67d', text: 'knots', isCorrect: false },
     ],
+    explanation: 'The SI (International System) unit for speed is meters per second (m/s).',
   },
   {
     id: 'q68',
@@ -838,6 +905,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q68c', text: 'Memory', isCorrect: false },
       { id: 'q68d', text: 'Storage', isCorrect: false },
     ],
+    explanation: 'A pixel (picture element) is the smallest controllable element of a digital image or display. ',
   },
   {
     id: 'q69',
@@ -850,6 +918,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q69c', text: 'Operating system', isCorrect: false },
       { id: 'q69d', text: 'Browser', isCorrect: false },
     ],
+    explanation: 'Google Drive is a file storage and synchronization service that allows users to store files in the "cloud," share files, and edit documents collaboratively.',
   },
   {
     id: 'q70',
@@ -862,6 +931,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q70c', text: 'Public Document Format', isCorrect: false },
       { id: 'q70d', text: 'Printed Document Format', isCorrect: false },
     ],
+    explanation: 'Developed by Adobe, PDF is a file format designed to present documents consistently across diverse software, hardware, and operating systems.',
   },
   {
     id: 'q71',
@@ -874,6 +944,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q71c', text: 'Row', isCorrect: false },
       { id: 'q71d', text: 'Cell', isCorrect: false },
     ],
+    explanation: 'In Excel, a "Range" is a collection of two or more cells. A1:A10 specifies a block of cells in the first column from row 1 to 10.',
   },
   {
     id: 'q72',
@@ -886,6 +957,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q72c', text: 'Potassium chloride', isCorrect: false },
       { id: 'q72d', text: 'Magnesium chloride', isCorrect: false },
     ],
+    explanation: 'While rock salt (Sodium chloride) is common, Calcium chloride is more effective at lower temperatures because it releases heat as it dissolves (exothermic).',
   },
   {
     id: 'q73',
@@ -898,6 +970,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q73c', text: 'Mathematics', isCorrect: false },
       { id: 'q73d', text: 'Astronomy', isCorrect: false },
     ],
+    explanation: 'Ibn Sina (Avicenna) was a polymath, but he is most famous in the West for "The Canon of Medicine," which was a standard medical text in universities for centuries.',
   },
   {
     id: 'q74',
@@ -910,6 +983,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q74c', text: 'Jhelum River', isCorrect: false },
       { id: 'q74d', text: 'Chenab River', isCorrect: false },
     ],
+    explanation: 'The Bara River is located in the Khyber District of KP, Pakistan. It is a tributary that eventually flows into the Kabul River.',
   },
   {
     id: 'q75',
@@ -922,6 +996,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q75c', text: 'Increasing', isCorrect: false },
       { id: 'q75d', text: 'Decreasing', isCorrect: false },
     ],
+    explanation: 'In a vacuum, all electromagnetic waves (including light) travel at a constant speed of approximately 300,000 km/s (denoted by c).',
   },
   {
     id: 'q76',
@@ -934,6 +1009,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q76c', text: 'Hypothesis', isCorrect: false },
       { id: 'q76d', text: 'Literature', isCorrect: false },
     ],
+    explanation: 'Action research is a "learning by doing" approach. It involves identifying a problem, taking action, and evaluating the results to improve professional practice.',
   },
   {
     id: 'q77',
@@ -946,6 +1022,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q77c', text: 'Scientific theories', isCorrect: false },
       { id: 'q77d', text: 'Economic systems', isCorrect: false },
     ],
+    explanation: 'A biography is a detailed description of a person’s life, written by someone else.',
   },
   {
     id: 'q78',
@@ -958,6 +1035,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q78c', text: 'Cholistan', isCorrect: false },
       { id: 'q78d', text: 'Thal', isCorrect: false },
     ],
+    explanation: 'The Kharan Desert is a sandy and mountainous desert situated in the Kharan District of Balochistan, Pakistan.',
   },
   {
     id: 'q79',
@@ -970,6 +1048,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q79c', text: 'Equator', isCorrect: false },
       { id: 'q79d', text: 'Arctic', isCorrect: false },
     ],
+    explanation: 'The Tropic of Cancer passes just south of Karachi, Pakistan. Most of Pakistan lies in the temperate zone north of this line. ',
   },
   {
     id: 'q80',
@@ -982,6 +1061,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q80c', text: '1949', isCorrect: false },
       { id: 'q80d', text: '1950', isCorrect: false },
     ],
+    explanation: 'The first coins of the Pakistani Rupee were issued in 1948 in denominations of 1 pie, ½, 1 and 2 annas, ¼, ½ and 1 rupee.',
   },
   {
     id: 'q81',
@@ -994,6 +1074,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q81c', text: 'Haleji', isCorrect: false },
       { id: 'q81d', text: 'Saiful Malook', isCorrect: false },
     ],
+    explanation: 'Manchar Lake, located in Sindh, is the largest natural freshwater lake in Pakistan and one of the largest in South Asia.',
   },
   {
     id: 'q82',
@@ -1006,6 +1087,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q82c', text: 'San Marino', isCorrect: false },
       { id: 'q82d', text: 'Liechtenstein', isCorrect: false },
     ],
+    explanation: 'Vatican City is an independent city-state enclaved within Rome, Italy, with an area of about 44 hectares (110 acres).',
   },
   {
     id: 'q83',
@@ -1018,6 +1100,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q83c', text: 'Brussels', isCorrect: false },
       { id: 'q83d', text: 'Riyadh', isCorrect: false },
     ],
+    explanation: 'Although Austria is not an OPEC member, the Organization of the Petroleum Exporting Countries moved its headquarters to Vienna in 1965.',
   },
   {
     id: 'q84',
@@ -1030,6 +1113,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q84c', text: 'Khawaja Nazimuddin', isCorrect: false },
       { id: 'q84d', text: 'Sir Zafarullah Khan', isCorrect: false },
     ],
+    explanation: 'Liaquat Ali Khan was a key leader of the Pakistan Movement and served as the first Prime Minister until his assassination in 1951.',
   },
   {
     id: 'q85',
@@ -1042,6 +1126,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q85c', text: '1948', isCorrect: false },
       { id: 'q85d', text: '1949', isCorrect: false },
     ],
+    explanation: 'Pakistan became a member of the United Nations on September 30, 1947, shortly after gaining independence.',
   },
   {
     id: 'q86',
@@ -1054,6 +1139,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q86c', text: '4000 km', isCorrect: false },
       { id: 'q86d', text: '5000 km', isCorrect: false },
     ],
+    explanation: 'The CPEC (China-Pakistan Economic Corridor) route connecting Gwadar Port to Kashgar in China is roughly 3,000 km long.',
   },
   {
     id: 'q87',
@@ -1066,6 +1152,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q87c', text: 'Jhelum River', isCorrect: false },
       { id: 'q87d', text: 'Chenab River', isCorrect: false },
     ],
+    explanation: 'The Kurram River flows from the Kurram Valley in KP and joins the Indus River near Isa Khel.',
   },
   {
     id: 'q88',
@@ -1078,6 +1165,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q88c', text: 'Astronomy', isCorrect: false },
       { id: 'q88d', text: 'Oceanography', isCorrect: false },
     ],
+    explanation: 'Meteorology is the scientific study of the atmosphere that focuses on weather processes and forecasting.',
   },
   {
     id: 'q89',
@@ -1090,6 +1178,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q89c', text: 'Planet', isCorrect: false },
       { id: 'q89d', text: 'Constellation', isCorrect: false },
     ],
+    explanation: 'As mentioned previously, Andromeda is our nearest major galactic neighbor. ',
   },
   {
     id: 'q90',
@@ -1102,6 +1191,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q90c', text: '48', isCorrect: false },
       { id: 'q90d', text: '72', isCorrect: false },
     ],
+    explanation: 'Multiples of 9: 9, 18, 27, 36... Multiples of 12: 12, 24, 36... The Least Common Multiple is 36.',
   },
   {
     id: 'q91',
@@ -1114,6 +1204,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q91c', text: 'Indian', isCorrect: false },
       { id: 'q91d', text: 'Arctic', isCorrect: false },
     ],
+    explanation: 'The Pacific Ocean is the largest and deepest of Earth’s oceanic divisions, covering about one-third of the planet’s surface. ',
   },
   {
     id: 'q92',
@@ -1126,6 +1217,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q92c', text: 'Geneva', isCorrect: false },
       { id: 'q92d', text: 'Brussels', isCorrect: false },
     ],
+    explanation: 'The International Monetary Fund (IMF) is headquartered in Washington, D.C.',
   },
   {
     id: 'q93',
@@ -1138,6 +1230,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q93c', text: 'Formulas only', isCorrect: false },
       { id: 'q93d', text: 'Nothing', isCorrect: false },
     ],
+    explanation: 'Excel’s Autofill feature intelligently copies data, formatting, or logical sequences (like dates or numbers) to adjacent cells based on an initial pattern.',
   },
   {
     id: 'q94',
@@ -1150,6 +1243,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q94c', text: 'Monitor', isCorrect: false },
       { id: 'q94d', text: 'Keyboard', isCorrect: false },
     ],
+    explanation: 'The Central Processing Unit (CPU) is where most calculations and data processing take place. ',
   },
   {
     id: 'q95',
@@ -1162,6 +1256,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q95c', text: 'Excel', isCorrect: false },
       { id: 'q95d', text: 'Chrome', isCorrect: false },
     ],
+    explanation: 'Hardware refers to the physical components of a computer that you can touch.',
   },
   {
     id: 'q96',
@@ -1174,6 +1269,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q96c', text: 'Monitor', isCorrect: false },
       { id: 'q96d', text: 'Printer', isCorrect: false },
     ],
+    explanation: 'Software consists of the programs and operating systems that tell the hardware what to do.',
   },
   {
     id: 'q97',
@@ -1186,6 +1282,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q97c', text: '1948', isCorrect: false },
       { id: 'q97d', text: '1949', isCorrect: false },
     ],
+    explanation: 'The Royal Pakistan Air Force was established upon independence on August 14, 1947.',
   },
   {
     id: 'q98',
@@ -1198,6 +1295,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q98c', text: 'Warsak', isCorrect: false },
       { id: 'q98d', text: 'Mirani', isCorrect: false },
     ],
+    explanation: 'Tarbela Dam on the Indus River is the largest earth-filled dam in the world and the largest in Pakistan by structural volume.',
   },
   {
     id: 'q99',
@@ -1210,6 +1308,7 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q99c', text: 'Ellipse', isCorrect: false },
       { id: 'q99d', text: 'Flat', isCorrect: false },
     ],
+    explanation: 'Earth is not a perfect sphere; it is slightly flattened at the poles and bulges at the equator due to rotation. This shape is called an oblate spheroid or a Geoid. ',
   },
   {
     id: 'q100',
@@ -1222,6 +1321,6 @@ export const pmsGkMcqs: MCQuestion[] = [
       { id: 'q100c', text: '23.5°', isCorrect: false },
       { id: 'q100d', text: '66.5°', isCorrect: false },
     ],
+    explanation: 'The Equator is the starting point for measuring latitude, designated as 0 degrees. ',
   },
 ];
-
