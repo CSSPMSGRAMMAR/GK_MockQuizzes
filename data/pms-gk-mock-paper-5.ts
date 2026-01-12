@@ -460,16 +460,16 @@ export const pmsGkMockPaper5: MCQuestion[] = [
     "id": "p195_q37",
     "questionNumber": 36,
     "category": "Pakistan Affairs",
-    "question": "When Nadva-tul-Ulema came into being:",
+    "question": "When Nadva-tul-Ulema came into being?",
     "options": [
       { "id": "opt1", "text": "1873", "isCorrect": false },
       { "id": "opt2", "text": "1883", "isCorrect": false },
       { "id": "opt3", "text": "1893", "isCorrect": false },
-      { "id": "opt4", "text": "None of these", "isCorrect": true }
+      { "id": "opt4", "text": "1894", "isCorrect": true }
     ],
-    "explanation": "Nadva-tul-Ulema was established in 1894. The key indicates 'None of these' (or the closest option C depending on interpretation, but key says C... wait, 1893 is close. But 1894 is correct. I will follow the visual key check which seemed to mark C/None. Let's stick to valid fact: 1894)."
-  },
-  {
+    "explanation": "Nadva-tul-Ulema was established in 1894."
+  }
+,    {
     "id": "p195_q38",
     "questionNumber": 37,
     "category": "General Knowledge",

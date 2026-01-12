@@ -961,18 +961,18 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'Hazrat Fatima bint Asad was the mother of Hazrat Ali (R.A). She was a saintly woman who raised the Holy Prophet (PBUH) like her own son after his grandfather died.',
   },
   {
-    id: 'q273',
-    questionNumber: 273,
-    category: 'Islamic Studies',
-    question: 'غسل الملاکہ کا لقب کس صحابی کو دیا گیا؟',
-    options: [
-      { id: 'q273a', text: 'حضرت ابن عباسؓ', isCorrect: false },
-      { id: 'q273b', text: 'حضرت خلیفہؓ', isCorrect: false },
-      { id: 'q273c', text: 'حضرت طلحہؓ', isCorrect: true },
-      { id: 'q273d', text: 'حضرت ابو جبلؓ', isCorrect: false },
+    "id": "q273",
+    "questionNumber": 273,
+    "category": "Islamic Studies",
+    "question": "غسل الملاکہ کا لقب کس صحابی کو دیا گیا؟",
+    "options": [
+      { "id": "q273a", "text": "حضرت ابن عباسؓ", "isCorrect": false },
+      { "id": "q273b", "text": "حضرت خلیفہؓ", "isCorrect": false },
+      { "id": "q273c", "text": "حضرت ہنزلہؓ", "isCorrect": true },
+      { "id": "q273d", "text": "حضرت ابو جبلؓ", "isCorrect": false }
     ],
-    explanation: 'Wait! Actually, "Ghusil-ul-Malaikah" (The one washed by angels) is the title of Hazrat Hanzala (R.A). If the key is Hazrat Talha, it might refer to a different honorific in specific regional exam patterns.',
-  },
+    "explanation": "غسل الملاکہ (The one washed by angels) is the title of حضرت ہنزلہؓ (Hazrat Hanzala, R.A)."
+  },  
   {
     id: 'q274',
     questionNumber: 274,
@@ -1119,19 +1119,18 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'Sahir Ludhianvi’s famous poem "Taj Mahal" is a critique of the monument, arguing that it is a display of royal wealth that mocks the love of poor people.',
   },
   {
-    id: 'q285',
-    questionNumber: 285,
-    category: 'Literature',
-    question: 'ایسی بلندی ایسی بستی کے مصنف کا نام بتائیں؟',
-    options: [
-      { id: 'q285a', text: 'عزیز احمد', isCorrect: false },
-      { id: 'q285b', text: 'اشفاق احمد', isCorrect: false },
-      { id: 'q285c', text: 'مرزا ہادی رسوا', isCorrect: false },
-      { id: 'q285d', text: 'ممتاز مفتی', isCorrect: true },
+    "id": "q285",
+    "questionNumber": 285,
+    "category": "Literature",
+    "question": "ایسی بلندی ایسی بستی کے مصنف کا نام بتائیں؟",
+    "options": [
+      { "id": "q285a", "text": "عزیز احمد", "isCorrect": true },
+      { "id": "q285b", "text": "اشفاق احمد", "isCorrect": false },
+      { "id": "q285c", "text": "مرزا ہادی رسوا", "isCorrect": false },
+      { "id": "q285d", "text": "ممتاز مفتی", "isCorrect": false }
     ],
-    explanation: 'Wait! Historically, "Aisi Bulandi Aisi Pasti" is a famous novel by Aziz Ahmad. If the key is Mumtaz Mufti, it may refer to a specific chapter or biographical work.',
-  },
-  {
+    "explanation": "مصنف 'ایسی بلندی ایسی بستی' عزیز احمد ہیں۔"
+  },    {
     id: 'q286',
     questionNumber: 286,
     category: 'Literature',

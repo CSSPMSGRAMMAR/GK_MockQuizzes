@@ -70,18 +70,18 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
     explanation: 'Fitch Ratings is one of the "Big Three" credit rating agencies. Their surveys and ratings tell investors how likely a country or company is to default on its debt.',
   },
   {
-    id: 'q106',
-    questionNumber: 106,
-    category: 'General Knowledge',
-    question: 'What was the official theme of the 2016 Rio Olympics?',
-    options: [
-      { id: 'q106a', text: 'One world, One Dream', isCorrect: false },
-      { id: 'q106b', text: 'A New World', isCorrect: false },
-      { id: 'q106c', text: 'Inspire a Generation', isCorrect: true },
-      { id: 'q106d', text: 'Share the Spirit', isCorrect: false },
+    "id": "q106",
+    "questionNumber": 106,
+    "category": "General Knowledge",
+    "question": "What was the official theme/slogan of the 2016 Rio Olympics?",
+    "options": [
+      { "id": "q106a", "text": "One world, One Dream", "isCorrect": false },
+      { "id": "q106b", "text": "A New World", "isCorrect": true },
+      { "id": "q106c", "text": "Inspire a Generation", "isCorrect": false },
+      { "id": "q106d", "text": "Share the Spirit", "isCorrect": false }
     ],
-    explanation: 'Wait! Actually, "A New World" (Um Mundo Novo) was the slogan for Rio 2016. However, based on the provided answer key, "Inspire a Generation" was the slogan for London 2012. *Note: Double-check your source key as the Rio slogan was "A New World".*',
-  },
+    "explanation": "The official slogan for the Rio 2016 Olympic Games was “A New World” (Portuguese: Um Mundo Novo), unveiled by the organizing committee to highlight unity, respect for diversity, and a commitment to change. Previous Olympics used different slogans, such as “Inspire a Generation” for London 2012 and “One World, One Dream” for Beijing 2008."
+  },  
   {
     id: 'q107',
     questionNumber: 107,
@@ -215,19 +215,19 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
     explanation: 'The 17th Amendment was passed during Pervez Musharraf’s era, effectively restoring many of the powers of the Presidency that had been curtailed by previous amendments.',
   },
   {
-    id: 'q117',
-    questionNumber: 117,
-    category: 'Pakistan Affairs',
-    question: 'In which city did Sir Syed Ahmad Khan found the scientific Society in 1963?',
-    options: [
-      { id: 'q117a', text: 'Ghazipur', isCorrect: false },
-      { id: 'q117b', text: 'Delhi', isCorrect: false },
-      { id: 'q117c', text: 'Lahore', isCorrect: false },
-      { id: 'q117d', text: 'Lucknow', isCorrect: true },
+    "id": "q117",
+    "questionNumber": 117,
+    "category": "Pakistan Affairs",
+    "question": "In which city did Sir Syed Ahmad Khan found the Scientific Society in 1864?",
+    "options": [
+      { "id": "q117a", "text": "Ghazipur", "isCorrect": true },
+      { "id": "q117b", "text": "Delhi", "isCorrect": false },
+      { "id": "q117c", "text": "Lahore", "isCorrect": false },
+      { "id": "q117d", "text": "Lucknow", "isCorrect": false }
     ],
-    explanation: 'Wait! Historic records show Sir Syed founded the Scientific Society in Ghazipur in 1864. However, per your answer key, Lucknow is selected. *Note: Historically, Sir Syed founded the Scientific Society in Ghazipur (1864) and then moved it to Aligarh.*',
+    "explanation": "Sir Syed Ahmad Khan founded the Scientific Society at Ghazipur in 1864 to promote educational reforms and translation of Western scientific works; later it was shifted to Aligarh. Ghazipur is the correct founding location."
   },
-  {
+      {
     id: 'q118',
     questionNumber: 118,
     category: 'Pakistan Affairs',
@@ -373,17 +373,17 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
     explanation: 'This was the largest ever overseas sale of the French Rafale jet, valued at approximately 14 billion Euros.',
   },
   {
-    id: 'q129',
-    questionNumber: 129,
-    category: 'International Relations',
-    question: 'Who is the current President of Iran?',
-    options: [
-      { id: 'q129a', text: 'Ebrahim Raisi', isCorrect: true },
-      { id: 'q129b', text: 'Muhammad Mokhber', isCorrect: false },
-      { id: 'q129c', text: 'Ali Khamenei', isCorrect: false },
-      { id: 'q129d', text: 'Masoud Pezeshkian', isCorrect: false },
+    "id": "q129",
+    "questionNumber": 129,
+    "category": "International Relations",
+    "question": "Who is the current President of Iran?",
+    "options": [
+      { "id": "q129a", "text": "Ebrahim Raisi", "isCorrect": false },
+      { "id": "q129b", "text": "Muhammad Mokhber", "isCorrect": false },
+      { "id": "q129c", "text": "Ali Khamenei", "isCorrect": false },
+      { "id": "q129d", "text": "Masoud Pezeshkian", "isCorrect": true }
     ],
-    explanation: 'As of late 2021/early 2022, Ebrahim Raisi was President. *Note: Masoud Pezeshkian was elected in 2024 following the death of Ebrahim Raisi in a helicopter crash.*',
+    "explanation": "Masoud Pezeshkian is the current President of Iran. He was elected in the 2024 presidential election and formally took office on 28 July 2024, succeeding the late Ebrahim Raisi. The Supreme Leader, Ayatollah Ali Khamenei, endorsed his presidency following the runoff election. Pezeshkian’s tenure continues into 2025 and 2026. :contentReference[oaicite:1]{index=1}"
   },
   {
     id: 'q130',
@@ -518,19 +518,19 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
     explanation: 'Located on the outskirts of Cairo, the Great Pyramid of Giza is the oldest of the Seven Wonders of the Ancient World and the only one to remain largely intact.',
   },
   {
-    id: 'q140',
-    questionNumber: 140,
-    category: 'Geography',
-    question: 'Which is the Highest peak of Himalayas Range in Pakistan?',
-    options: [
-      { id: 'q140a', text: 'K-2', isCorrect: true },
-      { id: 'q140b', text: 'Tirich Mir', isCorrect: false },
-      { id: 'q140c', text: 'Nanga Parbat', isCorrect: false },
-      { id: 'q140d', text: 'Sakesar', isCorrect: false },
+    "id": "q140",
+    "questionNumber": 140,
+    "category": "Geography",
+    "question": "Which is the highest peak of the Himalayan Range in Pakistan?",
+    "options": [
+      { "id": "q140a", "text": "K-2", "isCorrect": false },
+      { "id": "q140b", "text": "Tirich Mir", "isCorrect": false },
+      { "id": "q140c", "text": "Nanga Parbat", "isCorrect": true },
+      { "id": "q140d", "text": "Sakesar", "isCorrect": false }
     ],
-    explanation: 'Wait! K-2 is in the Karakoram Range. Nanga Parbat is actually the highest peak of the *Himalayan* range in Pakistan. *Note: Double-check your key, as K-2 is Karakoram.*',
-  },
-
+    "explanation": "Nanga Parbat (8,126 m) is the highest peak of the Himalayan Range in Pakistan. K-2 belongs to the Karakoram Range, while Tirich Mir is in the Hindu Kush and Sakesar is part of the Salt Range."
+  }
+,
   // Science (141-150)
   {
     id: 'q141',

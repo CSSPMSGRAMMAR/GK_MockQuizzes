@@ -662,9 +662,9 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
       { "id": "q51opt2", "text": "Ebrahim Raisi", "isCorrect": false },
       { "id": "q51opt3", "text": "Ali Larijani", "isCorrect": false }
     ],
-    "explanation": "Masoud Pezeshkian is the President of Iran."
+    "explanation": "Masoud Pezeshkian is the current President of Iran. He was elected in July 2024 and sworn in as the country’s ninth president on 30th July 2024. Prior to this, Ebrahim Raisi had served as president until his death in May 2024. Pezeshkian’s presidency continues into 2025 and beyond."
   },
-  {
+    {
     "id": "q52",
     "questionNumber": 52,
     "category": "Pakistan Affairs",
