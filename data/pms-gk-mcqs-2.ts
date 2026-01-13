@@ -1026,19 +1026,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'A Hadith where the narrator (rawi) is known for poor memory or inaccuracy is categorized as "Zaeef" (Weak).',
   },
   {
-    id: 'q278',
-    questionNumber: 278,
-    category: 'Islamic Studies',
-    question: 'مسند امام احمد کس نے تصنیف کی؟',
-    options: [
-      { id: 'q278a', text: 'امام مسلم', isCorrect: false },
-      { id: 'q278b', text: 'شاه عبدالعزیز', isCorrect: false },
-      { id: 'q278c', text: 'امام بخاری', isCorrect: false },
-      { id: 'q278d', text: 'شاه ولی اللہ محدث دہلوی', isCorrect: true },
+    "id": "q278",
+    "questionNumber": 278,
+    "category": "Islamic Studies",
+    "question": "مسند امام احمد کس نے تصنیف کی؟",
+    "options": [
+      { "id": "q278a", "text": "امام مسلم", "isCorrect": false },
+      { "id": "q278b", "text": "شاه عبدالعزیز", "isCorrect": false },
+      { "id": "q278c", "text": "امام بخاری", "isCorrect": false },
+      { "id": "q278d", "text": "امام احمد بن حنبل", "isCorrect": true }
     ],
-    explanation: 'Wait! Historically, "Musnad Ahmad" was compiled by Imam Ahmad bin Hanbal. If the key is Shah Waliullah, it might refer to a specific scholarly commentary or a regional textbook classification.',
-  },
-  {
+    "explanation": "مسند امام احمد امام احمد بن حنبل نے تصنیف کیا۔"
+  }
+,    {
     id: 'q279',
     questionNumber: 279,
     category: 'Islamic Studies',

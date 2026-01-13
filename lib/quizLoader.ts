@@ -7,6 +7,16 @@ import { pmsGkMockPaper3 } from '@/data/pms-gk-mock-paper-3';
 import { pmsGkMockPaper4 } from '@/data/pms-gk-mock-paper-4';
 import { pmsGkMockPaper5 } from '@/data/pms-gk-mock-paper-5';
 import { pmsGkMockPaper6 } from '@/data/pms-gk-mock-paper-6';
+import { pmsGkMockPaper7 } from '@/data/pms-gk-mock-paper-7';
+import { pmsGkMockPaper8 } from '@/data/pms-gk-mock-paper-8';
+import { pmsGkMockPaper9 } from '@/data/pms-gk-mock-paper-9';
+import { pmsGkMockPaper10 } from '@/data/pms-gk-mock-paper-10';
+import { pmsGkMockPaper11 } from '@/data/pms-gk-mock-paper-11';
+import { pmsGkMockPaper12 } from '@/data/pms-gk-mock-paper-12';
+import { pmsGkMockPaper13 } from '@/data/pms-gk-mock-paper-13';
+import { pmsGkMockPaper14 } from '@/data/pms-gk-mock-paper-14';
+import { pmsGkMockPaper15 } from '@/data/pms-gk-mock-paper-15';
+import { pmsGkMockPaper16 } from '@/data/pms-gk-mock-paper-16';
 // Subject-specific tests
 import { pastPaper2021Questions } from '@/data/pastPaper2021';
 import { geographyTestQuestions } from '@/data/geographyTest';
@@ -28,6 +38,16 @@ const QUIZ_QUESTIONS_MAP: Record<string, MCQuestion[]> = {
   'pms-gk-mock-paper-4': pmsGkMockPaper4, // Premium Mock Paper 4 with explanations (100 questions)
   'pms-gk-mock-paper-5': pmsGkMockPaper5, // Premium Mock Paper 5 with explanations (100 questions)
   'pms-gk-mock-paper-6': pmsGkMockPaper6, // Premium Mock Paper 6 with explanations (100 questions)
+  'pms-gk-mock-paper-7': pmsGkMockPaper7, // Premium Mock Paper 7 with explanations (100 questions)
+  'pms-gk-mock-paper-8': pmsGkMockPaper8, // Premium Mock Paper 8 with explanations (100 questions)
+  'pms-gk-mock-paper-9': pmsGkMockPaper9, // Premium Mock Paper 9 with explanations (100 questions)
+  'pms-gk-mock-paper-10': pmsGkMockPaper10, // Premium Mock Paper 10 with explanations (99 questions)
+  'pms-gk-mock-paper-11': pmsGkMockPaper11, // Premium Mock Paper 11 with explanations (100 questions)
+  'pms-gk-mock-paper-12': pmsGkMockPaper12, // Premium Mock Paper 12 with explanations (20 questions)
+  'pms-gk-mock-paper-13': pmsGkMockPaper13, // Premium Mock Paper 13 with explanations (100 questions)
+  'pms-gk-mock-paper-14': pmsGkMockPaper14, // Premium Mock Paper 14 with explanations (100 questions)
+  'pms-gk-mock-paper-15': pmsGkMockPaper15, // Premium Mock Paper 15 with explanations (100 questions)
+  'pms-gk-mock-paper-16': pmsGkMockPaper16, // Premium Mock Paper 16 with explanations (100 questions)
   // Subject-specific tests
   'past-paper-2021': pastPaper2021Questions, // Past Paper 2021 (100 questions)
   'geography-test': geographyTestQuestions, // Geography Test (100 questions)
