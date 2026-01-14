@@ -333,7 +333,7 @@ export default function Home() {
                         <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400" />
                       </div>
                       <h3 className="text-lg sm:text-xl font-display font-bold text-green-900 dark:text-green-100">
-                        Register Now for 20+ Full-Length Paid Mock Papers!
+                        Register Now for 20+ Full-Length Paid Mock Papers! (Special Offer for First 10 Registrations)
                       </h3>
                     </div>
                     <p className="text-sm sm:text-base text-green-800 dark:text-green-200">
