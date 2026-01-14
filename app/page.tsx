@@ -23,6 +23,7 @@ import {
   LogOut,
   User,
   Sparkles,
+  MessageCircle,
 } from 'lucide-react';
 
 interface Quiz {
@@ -312,6 +313,51 @@ export default function Home() {
               Practice with our free demo quizzes or access premium mock tests to excel in your
               PMS General Knowledge exam preparation.
             </motion.p>
+          </motion.div>
+
+          {/* WhatsApp CTA Section - 20+ Mock Papers */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="relative"
+          >
+            <Card className="bg-gradient-to-r from-green-50 via-emerald-50 to-green-50 dark:from-green-950/20 dark:via-emerald-950/20 dark:to-green-950/20 border-2 border-green-200 dark:border-green-800 shadow-elegant overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 dark:bg-green-800/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-200/30 dark:bg-emerald-800/30 rounded-full blur-3xl -ml-16 -mb-16"></div>
+              <CardContent className="pt-6 pb-6 relative z-10">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+                  <div className="flex-1 text-center sm:text-left">
+                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
+                      <div className="p-2 bg-green-100 dark:bg-green-900/50 rounded-full">
+                        <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400" />
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-display font-bold text-green-900 dark:text-green-100">
+                        Register Now for 20+ Full-Length Paid Mock Papers!
+                      </h3>
+                    </div>
+                    <p className="text-sm sm:text-base text-green-800 dark:text-green-200">
+                      Get access to our comprehensive collection of premium mock tests designed to help you excel in your PMS GK exam preparation.
+                    </p>
+                  </div>
+                  {/* TODO: Replace 923001234567 with your actual WhatsApp number (format: country code + number without + or spaces) */}
+                  <a
+                    href="https://wa.me/923265511188?text=Hi!%20I%20want%20to%20register%20for%20the%2020%2B%20full-length%20paid%20mock%20papers%20test."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0"
+                  >
+                    <Button
+                      size="lg"
+                      className="bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto px-6 sm:px-8"
+                    >
+                      <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                      <span className="font-semibold">Contact on WhatsApp</span>
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           {/* Tab Navigation */}
