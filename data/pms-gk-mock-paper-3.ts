@@ -2,18 +2,35 @@ import { MCQuestion } from '@/types/exam';
 
 export const pmsGkMockPaper3: MCQuestion[] = [
   {
-    "id": "q1",
+    "id": "Q1",
     "questionNumber": 1,
     "category": "General Knowledge",
     "question": "When did Yasser Arafat become the President of Palestine (Palestinian National Authority)?",
     "options": [
-      { "id": "q1opt0", "text": "1989", "isCorrect": false },
-      { "id": "q1opt1", "text": "1991", "isCorrect": false },
-      { "id": "q1opt2", "text": "1996", "isCorrect": true },
-      { "id": "q1opt3", "text": "1999", "isCorrect": false }
+      {
+        "id": "A",
+        "text": "1994",
+        "isCorrect": true
+      },
+      {
+        "id": "B",
+        "text": "1996",
+        "isCorrect": false
+      },
+      {
+        "id": "C",
+        "text": "1998",
+        "isCorrect": false
+      },
+      {
+        "id": "D",
+        "text": "2000",
+        "isCorrect": false
+      }
     ],
-    "explanation": "Yasser Arafat was elected as the first President of the Palestinian National Authority in 1996."
-  },
+    "explanation": "Yasser Arafat became President of the Palestinian National Authority on 5 July 1994 following the Oslo Accords implementation. The 1996 election formalized this position, but his presidency began in 1994. :contentReference[oaicite:2]{index=2}"
+  }
+  ,
   {
     "id": "q2",
     "questionNumber": 2,

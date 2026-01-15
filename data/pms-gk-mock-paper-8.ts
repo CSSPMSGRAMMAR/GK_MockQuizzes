@@ -83,14 +83,14 @@ export const pmsGkMockPaper8: MCQuestion[] = [
     "id": "new_q7",
     "questionNumber": 7,
     "category": "Current Affairs",
-    "question": "Who is the current Chancellor of Germany (2024)?",
-    "options": [
-      { "id": "opt1", "text": "Angela Merkel", "isCorrect": false },
-      { "id": "opt2", "text": "Olaf Scholz", "isCorrect": true },
-      { "id": "opt3", "text": "Emmanuel Macron", "isCorrect": false },
-      { "id": "opt4", "text": "Boris Pistorius", "isCorrect": false }
-    ],
-    "explanation": "Olaf Scholz has been serving as the Chancellor of Germany since December 2021."
+    "question": "Who is the current Chancellor of Germany?",
+"options": [
+    { "id": "opt1", "text": "Olaf Scholz", "isCorrect": false },
+    { "id": "opt2", "text": "Friedrich Merz", "isCorrect": true },
+    { "id": "opt3", "text": "Angela Merkel", "isCorrect": false },
+    { "id": "opt4", "text": "Armin Laschet", "isCorrect": false }
+  ],
+  "explanation": "Friedrich Merz became Chancellor of Germany on 6 May 2025, succeeding Olaf Scholz after the federal election and coalition formation."
   },
   {
     "id": "new_q8",
@@ -1110,7 +1110,7 @@ export const pmsGkMockPaper8: MCQuestion[] = [
     "id": "new_q86",
     "questionNumber": 86,
     "category": "Current Affairs",
-    "question": "Which country is the newest member of the IMF (as of 2024)?",
+    "question": "Which country is the newest member of the IMF?",
     "options": [
       { "id": "opt1", "text": "Andorra", "isCorrect": true },
       { "id": "opt2", "text": "Liechtenstein", "isCorrect": false },

@@ -15,19 +15,19 @@ export const pmsGkMockPaper7: MCQuestion[] = [
     "explanation": "Brazil hosted the G20 summit in 2024, taking over the presidency from India."
   },
   {
-    "id": "new_q2",
+    "id": "p195_q29",
     "questionNumber": 2,
     "category": "Pakistan Affairs",
-    "question": "Who was the first President of the Constitution Assembly of Pakistan?",
+    "question": "Who was the first President of the Constituent Assembly of Pakistan?",
     "options": [
       { "id": "opt1", "text": "Liaquat Ali Khan", "isCorrect": false },
-      { "id": "opt2", "text": "Jogendra Nath Mandal", "isCorrect": true },
+      { "id": "opt2", "text": "Jogendra Nath Mandal", "isCorrect": false },
       { "id": "opt3", "text": "Maulvi Tamizuddin", "isCorrect": false },
-      { "id": "opt4", "text": "Sardar Abdur Rab Nishtar", "isCorrect": false }
+      { "id": "opt4", "text": "Muhammad Ali Jinnah", "isCorrect": true }
     ],
-    "explanation": "Jogendra Nath Mandal was elected as the first temporary chairman/president of the Constituent Assembly before Quaid-e-Azam was elected as its permanent President."
-  },
-  {
+    "explanation": "Muhammad Ali Jinnah was unanimously elected as the first permanent President of the Constituent Assembly of Pakistan on 11 August 1947, shortly after the first session of the Assembly. Although Jogendra Nath Mandal chaired the *initial meeting* as temporary chairman, the official first president was Jinnah. :contentReference[oaicite:2]{index=2}"
+  }
+,    {
     "id": "new_q3",
     "questionNumber": 3,
     "category": "General Knowledge",
@@ -423,14 +423,14 @@ export const pmsGkMockPaper7: MCQuestion[] = [
     "category": "Pakistan Affairs",
     "question": "In which year did the 1965 War between India and Pakistan take place?",
     "options": [
-      { "id": "opt1", "text": "January", "isCorrect": false },
-      { "id": "opt2", "text": "September", "isCorrect": true },
-      { "id": "opt3", "text": "December", "isCorrect": false },
-      { "id": "opt4", "text": "July", "isCorrect": false }
+      { "id": "opt1", "text": "1963", "isCorrect": false },
+      { "id": "opt2", "text": "1964", "isCorrect": false },
+      { "id": "opt3", "text": "1965", "isCorrect": true },
+      { "id": "opt4", "text": "1966", "isCorrect": false }
     ],
-    "explanation": "The Indo-Pakistani War of 1965 largely took place in September (Defense Day is Sep 6)."
-  },
-  {
+    "explanation": "The Indo‑Pakistani War of 1965 took place between August and September 1965, making 1965 the correct year of the conflict. :contentReference[oaicite:2]{index=2}"
+  }
+,    {
     "id": "new_q34",
     "questionNumber": 34,
     "category": "General Knowledge",
@@ -844,9 +844,9 @@ export const pmsGkMockPaper7: MCQuestion[] = [
       { "id": "opt3", "text": "3", "isCorrect": false },
       { "id": "opt4", "text": "4", "isCorrect": false }
     ],
-    "explanation": "There are 2 non-member observer states: The Holy See and the State of Palestine."
-  },
-  {
+    "explanation": "There are currently two non‑member observer states at the United Nations General Assembly: the Holy See and the State of Palestine, which participate in sessions and maintain Permanent Observer Missions but are not full members. :contentReference[oaicite:2]{index=2}"
+  }
+,    {
     "id": "new_q66",
     "questionNumber": 66,
     "category": "General Knowledge",

@@ -15,19 +15,19 @@ export const pmsGkMockPaper9: MCQuestion[] = [
     "explanation": "The letter 'J' is the only letter of the alphabet that does not appear in any element's name on the periodic table. For example, Xenon has 'X', Quasiparticle has 'Q' (not an element but used often in discussions, but even without it 'Q' appears in element symbols in some languages), and Zinc has 'Z'."
   },
   {
-    "id": "q_202",
-    "questionNumber": 2,
-    "category": "General Knowledge",
-    "question": "What animal is known for having the largest brain relative to its body size?",
-    "options": [
-      { "id": "opt_202_1", "text": "Tree Shrew", "isCorrect": true },
-      { "id": "opt_202_2", "text": "Human", "isCorrect": false },
-      { "id": "opt_202_3", "text": "Elephant", "isCorrect": false },
-      { "id": "opt_202_4", "text": "Sperm Whale", "isCorrect": false }
-    ],
-    "explanation": "While humans have a large brain, and elephants and sperm whales have the largest absolute brain sizes, the tree shrew has the largest brain-to-body mass ratio of any animal, at about 1:10. This is a common trick question as most people would assume a larger, more intelligent animal."
-  },
-  {
+      "id": "q_202",
+      "questionNumber": 2,
+      "category": "General Knowledge",
+      "question": "What animal is known for having the largest brain relative to its body size?",
+      "options": [
+        { "id": "opt_202_1", "text": "Tree Shrew", "isCorrect": false },
+        { "id": "opt_202_2", "text": "Human", "isCorrect": false },
+        { "id": "opt_202_3", "text": "Elephant", "isCorrect": false },
+        { "id": "opt_202_4", "text": "Small Ants", "isCorrect": true }
+      ],
+      "explanation": "Small ants have the largest brain-to-body mass ratio (1:7), surpassing humans, tree shrews, and other animals. Humans have high cognitive ability due to Encephalization Quotient (EQ), but in pure ratio terms, small ants top the list."
+    }
+,      {
     "id": "q_203",
     "questionNumber": 3,
     "category": "General Knowledge",

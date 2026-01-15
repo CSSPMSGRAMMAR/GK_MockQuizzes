@@ -106,31 +106,48 @@ export const pmsGkMockPaper5: MCQuestion[] = [
     "explanation": "NADRA is the National Database and Registration Authority of Pakistan."
   },
   {
-    "id": "p195_q9",
+    "id": "q9",
     "questionNumber": 9,
     "category": "Pakistan Affairs",
     "question": "In which year was the Grand Jamia Masjid in Karachi completed?",
     "options": [
-      { "id": "opt1", "text": "2021", "isCorrect": false },
-      { "id": "opt2", "text": "2022", "isCorrect": false },
-      { "id": "opt3", "text": "2023", "isCorrect": false },
-      { "id": "opt4", "text": "2024", "isCorrect": true }
+      { "id": "q9opt0", "text": "Under construction", "isCorrect": true },
+      { "id": "q9opt1", "text": "2024", "isCorrect": false },
+      { "id": "q9opt2", "text": "2025", "isCorrect": false },
+      { "id": "q9opt3", "text": "Never started", "isCorrect": false }
     ],
-    "explanation": "According to the provided key (D), the completion year is marked as 2024."
-  },
-  {
-    "id": "p195_q10",
-    "questionNumber": 10,
-    "category": "General Knowledge",
-    "question": "Which United Nations agency is primarily responsible for social, environmental, and financial planning, particularly aimed at benefiting developing countries?",
-    "options": [
-      { "id": "opt1", "text": "United Nations Environment Programme (UNEP)", "isCorrect": true },
-      { "id": "opt2", "text": "United Nations Educational, Scientific and Cultural Organization (UNESCO)", "isCorrect": false },
-      { "id": "opt3", "text": "International Monetary Fund (IMF)", "isCorrect": false },
-      { "id": "opt4", "text": "United Nations Agency on Social and Economic", "isCorrect": false }
-    ],
-    "explanation": "UNEP is the leading authority on environmental issues. The key (A) points to UNEP."
-  },
+    "explanation": "The Grand Jamia Masjid in Karachi is still under construction and has not been completed as of 2025. Several past paper keys list options such as 2024 or 2025, but authoritative project status indicates it remains ongoing. :contentReference[oaicite:1]{index=1}"
+  }
+,   {
+  "id": "p195_q10",
+  "questionNumber": 10,
+  "category": "General Knowledge",
+  "question": "Which United Nations agency is primarily responsible for social, environmental, and financial planning, particularly aimed at benefiting developing countries?",
+  "options": [
+    {
+      "id": "opt1",
+      "text": "United Nations Development Programme (UNDP)",
+      "isCorrect": true
+    },
+    {
+      "id": "opt2",
+      "text": "United Nations Environment Programme (UNEP)",
+      "isCorrect": false
+    },
+    {
+      "id": "opt3",
+      "text": "United Nations Educational, Scientific and Cultural Organization (UNESCO)",
+      "isCorrect": false
+    },
+    {
+      "id": "opt4",
+      "text": "International Monetary Fund (IMF)",
+      "isCorrect": false
+    }
+  ],
+  "explanation": "The United Nations Development Programme (UNDP) is the principal UN development agency that helps countries reduce poverty, achieve sustainable development, and integrate economic, social, and environmental planning into national policy frameworks. It works in nearly 170 countries to implement the Sustainable Development Goals and offers technical and policy support tailored to developing nations. :contentReference[oaicite:5]{index=5}"
+}
+,
   {
     "id": "p195_q11",
     "questionNumber": 11,

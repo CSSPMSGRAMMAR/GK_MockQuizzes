@@ -129,7 +129,7 @@ export const pmsGkMockPaper4: MCQuestion[] = [
       { "id": "q10opt2", "text": "20%", "isCorrect": false },
       { "id": "q10opt3", "text": "10%", "isCorrect": false }
     ],
-    "explanation": "According to the paper's key, Pakistan imports 81% of its weapons."
+    "explanation": "According to SIPRI data and defense trade analyses, China accounted for approximately 81 % of Pakistan’s total arms imports in the recent reporting period, making 81 % the widely cited figure for Pakistan’s weapons import share.}"
   },
   {
     "id": "q11",
@@ -514,14 +514,30 @@ export const pmsGkMockPaper4: MCQuestion[] = [
     "category": "Current Affairs",
     "question": "What major political event happened in Syria in December 2024?",
     "options": [
-      { "id": "q40opt0", "text": "Syria signed a peace treaty with Israel", "isCorrect": false },
-      { "id": "q40opt1", "text": "Regime change leading to the overthrow of Bashar al-Assad", "isCorrect": true },
-      { "id": "q40opt2", "text": "Syria joined the Gulf Cooperation Council (GCC)", "isCorrect": false },
-      { "id": "q40opt3", "text": "Assad declared a state of emergency for five years", "isCorrect": false }
+      {
+        "id": "q40opt0",
+        "text": "Syria signed a peace treaty with Israel",
+        "isCorrect": false
+      },
+      {
+        "id": "q40opt1",
+        "text": "The Assad regime was overthrown and Bashar al‑Assad fled the country",
+        "isCorrect": true
+      },
+      {
+        "id": "q40opt2",
+        "text": "Syria joined the Gulf Cooperation Council (GCC)",
+        "isCorrect": false
+      },
+      {
+        "id": "q40opt3",
+        "text": "Assad declared a state of emergency for five years",
+        "isCorrect": false
+      }
     ],
-    "explanation": "The event marked is the regime change and overthrow of Bashar al-Assad."
-  },
-  {
+    "explanation": "In December 2024, Syrian opposition forces made significant advances and captured the capital, leading to the collapse of President Bashar al‑Assad’s regime and his departure from Syria. This marked a major political change in the country after years of civil war. :contentReference[oaicite:3]{index=3}"
+  }
+,    {
     "id": "q41",
     "questionNumber": 41,
     "category": "Current Affairs",
@@ -581,24 +597,25 @@ export const pmsGkMockPaper4: MCQuestion[] = [
     "options": [
       { "id": "q45opt0", "text": "$ 12 billion", "isCorrect": false },
       { "id": "q45opt1", "text": "$ 16 billion", "isCorrect": false },
-      { "id": "q45opt2", "text": "$ 8 billion", "isCorrect": true },
+      { "id": "q45opt2", "text": "$ 8.8 billion", "isCorrect": true },
       { "id": "q45opt3", "text": "$ 22 billion", "isCorrect": false }
     ],
-    "explanation": "Pakistan received $8 billion in remittances during Q1 2025."
-  },
-  {
-    "id": "q46",
-    "questionNumber": 46,
-    "category": "Geography",
-    "question": "The Sinai Peninsula or Sinai is a triangular peninsula in Egypt about",
-    "options": [
-      { "id": "q46opt0", "text": "30,000 km²", "isCorrect": false },
-      { "id": "q46opt1", "text": "40,000 km²", "isCorrect": false },
-      { "id": "q46opt2", "text": "50,000 km²", "isCorrect": false },
-      { "id": "q46opt3", "text": "67,000 km²", "isCorrect": true }
-    ],
-    "explanation": "While the exact area is closer to 60,000 km², the provided explanation states to choose 67,000 km² as the closest available option."
-  },
+    "explanation": "According to the State Bank of Pakistan’s remittance data, Pakistan received approximately $8.8 billion in overseas workers’ remittances during the first quarter of fiscal year 2025 (July‑September 2024). The commonly reported figure in official sources is rounded to $8.8 billion. :contentReference[oaicite:1]{index=1}"
+  }
+,    {
+  "id": "q46",
+  "questionNumber": 46,
+  "category": "Geography",
+  "question": "The Sinai Peninsula or Sinai is a triangular peninsula in Egypt about",
+  "options": [
+    { "id": "q46opt0", "text": "30,000 km²", "isCorrect": false },
+    { "id": "q46opt1", "text": "40,000 km²", "isCorrect": false },
+    { "id": "q46opt2", "text": "50,000 km²", "isCorrect": false },
+    { "id": "q46opt3", "text": "60,000 km²", "isCorrect": true }
+  ],
+  "explanation": "The Sinai Peninsula covers an area of approximately 60,000 square kilometres, forming a triangular land bridge between Africa and Asia. (Authoritative geography sources cite around 60,000 km² for the Sinai Peninsula’s area.) :contentReference[oaicite:2]{index=2}"
+}
+,
   {
     "id": "q47",
     "questionNumber": 47,

@@ -562,7 +562,7 @@ export const subjectcurrentaffairs: MCQuestion[] = [
       {
         "id": "q20opt0",
         "text": "Munir Akram",
-        "isCorrect": true
+        "isCorrect": false
       },
       {
         "id": "q20opt1",
@@ -572,7 +572,7 @@ export const subjectcurrentaffairs: MCQuestion[] = [
       {
         "id": "q20opt2",
         "text": "Asim Iftikhar Ahmad",
-        "isCorrect": false
+        "isCorrect": true
       },
       {
         "id": "q20opt3",
@@ -580,7 +580,7 @@ export const subjectcurrentaffairs: MCQuestion[] = [
         "isCorrect": false
       }
     ],
-    "explanation": "Munir Akram is the serving Permanent Representative of Pakistan to the UN."
+    "explanation": "Asim Iftikhar Ahmad is the serving Permanent Representative of Pakistan to the UN."
   },
   {
     "id": "q21",

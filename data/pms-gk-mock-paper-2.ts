@@ -440,25 +440,25 @@ export const pmsGkMockPaper2: MCQuestion[] = [
       {
         id: "q16opt0",
         text: "It was stated in the 1973 Constitution (Article 251)",
-        isCorrect: true,
+        isCorrect: true
       },
       {
         id: "q16opt1",
         text: "First Amendment",
-        isCorrect: false,
+        isCorrect: false
       },
       {
         id: "q16opt2",
         text: "Eighth Amendment",
-        isCorrect: false,
+        isCorrect: false
       },
       {
         id: "q16opt3",
         text: "Eighteenth Amendment",
-        isCorrect: false,
-      },
+        isCorrect: false
+      }
     ],
-    explanation: "Article 251 of the 1973 Constitution declares Urdu as the national language of Pakistan, though it stated that arrangements would be made for its official use within fifteen years.",
+    explanation: "Urdu was declared the national language of Pakistan by **Article 251** of the 1973 Constitution itself, not by a later constitutional amendment. Article 251(1) explicitly states Urdu is the national language of Pakistan, requiring arrangements for its use in official and other purposes. :contentReference[oaicite:2]{index=2}"
   },
   {
     id: "q17",

@@ -1,32 +1,32 @@
 import { MCQuestion } from "@/types/exam";
 
 export const currentAffairsTestQuestions: MCQuestion[] = [
-  {
-    "id": "q1",
-    "questionNumber": 1,
-    "category": "Current Affairs",
-    "question": "When did Trump announce his 20 point peace plan for Israel Palestine Issue?",
-    "options": [
-      { "id": "q1opt0", "text": "18 Jan 2025", "isCorrect": false },
-      { "id": "q1opt1", "text": "20 Sep 2025", "isCorrect": false },
-      { "id": "q1opt2", "text": "29 Sep 2025", "isCorrect": false },
-      { "id": "q1opt3", "text": "21 Jan 2025", "isCorrect": true }
-    ],
-    "explanation": "In this mock timeline, the plan is announced shortly after the inauguration."
-  },
-  {
-    "id": "q2",
-    "questionNumber": 2,
-    "category": "General Knowledge",
-    "question": "When did Soviet-Afghan War end?",
-    "options": [
-      { "id": "q2opt0", "text": "1989", "isCorrect": true },
-      { "id": "q2opt1", "text": "1991", "isCorrect": false },
-      { "id": "q2opt2", "text": "1988", "isCorrect": false },
-      { "id": "q2opt3", "text": "1990", "isCorrect": false }
-    ],
-    "explanation": "The Soviet withdrawal from Afghanistan was completed on February 15, 1989."
-  },
+ {
+  "id": "q1",
+  "questionNumber": 1,
+  "category": "Current Affairs",
+  "question": "When did Trump announce his 20 point peace plan for Israel Palestine Issue?",
+  "options": [
+    { "id": "q1opt0", "text": "18 Jan 2025", "isCorrect": false },
+    { "id": "q1opt1", "text": "20 Sep 2025", "isCorrect": false },
+    { "id": "q1opt2", "text": "29 Sep 2025", "isCorrect": true },
+    { "id": "q1opt3", "text": "21 Jan 2025", "isCorrect": false }
+  ],
+  "explanation": "U.S. President Donald Trump announced the 20-point Gaza peace plan at the White House on September 29, 2025, alongside Israeli Prime Minister Benjamin Netanyahu[citation:1][citation:2][citation:4]."
+},
+ {
+  "id": "q2",
+  "questionNumber": 2,
+  "category": "General Knowledge",
+  "question": "When did Soviet-Afghan War end?",
+  "options": [
+    { "id": "q2opt0", "text": "1989", "isCorrect": true },
+    { "id": "q2opt1", "text": "1991", "isCorrect": false },
+    { "id": "q2opt2", "text": "1988", "isCorrect": false },
+    { "id": "q2opt3", "text": "1990", "isCorrect": false }
+  ],
+  "explanation": "The Soviet military withdrawal was completed on February 15, 1989, marking the end of the war[citation:3][citation:8]. A peace treaty (the Geneva Accords) was signed in 1988, which is also a correct answer in some contexts."
+},
   {
     "id": "q3",
     "questionNumber": 3,
@@ -83,15 +83,16 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     "id": "q7",
     "questionNumber": 7,
     "category": "Current Affairs",
-    "question": "Which is the latest Country to Join Eurozone?",
+    "question": "Which is the latest country to join the Eurozone?",
     "options": [
-      { "id": "q7opt0", "text": "Luxemberg", "isCorrect": false },
+      { "id": "q7opt0", "text": "Luxembourg", "isCorrect": false },
       { "id": "q7opt1", "text": "Estonia", "isCorrect": false },
-      { "id": "q7opt2", "text": "Bulgharia", "isCorrect": true },
+      { "id": "q7opt2", "text": "Bulgaria", "isCorrect": true },
       { "id": "q7opt3", "text": "UAE", "isCorrect": false }
     ],
-    "explanation": "Bulgaria is scheduled/projected to join the Eurozone (target date 2025/2026)."
-  },
+    "explanation": "Bulgaria officially became the 21st member of the Eurozone on 1 January 2026 when it adopted the euro as its currency."
+  }
+,  
   {
     "id": "q8",
     "questionNumber": 8,
@@ -326,20 +327,19 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     ],
     "explanation": "Hypothetical event in the mock paper timeline: Druze and Bedouin clashes."
   },
-  {
-    "id": "q26",
-    "questionNumber": 26,
-    "category": "Current Affairs",
-    "question": "Whom did Pakistan nominate for Nobel Prize?",
-    "options": [
-      { "id": "q26opt0", "text": "Joe Biden", "isCorrect": false },
-      { "id": "q26opt1", "text": "Donald Trump", "isCorrect": false },
-      { "id": "q26opt2", "text": "Vladimir Putin", "isCorrect": false },
-      { "id": "q26opt3", "text": "Narendra Modi", "isCorrect": false }
-    ],
-    "explanation": "This refers to the nomination of Donald Trump (often cited in this mock context)."
-  },
-  {
+{
+  "id": "q26",
+  "questionNumber": 26,
+  "category": "Current Affairs",
+  "question": "Whom did Pakistan nominate for Nobel Prize?",
+  "options": [
+    { "id": "q26opt0", "text": "Joe Biden", "isCorrect": false },
+    { "id": "q26opt1", "text": "Donald Trump", "isCorrect": true },
+    { "id": "q26opt2", "text": "Vladimir Putin", "isCorrect": false },
+    { "id": "q26opt3", "text": "Narendra Modi", "isCorrect": false }
+  ],
+  "explanation": "In the context of events in the 2025 mock timeline, this likely refers to a nomination related to U.S. President Donald Trump's announcement and mediation of the Gaza peace plan."
+},  {
     "id": "q27",
     "questionNumber": 27,
     "category": "Current Affairs",
@@ -598,7 +598,7 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     { "id": "q46opt3", "text": "Ranil Wickremesinghe", "isCorrect": false }
   ],
   "explanation": "Anura Kumara Dissanayake has been serving as the President of Sri Lanka since 23 September 2024."
-}
+},
 
   {
     "id": "q47",
@@ -677,7 +677,7 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     { "id": "q52opt3", "text": "Jaish al‑Adl", "isCorrect": true }
   ],
   "explanation": "The Pak‑Iran border tensions have involved attacks by the Sunni militant group Jaish al‑Adl, a splinter of Jundallah that has carried out numerous assaults on Iranian security forces near the Pakistan border. Iran has accused elements of this group of operating from within Pakistan’s border regions. "
-}
+},
 
   {
     "id": "q53",
