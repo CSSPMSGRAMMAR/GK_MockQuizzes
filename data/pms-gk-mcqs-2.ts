@@ -320,19 +320,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'Islamabad United became the first team to win three PSL titles after defeating Multan Sultans in a thrilling final in Karachi.',
   },
-  {
-    id: 'q225',
-    questionNumber: 225,
-    category: 'International Relations',
-    question: 'Who was the 8th president of Pakistan?',
-    options: [
-      { id: 'q225a', text: 'Wasim Sajjad', isCorrect: false },
-      { id: 'q225b', text: 'Rafique Tarar', isCorrect: true },
-      { id: 'q225c', text: 'Pervez Musharraf', isCorrect: false },
-      { id: 'q225d', text: 'Farooq Leghari', isCorrect: false },
-    ],
-    explanation: 'Rafiq Tarar served as President from 1998 to 2001. He remained in office for some time after the 1999 military coup before being removed by Musharraf.',
-  },
+{
+  "id": "q225",
+  "questionNumber": 225,
+  "category": "International Relations",
+  "question": "Who was the 8th president of Pakistan?",
+  "options": [
+    { "id": "q225a", "text": "Wasim Sajjad", "isCorrect": false },
+    { "id": "q225b", "text": "Rafique Tarar", "isCorrect": false },
+    { "id": "q225c", "text": "Pervez Musharraf", "isCorrect": false },
+    { "id": "q225d", "text": "Farooq Leghari", "isCorrect": true }
+  ],
+  "explanation": "Farooq Leghari served as the 8th President of Pakistan from 1993 to 1997."
+},
   {
     id: 'q226',
     questionNumber: 226,
@@ -413,19 +413,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'During the day, the land heats up faster than the sea. The warm air over land rises, and cool air from the sea flows in to take its place. ',
   },
-  {
-    id: 'q232',
-    questionNumber: 232,
-    category: 'Geography',
-    question: 'The boundary line which includes the creek in Sindh is known as:',
-    options: [
-      { id: 'q232a', text: 'Blue Line', isCorrect: false },
-      { id: 'q232b', text: 'Red Line', isCorrect: false },
-      { id: 'q232c', text: 'Green Line', isCorrect: false },
-      { id: 'q232d', text: 'Yellow Line', isCorrect: true },
-    ],
-    explanation: 'In the Sir Creek dispute, the "Green Line" represents Pakistan’s claim (eastern bank), while the "Blue Line" represents India’s claim (mid-channel). However, standard PPSC/PMS keys often refer to the boundary markers here collectively as part of historical "Yellow Line" mappings of the Rann of Kutch.',
-  },
+{
+  "id": "q232",
+  "questionNumber": 232,
+  "category": "Geography",
+  "question": "The boundary line which includes the creek in Sindh is known as:",
+  "options": [
+    { "id": "q232a", "text": "Blue Line", "isCorrect": false },
+    { "id": "q232b", "text": "Red Line", "isCorrect": false },
+    { "id": "q232c", "text": "Green Line", "isCorrect": true },
+    { "id": "q232d", "text": "Yellow Line", "isCorrect": false }
+  ],
+  "explanation": "In the Sir Creek dispute, Pakistan’s claim places the boundary along the eastern bank of Sir Creek, often depicted as the Green Line, whereas India argues for a mid-channel boundary under the thalweg principle."
+},
   {
     id: 'q233',
     questionNumber: 233,
@@ -653,20 +653,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'COBOL (Common Business-Oriented Language) is a compiled English-like computer programming language designed for business use, not a database system.',
   },
-  {
-    id: 'q250',
-    questionNumber: 250,
-    category: 'Science',
-    question: 'What is the maximum number of undo actions possible in Microsoft Excel (by default)?',
-    options: [
-      { id: 'q250a', text: '16', isCorrect: true },
-      { id: 'q250b', text: '50', isCorrect: false },
-      { id: 'q250c', text: '100', isCorrect: false },
-      { id: 'q250d', text: '20', isCorrect: false },
-    ],
-    explanation: 'While modern versions allow up to 100, historical versions of Excel (and many PPSC/PMS curriculum sources) cite 16 as the default limit.',
-  },
-
+{
+  "id": "q250",
+  "questionNumber": 250,
+  "category": "Science",
+  "question": "What is the maximum number of undo actions possible in Microsoft Excel (by default)?",
+  "options": [
+    { "id": "q250a", "text": "16", "isCorrect": false },
+    { "id": "q250b", "text": "50", "isCorrect": false },
+    { "id": "q250c", "text": "100", "isCorrect": true },
+    { "id": "q250d", "text": "20", "isCorrect": false }
+  ],
+  "explanation": "By default, Excel (2016 and later) retains up to 100 undoable actions in its undo stack."
+},
   // Computer / IT Advanced (251-260)
   {
     id: 'q251',
@@ -841,20 +840,20 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'Dr. Jameel Jalibi’s "Tarikh-e-Adab-e-Urdu" is a monumental work. Volume 1 specifically covers the early period up to 1750 (though often tested in exams with timeframes like 1750-1850 based on specific syllabi).',
   },
-  {
-    id: 'q264',
-    questionNumber: 264,
-    category: 'English',
-    question: 'کتاب "انگارے" میں کتنے ڈرامے شامل ہیں؟',
-    options: [
-      { id: 'q264a', text: 'ایک', isCorrect: false },
-      { id: 'q264b', text: 'دو', isCorrect: false },
-      { id: 'q264c', text: 'تین', isCorrect: false },
-      { id: 'q264d', text: 'چار', isCorrect: true },
-    ],
-    explanation: '"Angaray" (1932) was a controversial collection of short stories. It contained nine stories and one play (total 10 pieces), but some editions emphasize the breakdown of genres differently.',
-  },
-  {
+{
+  "id": "q264",
+  "questionNumber": 264,
+  "category": "English",
+  "question": "کتاب \"انگارے\" میں کتنے ڈرامے شامل ہیں؟",
+  "options": [
+    { "id": "q264a", "text": "ایک", "isCorrect": true },
+    { "id": "q264b", "text": "دو", "isCorrect": false },
+    { "id": "q264c", "text": "تین", "isCorrect": false },
+    { "id": "q264d", "text": "چار", "isCorrect": false }
+  ],
+  "explanation": "کتاب \"انگارے\" (1932) میں نو مختصر کہانیاں اور ایک ڈرامہ شامل ہیں۔"
+}
+  ,{
     id: 'q265',
     questionNumber: 265,
     category: 'English',
@@ -919,20 +918,20 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'Jalaluddin Khilji appointed him as "Mushaf-dar" and conferred the title "Amir" upon him due to his poetic brilliance.',
   },
-  {
-    id: 'q270',
-    questionNumber: 270,
-    category: 'English',
-    question: 'Complete the sentence: Five people have joined the job and seven resigned.',
-    options: [
-      { id: 'q270a', text: 'R is', isCorrect: false },
-      { id: 'q270b', text: 'was', isCorrect: false },
-      { id: 'q270c', text: 'have', isCorrect: false },
-      { id: 'q270d', text: 'Has', isCorrect: true },
-    ],
-    explanation: 'In the sentence structure "Seven resigned," the auxiliary verb "have" is omitted but understood. The correct full phrasing would be "seven have resigned." If the option is "Has," it implies a collective noun usage which is a common trick in grammatical exams.',
-  },
-
+{
+  "id": "q270",
+  "questionNumber": 270,
+  "category": "English",
+  "question": "Complete the sentence: Five people have joined the job and seven ________.",
+  "options": [
+    { "id": "q270a", "text": "R is", "isCorrect": false },
+    { "id": "q270b", "text": "was", "isCorrect": false },
+    { "id": "q270c", "text": "have", "isCorrect": true },
+    { "id": "q270d", "text": "Has", "isCorrect": false }
+  ],
+  "explanation": "In the sentence, the second part should also be in present perfect tense: “seven have resigned.”"
+}
+  ,
   // Islamic Studies (271-280)
   {
     id: 'q271',
@@ -973,20 +972,20 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     "explanation": "غسل الملاکہ (The one washed by angels) is the title of حضرت ہنزلہؓ (Hazrat Hanzala, R.A)."
   },  
-  {
-    id: 'q274',
-    questionNumber: 274,
-    category: 'Islamic Studies',
-    question: 'غزوہ احد میں حضرت محمدﷺ کے دندان مبارک کس دشمن نے توڑے؟',
-    options: [
-      { id: 'q274a', text: 'ابو جہل', isCorrect: false },
-      { id: 'q274b', text: 'عتبہ', isCorrect: false },
-      { id: 'q274c', text: 'ابن قمیہ', isCorrect: true },
-      { id: 'q274d', text: 'ابو لہب', isCorrect: false },
-    ],
-    explanation: 'During the Battle of Uhud, Utbah bin Abi Waqqas threw stones at the Holy Prophet (PBUH), causing his teeth to break and his lip to bleed.',
-  },
-  {
+{
+  "id": "q274",
+  "questionNumber": 274,
+  "category": "Islamic Studies",
+  "question": "غزوہ احد میں حضرت محمد ﷺ کے دندان مبارک کس دشمن نے توڑے؟",
+  "options": [
+    { "id": "q274a", "text": "ابو جہل", "isCorrect": false },
+    { "id": "q274b", "text": "عتبہ", "isCorrect": false },
+    { "id": "q274c", "text": "عتبہ بن ابی وقاص", "isCorrect": true },
+    { "id": "q274d", "text": "ابو لہب", "isCorrect": false }
+  ],
+  "explanation": "غزوہ احد میں حضرت محمد ﷺ کے ایک دندان مبارک کو *عتبہ بن ابی وقاص* نے پتھر سے توڑا، جس سے ان کے منہ کے اندر کے دانت ٹوٹ گئے۔"
+}
+  ,{
     id: 'q275',
     questionNumber: 275,
     category: 'Islamic Studies',
@@ -1210,19 +1209,20 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'This reflected an increase from the previous year, aimed at meeting the requirements of the armed forces amidst inflation and rising operational costs.',
   },
-  {
-    id: 'q294',
-    questionNumber: 294,
-    category: 'Economy',
-    question: 'Who is the current Ambassador of Pakistan to the United Nations (UNO)?',
-    options: [
-      { id: 'q294a', text: 'Maleeha Lodhi', isCorrect: false },
-      { id: 'q294b', text: 'Sherry Rehman', isCorrect: false },
-      { id: 'q294c', text: 'Munir Akram', isCorrect: true },
-      { id: 'q294d', text: 'Asim Iftikhar Ahmad', isCorrect: false },
-    ],
-    explanation: 'Munir Akram assumed the office in 2019, replacing Maleeha Lodhi. He had previously served in the same position from 2002 to 2008.',
-  },
+ {
+  "id": "q294",
+  "questionNumber": 294,
+  "category": "Economy",
+  "question": "Who is the current Ambassador of Pakistan to the United Nations (UNO)?",
+  "options": [
+    { "id": "q294a", "text": "Maleeha Lodhi", "isCorrect": false },
+    { "id": "q294b", "text": "Sherry Rehman", "isCorrect": false },
+    { "id": "q294c", "text": "Munir Akram", "isCorrect": false },
+    { "id": "q294d", "text": "Asim Iftikhar Ahmad", "isCorrect": true }
+  ],
+  "explanation": "Asim Iftikhar Ahmad is currently serving as Pakistan’s Permanent Representative (Ambassador) to the United Nations, having assumed the position in March/April 2025 following the completion of Munir Akram’s tenure. :contentReference[oaicite:0]{index=0}"
+}
+  ,
   {
     id: 'q295',
     questionNumber: 295,

@@ -88,35 +88,36 @@ export const subjectcurrentaffairs: MCQuestion[] = [
     ],
     "explanation": "The Houthi movement is a political and militant group based in Yemen."
   },
-  {
-    "id": "q4",
-    "questionNumber": 4,
-    "category": "Current Affairs",
-    "question": "Who is the current Prime Minister of Canada?",
-    "options": [
-      {
-        "id": "q4opt0",
-        "text": "Justin Trudeau",
-        "isCorrect": true
-      },
-      {
-        "id": "q4opt1",
-        "text": "Mark Carney",
-        "isCorrect": false
-      },
-      {
-        "id": "q4opt2",
-        "text": "Pierre Poilievre",
-        "isCorrect": false
-      },
-      {
-        "id": "q4opt3",
-        "text": "Stephen Harper",
-        "isCorrect": false
-      }
-    ],
-    "explanation": "Justin Trudeau is the current Prime Minister of Canada."
-  },
+{
+  "id": "q4",
+  "questionNumber": 4,
+  "category": "Current Affairs",
+  "question": "Who is the current Prime Minister of Canada?",
+  "options": [
+    {
+      "id": "q4opt0",
+      "text": "Justin Trudeau",
+      "isCorrect": false
+    },
+    {
+      "id": "q4opt1",
+      "text": "Mark Carney",
+      "isCorrect": true
+    },
+    {
+      "id": "q4opt2",
+      "text": "Pierre Poilievre",
+      "isCorrect": false
+    },
+    {
+      "id": "q4opt3",
+      "text": "Stephen Harper",
+      "isCorrect": false
+    }
+  ],
+  "explanation": "Mark Carney became the Prime Minister of Canada on 14 March 2025, succeeding Justin Trudeau after winning the Liberal Party leadership race."
+}
+,
   {
     "id": "q5",
     "questionNumber": 5,
@@ -1306,36 +1307,36 @@ export const subjectcurrentaffairs: MCQuestion[] = [
     ],
     "explanation": "COP29 was held in Baku, Azerbaijan."
   },
-  {
-    "id": "q46",
-    "questionNumber": 46,
-    "category": "Current Affairs",
-    "question": "Who is the current President of Sri Lanka?",
-    "options": [
-      {
-        "id": "q46opt0",
-        "text": "Sajith Premadasa",
-        "isCorrect": false
-      },
-      {
-        "id": "q46opt1",
-        "text": "Anura Kumara Dissanayake",
-        "isCorrect": true
-      },
-      {
-        "id": "q46opt2",
-        "text": "Gotabaya Rajapaksa",
-        "isCorrect": false
-      },
-      {
-        "id": "q46opt3",
-        "text": "Ranil Wickremesinghe",
-        "isCorrect": false
-      }
-    ],
-    "explanation": "Anura Kumara Dissanayake is the President of Sri Lanka."
-  },
-  {
+{
+  "id": "q46",
+  "questionNumber": 46,
+  "category": "Current Affairs",
+  "question": "Who is the current President of Sri Lanka?",
+  "options": [
+    {
+      "id": "q46opt0",
+      "text": "Sajith Premadasa",
+      "isCorrect": false
+    },
+    {
+      "id": "q46opt1",
+      "text": "Anura Kumara Dissanayake",
+      "isCorrect": true
+    },
+    {
+      "id": "q46opt2",
+      "text": "Gotabaya Rajapaksa",
+      "isCorrect": false
+    },
+    {
+      "id": "q46opt3",
+      "text": "Ranil Wickremesinghe",
+      "isCorrect": false
+    }
+  ],
+  "explanation": "Anura Kumara Dissanayake has been serving as the President of Sri Lanka since September 23, 2024, after winning the presidential election."
+}
+  ,{
     "id": "q47",
     "questionNumber": 47,
     "category": "Pakistan Affairs",

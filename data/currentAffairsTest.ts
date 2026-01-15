@@ -46,12 +46,12 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     "category": "Current Affairs",
     "question": "Who is the current Prime Minister of Canada?",
     "options": [
-      { "id": "q4opt0", "text": "Justin Trudeau", "isCorrect": true },
-      { "id": "q4opt1", "text": "Mark Carney", "isCorrect": false },
+      { "id": "q4opt0", "text": "Justin Trudeau", "isCorrect": false },
+      { "id": "q4opt1", "text": "Mark Carney", "isCorrect": true },
       { "id": "q4opt2", "text": "Pierre Poilievre", "isCorrect": false },
       { "id": "q4opt3", "text": "Stephen Harper", "isCorrect": false }
     ],
-    "explanation": "Justin Trudeau is the current Prime Minister of Canada."
+    "explanation": "Mark Carney is the current Prime Minister of Canada as of January 2025. He won the 2024 Canadian federal election, and Justin Trudeau resigned from the position in January 2025."
   },
   {
     "id": "q5",
@@ -586,19 +586,20 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     ],
     "explanation": "COP29 was held in Baku, Azerbaijan."
   },
-  {
-    "id": "q46",
-    "questionNumber": 46,
-    "category": "Current Affairs",
-    "question": "Who is the current President of Sri Lanka?",
-    "options": [
-      { "id": "q46opt0", "text": "Sajith Premadasa", "isCorrect": false },
-      { "id": "q46opt1", "text": "Anura Kumara Dissanayake", "isCorrect": true },
-      { "id": "q46opt2", "text": "Gotabaya Rajapaksa", "isCorrect": false },
-      { "id": "q46opt3", "text": "Ranil Wickremesinghe", "isCorrect": false }
-    ],
-    "explanation": "Anura Kumara Dissanayake is the President of Sri Lanka."
-  },
+ {
+  "id": "q46",
+  "questionNumber": 46,
+  "category": "Current Affairs",
+  "question": "Who is the current President of Sri Lanka?",
+  "options": [
+    { "id": "q46opt0", "text": "Sajith Premadasa", "isCorrect": false },
+    { "id": "q46opt1", "text": "Anura Kumara Dissanayake", "isCorrect": true },
+    { "id": "q46opt2", "text": "Gotabaya Rajapaksa", "isCorrect": false },
+    { "id": "q46opt3", "text": "Ranil Wickremesinghe", "isCorrect": false }
+  ],
+  "explanation": "Anura Kumara Dissanayake has been serving as the President of Sri Lanka since 23 September 2024."
+}
+
   {
     "id": "q47",
     "questionNumber": 47,
@@ -664,19 +665,20 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     ],
     "explanation": "Masoud Pezeshkian is the current President of Iran. He was elected in July 2024 and sworn in as the country’s ninth president on 30th July 2024. Prior to this, Ebrahim Raisi had served as president until his death in May 2024. Pezeshkian’s presidency continues into 2025 and beyond."
   },
-    {
-    "id": "q52",
-    "questionNumber": 52,
-    "category": "Pakistan Affairs",
-    "question": "Which terrorist group is the cause of Pak-Iran conflict?",
-    "options": [
-      { "id": "q52opt0", "text": "Jundallah", "isCorrect": false },
-      { "id": "q52opt1", "text": "Al Qaeda", "isCorrect": false },
-      { "id": "q52opt2", "text": "ISIS", "isCorrect": false },
-      { "id": "q52opt3", "text": "TTP", "isCorrect": false }
-    ],
-    "explanation": "Jaish al-Adl (offshoot of Jundallah) is the primary cause, though options here list Jundallah, which is the root group."
-  },
+  {
+  "id": "q52",
+  "questionNumber": 52,
+  "category": "Pakistan Affairs",
+  "question": "Which terrorist group is the cause of the Pak‑Iran conflict?",
+  "options": [
+    { "id": "q52opt0", "text": "Jundallah", "isCorrect": false },
+    { "id": "q52opt1", "text": "Al Qaeda", "isCorrect": false },
+    { "id": "q52opt2", "text": "ISIS", "isCorrect": false },
+    { "id": "q52opt3", "text": "Jaish al‑Adl", "isCorrect": true }
+  ],
+  "explanation": "The Pak‑Iran border tensions have involved attacks by the Sunni militant group Jaish al‑Adl, a splinter of Jundallah that has carried out numerous assaults on Iranian security forces near the Pakistan border. Iran has accused elements of this group of operating from within Pakistan’s border regions. "
+}
+
   {
     "id": "q53",
     "questionNumber": 53,
@@ -958,10 +960,10 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     "options": [
       { "id": "q74opt0", "text": "Haq Flotilla", "isCorrect": false },
       { "id": "q74opt1", "text": "Amud Flotilla", "isCorrect": false },
-      { "id": "q74opt2", "text": "Sumud Flotilla", "isCorrect": false },
+      { "id": "q74opt2", "text": "Sumud Flotilla", "isCorrect": true },
       { "id": "q74opt3", "text": "Geneva Flotilla", "isCorrect": false }
     ],
-    "explanation": "The Freedom Flotilla Coalition ships are often referred to, but 'Sumud' (Steadfastness) is a likely name in this context."
+  "explanation": "The aid convoy sailing toward Gaza in 2025 was known as the Global Sumud Flotilla, a multinational group of vessels attempting to deliver humanitarian supplies and break the naval blockade. "
   },
   {
     "id": "q75",
