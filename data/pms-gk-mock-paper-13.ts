@@ -501,12 +501,12 @@ export const pmsGkMockPaper13: MCQuestion[] = [
     "category": "Everyday Science",
     "question": "The primary gas responsible for the greenhouse effect on Earth is:",
     "options": [
-      { "id": "q39opt1", "text": "Carbon dioxide", "isCorrect": false },
+      { "id": "q39opt1", "text": "Carbon dioxide", "isCorrect": true },
       { "id": "q39opt2", "text": "Methane", "isCorrect": false },
       { "id": "q39opt3", "text": "Ozone", "isCorrect": false },
-      { "id": "q39opt4", "text": "Water vapor", "isCorrect": true }
+      { "id": "q39opt4", "text": "Water vapor", "isCorrect": false }
     ],
-    "explanation": "Water vapor is the most abundant greenhouse gas and contributes most to the natural greenhouse effect."
+    "explanation": "Carbon dioxide is the primary greenhouse gas responsible for the greenhouse effect on Earth."
   },
   {
     "id": "pms_gk_q40",
