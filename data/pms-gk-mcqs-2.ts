@@ -828,18 +828,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'Intizar Hussain, a legendary Urdu writer, wrote his memoirs titled "Chiraghon Ka Dhuan," which captures the cultural essence of a bygone era.',
   },
   {
-    id: 'q263',
-    questionNumber: 263,
-    category: 'English',
-    question: '"تاریخ ادب اردو" جلد اول میں اردو ادب کے کس دور کا احاطہ کیا گیا ہے؟',
-    options: [
-      { id: 'q263a', text: '1750 to 1850', isCorrect: true },
-      { id: 'q263b', text: '1850 to 1900', isCorrect: false },
-      { id: 'q263c', text: '1750 تک', isCorrect: false },
-      { id: 'q263d', text: '1900 to 1950', isCorrect: false },
-    ],
-    explanation: 'Dr. Jameel Jalibi’s "Tarikh-e-Adab-e-Urdu" is a monumental work. Volume 1 specifically covers the early period up to 1750 (though often tested in exams with timeframes like 1750-1850 based on specific syllabi).',
-  },
+  "id": "q263",
+  "questionNumber": 263,
+  "category": "English",
+  "question": "\"تاریخ ادب اردو\" جلد اول میں اردو ادب کے کس دور کا احاطہ کیا گیا ہے؟",
+  "options": [
+    { "id": "q263a", "text": "1750 to 1850", "isCorrect": false },
+    { "id": "q263b", "text": "1850 to 1900", "isCorrect": false },
+    { "id": "q263c", "text": "1750 تک", "isCorrect": true },
+    { "id": "q263d", "text": "1900 to 1950", "isCorrect": false }
+  ],
+  "explanation": "ڈاکٹر جمیل جالبی کی \"تاریخ ادب اردو\" جلد اول میں اردو ادب کے ابتدائی دور سے لے کر 1750 تک کا احاطہ کیا گیا ہے، جبکہ جلد دوم 1750 سے 1850 تک کے دور پر مشتمل ہے۔"
+}
+,
 {
   "id": "q264",
   "questionNumber": 264,
@@ -866,19 +867,20 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     ],
     explanation: 'Mirza Ghalib compiled "Gul-e-Rana" in 1828 at the request of his friend Maulvi Sirajuddin Ahmad.',
   },
-  {
-    id: 'q266',
-    questionNumber: 266,
-    category: 'English',
-    question: 'بانو قدسیہ کی کتاب "مر ¸د ابریشم" کس شخصیت کے بارے میں ہے؟',
-    options: [
-      { id: 'q266a', text: 'اشفاق احمد', isCorrect: false },
-      { id: 'q266b', text: 'قدرت ہللا شہاب', isCorrect: false },
-      { id: 'q266c', text: 'واصف علی واصف', isCorrect: false },
-      { id: 'q266d', text: 'ممتاز مفتی', isCorrect: true },
-    ],
-    explanation: 'In "Mard-e-Abrisham," Bano Qudsia pens a biography of the famous writer and her close family friend, Mumtaz Mufti.',
-  },
+ {
+  "id": "q266",
+  "questionNumber": 266,
+  "category": "English",
+  "question": "بانو قدسیہ کی کتاب \"مردِ ابریشم\" کس شخصیت کے بارے میں ہے؟",
+  "options": [
+    { "id": "q266a", "text": "اشفاق احمد", "isCorrect": false },
+    { "id": "q266b", "text": "قدرت اللہ شہاب", "isCorrect": true },
+    { "id": "q266c", "text": "واصف علی واصف", "isCorrect": false },
+    { "id": "q266d", "text": "ممتاز مفتی", "isCorrect": false }
+  ],
+  "explanation": "بانو قدسیہ کی کتاب \"مردِ ابریشم\" معروف ادیب اور سرکاری افسر **قدرت اللہ شہاب** کی زندگی اور شخصیت پر مبنی ہے، جسے انہوں نے اپنے مشاہدات کے ساتھ پیش کیا ہے۔ Qudratullah Shahab’s life and relations with the author’s circle are central to the book. :contentReference[oaicite:1]{index=1}"
+}
+,
   {
     id: 'q267',
     questionNumber: 267,
@@ -893,18 +895,19 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'Shan-ul-Haq Haqqee was a renowned linguist and lexicographer. "Farhang-e-Talaffuz" is a definitive dictionary for correct Urdu pronunciation.',
   },
   {
-    id: 'q268',
-    questionNumber: 268,
-    category: 'English',
-    question: '"گنگ شہزادی" کس کی تصنیف ہے؟',
-    options: [
-      { id: 'q268a', text: 'بانو قدسیہ', isCorrect: false },
-      { id: 'q268b', text: 'خالدہ حسین', isCorrect: false },
-      { id: 'q268c', text: 'عصمت چغتائی', isCorrect: false },
-      { id: 'q268d', text: 'قراۃ العین حیدر', isCorrect: true },
-    ],
-    explanation: '"Gung Shahzadi" is a short story by Qurratulain Hyder, one of the most prominent writers of Urdu literature.',
-  },
+  "id": "q268",
+  "questionNumber": 268,
+  "category": "English",
+  "question": "“گنگ شہزادی” کس کی تصنیف ہے؟",
+  "options": [
+    { "id": "q268a", "text": "بانو قدسیہ", "isCorrect": false },
+    { "id": "q268b", "text": "خالدہ حسین", "isCorrect": true },
+    { "id": "q268c", "text": "عصمت چغتائی", "isCorrect": false },
+    { "id": "q268d", "text": "قراۃ العین حیدر", "isCorrect": false }
+  ],
+  "explanation": "“گنگ شہزادی” (Gung Shehzadi) is a short story by Khalida Hussain, a noted Urdu short-story writer, featuring in her collection of fiction. :contentReference[oaicite:1]{index=1}"
+}
+,
   {
     id: 'q269',
     questionNumber: 269,
@@ -1289,16 +1292,17 @@ export const pmsGkMcqsAdvanced: MCQuestion[] = [
     explanation: 'Known as the "Father of the Nation," Sheikh Zayed ruled the UAE from its formation in 1971 until his death in 2004.',
   },
   {
-    id: 'q300',
-    questionNumber: 300,
-    category: 'Economy',
-    question: 'Who became the Premier (Chief Minister) of Punjab after the 1937 elections under GOI Act 1935?',
-    options: [
-      { id: 'q300a', text: 'Allama Iqbal', isCorrect: false },
-      { id: 'q300b', text: 'Khizar Hayat Tiwana', isCorrect: false },
-      { id: 'q300c', text: 'Sir Sikandar Hayat Khan', isCorrect: true },
-      { id: 'q300d', text: 'Ch. Rehmat Ali', isCorrect: false },
-    ],
-    explanation: 'Sir Sikandar Hayat Khan led the Unionist Party and served as Premier of Punjab until his death in 1942.',
-  },
+  "id": "q300",
+  "questionNumber": 300,
+  "category": "Economy",
+  "question": "Who became the Premier (Chief Minister) of Punjab after the 1937 elections under GOI Act 1935?",
+  "options": [
+    { "id": "q300a", "text": "Allama Iqbal", "isCorrect": false },
+    { "id": "q300b", "text": "Khizar Hayat Tiwana", "isCorrect": false },
+    { "id": "q300c", "text": "Sir Sikandar Hayat Khan", "isCorrect": true },
+    { "id": "q300d", "text": "Ch. Rehmat Ali", "isCorrect": false }
+  ],
+  "explanation": "Sir Sikandar Hayat Khan led the Unionist Party and served as Premier of Punjab after the 1937 elections under the Government of India Act 1935, remaining in office until his death in 1942."
+}
+,
 ];

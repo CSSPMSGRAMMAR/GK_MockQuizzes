@@ -17,19 +17,20 @@ export const pmsGkMcqsAdditional: MCQuestion[] = [
     ],
     explanation: 'While George Orwell used the term in an essay, Bernard Baruch, an American financier and presidential adviser, first used it in a speech in 1947 to describe the geopolitical tension between the USSR and the US.',
   },
-  {
-    id: 'q102',
-    questionNumber: 102,
-    category: 'General Knowledge',
-    question: 'Which country provided $144 million in humanitarian aid to Afghanistan in 2021?',
-    options: [
-      { id: 'q102a', text: 'USA', isCorrect: false },
-      { id: 'q102b', text: 'UK', isCorrect: false },
-      { id: 'q102c', text: 'Germany', isCorrect: true },
-      { id: 'q102d', text: 'Russia', isCorrect: false },
-    ],
-    explanation: 'Following the Taliban takeover in 2021, Germany remained a top donor, pledging this significant amount to address the burgeoning food and medical crisis through international NGOs.',
-  },
+ {
+  "id": "q102",
+  "questionNumber": 102,
+  "category": "General Knowledge",
+  "question": "Which country provided $144 million in humanitarian aid to Afghanistan in 2021?",
+  "options": [
+    { "id": "q102a", "text": "USA", "isCorrect": true },
+    { "id": "q102b", "text": "UK", "isCorrect": false },
+    { "id": "q102c", "text": "Germany", "isCorrect": false },
+    { "id": "q102d", "text": "Russia", "isCorrect": false }
+  ],
+  "explanation": "In October 2021, the United States government announced it would provide nearly $144 million in humanitarian aid to Afghanistan to support food security, essential healthcare, winter assistance, and other life-saving services through UN and NGO partners as the country faced a deepening humanitarian crisis. The total U.S. humanitarian assistance including this contribution reached approximately $474 million in 2021. :contentReference[oaicite:3]{index=3}"
+}
+,
   {
     id: 'q103',
     questionNumber: 103,
