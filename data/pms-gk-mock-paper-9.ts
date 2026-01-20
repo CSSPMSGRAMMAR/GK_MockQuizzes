@@ -989,19 +989,20 @@ export const pmsGkMockPaper9: MCQuestion[] = [
     ],
     "explanation": "The strawberry is unique among common fruits because its small, seed-like achenes are found on the exterior of the fleshy part. Botanically, the \"fruit\" of a strawberry is actually the receptacle, and the small \"seeds\" are the true fruits. Raspberries and blackberries are aggregate fruits, and figs are syconia, with seeds inside."
   },
-  {
-    "id": "q_277",
-    "questionNumber": 77,
-    "category": "Geography",
-    "question": "Which country has the most fresh water in the form of glaciers and ice?",
-    "options": [
-      { "id": "opt_277_1", "text": "Antarctica", "isCorrect": true },
-      { "id": "opt_277_2", "text": "Canada", "isCorrect": false },
-      { "id": "opt_277_3", "text": "Greenland (Denmark)", "isCorrect": false },
-      { "id": "opt_277_4", "text": "Russia", "isCorrect": false }
-    ],
-    "explanation": "This is a trick question. While Greenland (part of Denmark) and Canada have significant ice reserves, Antarctica is a continent, not a country. However, if interpreting \"country\" loosely to mean a major landmass often considered in a national context due to scientific claims or unique status, it is sometimes used this way. But explicitly, as a continent, Antarctica holds about 90% of the world's ice and 70% of its freshwater. If the question strictly means sovereign nation, Greenland would be the best answer, but Antarctica is usually the intended tricky answer for sheer volume."
-  },
+ {
+  "id": "q_277",
+  "questionNumber": 77,
+  "category": "Geography",
+  "question": "Which country has the most fresh water in the form of glaciers and ice?",
+  "options": [
+    { "id": "opt_277_1", "text": "Antarctica", "isCorrect": false },
+    { "id": "opt_277_2", "text": "Canada", "isCorrect": false },
+    { "id": "opt_277_3", "text": "Greenland (Denmark)", "isCorrect": true },
+    { "id": "opt_277_4", "text": "Russia", "isCorrect": false }
+  ],
+  "explanation": "While Antarctica contains the vast majority of Earth’s frozen freshwater, it is a continent, not a sovereign country. Among countries, Greenland (an autonomous territory of Denmark) has the largest ice sheet and thus the most fresh water stored in glaciers and ice. Canada also has extensive freshwater, mainly in lakes and some glacial ice, but Greenland’s ice sheet exceeds Canada’s glacial ice reserves. :contentReference[oaicite:6]{index=6}"
+}
+,
   {
     "id": "q_278",
     "questionNumber": 78,

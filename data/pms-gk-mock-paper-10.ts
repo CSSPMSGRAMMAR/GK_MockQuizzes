@@ -241,12 +241,12 @@ export const pmsGkMockPaper10: MCQuestion[] = [
     "category": "Geography",
     "question": "What is the only capital city in the world that sits on two continents?",
     "options": [
-      { "id": "q68opt1", "text": "Ankara", "isCorrect": false },
+      { "id": "q68opt1", "text": "Ankara", "isCorrect": true },
       { "id": "q68opt2", "text": "Cairo", "isCorrect": false },
       { "id": "q68opt3", "text": "Moscow", "isCorrect": false },
-      { "id": "q68opt4", "text": "Istanbul", "isCorrect": true }
+      { "id": "q68opt4", "text": "Istanbul", "isCorrect": false }
     ],
-    "explanation": "Istanbul, Turkey, is the only city in the world that straddles two continents, Europe and Asia. While Ankara is the capital, Istanbul is the transcontinental hub."
+    "explanation": "Ankara, Turkey, is the only city in the world that straddles two continents, Europe and Asia."
   },
   {
     "id": "pms_gk_4_q89",

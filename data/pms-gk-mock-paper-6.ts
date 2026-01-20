@@ -353,18 +353,19 @@ export const pmsGkMockPaper6: MCQuestion[] = [
     "explanation": "Ritzau is the independent news agency of Denmark."
   },
   {
-    "id": "gk_q28",
-    "questionNumber": 28,
-    "category": "Geography",
-    "question": "Which country officially has two capitals?",
-    "options": [
-      { "id": "opt1", "text": "Nigeria", "isCorrect": false },
-      { "id": "opt2", "text": "South Africa", "isCorrect": false },
-      { "id": "opt3", "text": "Sri Lanka", "isCorrect": false },
-      { "id": "opt4", "text": "Malaysia", "isCorrect": false }
-    ],
-    "explanation": "While South Africa has three, Sri Lanka (Colombo/Kotte) and Malaysia (KL/Putrajaya) have two. In MCQ contexts listing these options, South Africa is the classic 'multiple capitals' answer (Pretoria, Cape Town, Bloemfontein). If compelled to choose 'two', Sri Lanka fits well."
-  },
+  "id": "gk_q28",
+  "questionNumber": 28,
+  "category": "Geography",
+  "question": "Which country officially has two capitals?",
+  "options": [
+    { "id": "opt1", "text": "Nigeria", "isCorrect": false },
+    { "id": "opt2", "text": "South Africa", "isCorrect": false },
+    { "id": "opt3", "text": "Sri Lanka", "isCorrect": true },
+    { "id": "opt4", "text": "Malaysia", "isCorrect": false }
+  ],
+  "explanation": "Sri Lanka officially uses two capitals: Sri Jayawardenepura Kotte (legislative/administrative capital where Parliament sits) and Colombo (commercial and executive/judicial functions). Malaysia also has two capitals (Kuala Lumpur and Putrajaya), but among the listed options, Sri Lanka is the best response for ‘officially has two capitals.’"
+}
+,
   {
     "id": "gk_q29",
     "questionNumber": 29,
