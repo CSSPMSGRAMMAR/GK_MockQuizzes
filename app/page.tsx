@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AnnouncementBanner } from '@/components/AnnouncementBanner';
+import { InstagramEmbed } from '@/components/InstagramEmbed';
 import type { Announcement } from '@/lib/announcements';
 import {
   BookOpen,
@@ -313,6 +314,34 @@ export default function Home() {
               Practice with our free demo quizzes or access premium mock tests to excel in your
               PMS General Knowledge exam preparation.
             </motion.p>
+          </motion.div>
+
+          {/* Instagram (top + compact + mobile-friendly) */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
+            <Card className="border-2">
+              <CardContent className="pt-4 sm:pt-5">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                  <div className="text-center sm:text-left">
+                    <h3 className="font-display font-semibold text-base sm:text-lg">Instagram</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      Latest post from @csspms.grammar
+                    </p>
+                  </div>
+                  <div className="w-full sm:w-auto">
+                    <div className="mx-auto w-full max-w-[360px] sm:max-w-[460px] overflow-hidden">
+                      <InstagramEmbed
+                        permalink="https://www.instagram.com/p/DTw2EfZjJWr/?utm_source=ig_embed&utm_campaign=loading"
+                        captioned={false}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           {/* WhatsApp CTA Section - 20+ Mock Papers */}
