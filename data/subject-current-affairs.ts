@@ -1925,12 +1925,12 @@ export const subjectcurrentaffairs: MCQuestion[] = [
       {
         "id": "q67opt0",
         "text": "17 Sep 2025",
-        "isCorrect": false
+        "isCorrect": true
       },
       {
         "id": "q67opt1",
         "text": "19 Sep 2025",
-        "isCorrect": true
+        "isCorrect": false
       },
       {
         "id": "q67opt2",
@@ -1943,7 +1943,7 @@ export const subjectcurrentaffairs: MCQuestion[] = [
         "isCorrect": false
       }
     ],
-    "explanation": "Mock event: 19 Sep 2025."
+    "explanation": "Mock event: 17 Sep 2025."
   },
   {
     "id": "q68",

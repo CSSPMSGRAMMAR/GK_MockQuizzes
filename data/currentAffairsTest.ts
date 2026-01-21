@@ -1017,19 +1017,20 @@ export const currentAffairsTestQuestions: MCQuestion[] = [
     ],
     "explanation": "As of 2024, there are 29 Schengen countries (Bulgaria and Romania joined by air/sea)."
   },
-  {
-    "id": "q79",
-    "questionNumber": 79,
-    "category": "Current Affairs",
-    "question": "According to recent UN report in November 2025, which is the most populous city in the world?",
-    "options": [
-      { "id": "q79opt0", "text": "Jakarta", "isCorrect": false },
-      { "id": "q79opt1", "text": "Shanghai", "isCorrect": false },
-      { "id": "q79opt2", "text": "Tokoyo", "isCorrect": true },
-      { "id": "q79opt3", "text": "Dhaka", "isCorrect": false }
-    ],
-    "explanation": "Tokyo is traditionally the most populous, though declining. In mock papers, it usually retains top spot."
-  },
+ {
+  "id": "q79",
+  "questionNumber": 79,
+  "category": "Current Affairs",
+  "question": "According to recent UN report in November 2025, which is the most populous city in the world?",
+  "options": [
+    { "id": "q79opt0", "text": "Jakarta", "isCorrect": true },
+    { "id": "q79opt1", "text": "Shanghai", "isCorrect": false },
+    { "id": "q79opt2", "text": "Tokyo", "isCorrect": false },
+    { "id": "q79opt3", "text": "Dhaka", "isCorrect": false }
+  ],
+  "explanation": "According to the United Nations 'World Urbanization Prospects 2025' report released in November 2025, Jakarta (Indonesia) has overtaken Tokyo to become the world's most populous city with nearly 42 million residents, followed by Dhaka and then Tokyo. This shift reflects revised global urban population estimates and demographic trends. :contentReference[oaicite:1]{index=1}"
+}
+,
   {
     "id": "q80",
     "questionNumber": 80,
